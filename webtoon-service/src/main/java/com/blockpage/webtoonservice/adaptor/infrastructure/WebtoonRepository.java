@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long> {
     List<WebtoonEntity> findByGenreTypeAndWebtoonStatus(String genre, int status);
-
+    List<WebtoonEntity> findByPublicationDaysAndWebtoonStatus(String publicationDays, int status);
 
 }

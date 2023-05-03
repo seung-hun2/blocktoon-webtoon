@@ -37,5 +37,26 @@ public class MockWebtoonController {
                 .body(webtoonViewList);
     }
 
+    @GetMapping("/{weekdays}")
+    public ResponseEntity byWeekdays(@PathVariable int weekdays){
+        List<WebtoonEntity> webtoonEntityList =  webtoonRepository.findByPublicationDaysAndWebtoonStatus(
+                String.valueOf(PublicationDays.findPublicationDaysByKey(weekdays)),1);
+        List<WebtoonView> webtoonViewList = null;
+
+        for(int i=0;i<webtoonEntityList.size();i++){
+            webtoonViewList.get(i).builder()
+                    .creator(webtoonEntityList.get(i).getCreator())
+                    .webtoonTitle(webtoonEntityList.get(i).getWebtoonTitle())
+                    .webtoonThumbnail(webtoonEntityList.get(i).getWebtoonThumbnail())
+                    .illustrator(webtoonEntityList.get(i).getIllustrator())
+                    .views(webtoonEntityList.get(i).getViews())
+                    .interestCount(webtoonEntityList.get(i).getInterestCount())
+                    .build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(webtoonViewList);
+
+    }
 
 }
