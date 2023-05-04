@@ -86,4 +86,30 @@ public class MockWebtoonController {
 
     }
 
+
+    /**
+     * 작가가 자신의 웹툰 조회
+     */
+    @GetMapping("/creator")
+    public ResponseEntity byCreator(){
+        List<WebtoonEntity> webtoonEntityList = webtoonRepository.findByCreatorId(1L);
+        List<WebtoonView> webtoonViewList = new ArrayList<>();
+
+        for(int i=0;i<webtoonEntityList.size();i++){
+            webtoonViewList.add(WebtoonView.builder()
+                    .creator(webtoonEntityList.get(i).getCreator())
+                    .webtoonTitle(webtoonEntityList.get(i).getWebtoonTitle())
+                    .webtoonThumbnail(webtoonEntityList.get(i).getWebtoonThumbnail())
+                    .illustrator(webtoonEntityList.get(i).getIllustrator())
+                    .views(webtoonEntityList.get(i).getViews())
+                    .interestCount(webtoonEntityList.get(i).getInterestCount())
+                    .build());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(webtoonViewList);
+
+    }
+
+
 }
