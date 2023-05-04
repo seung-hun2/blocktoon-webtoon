@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -24,35 +26,21 @@ public class MockWebtoonController {
     @GetMapping("")
     public ResponseEntity byGenreOrWeekdays(@RequestParam(required = false) String weekdays,
                                      @RequestParam(required = false) String genre) {
-        List<WebtoonEntity> webtoonGenreList = new ArrayList<>();
-        List<WebtoonEntity> webtoonPublicationDaysList = new ArrayList<>();
+        List<WebtoonEntity> webtoonEntityList = new ArrayList<>();
         List<WebtoonView> webtoonViewList = new ArrayList<>();
+
         if(genre != null) {
-            webtoonGenreList = webtoonRepository.findAllByGenreTypeAndWebtoonStatus(
+            webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatus(
                     GenreType.findGenreTypeByKey(Integer.parseInt(genre)), WebtoonStatus.PUBLISH);
-            for(int i=0;i<webtoonGenreList.size();i++) {
-                webtoonViewList.add(WebtoonView.builder()
-                        .creator(webtoonGenreList.get(i).getCreator())
-                        .webtoonTitle(webtoonGenreList.get(i).getWebtoonTitle())
-                        .webtoonThumbnail(webtoonGenreList.get(i).getWebtoonThumbnail())
-                        .illustrator(webtoonGenreList.get(i).getIllustrator())
-                        .views(webtoonGenreList.get(i).getViews())
-                        .interestCount(webtoonGenreList.get(i).getInterestCount())
-                        .build());
-            }
+            webtoonEntityList.stream()
+                    .map(w->WebtoonView.toViewFromEntity(w))
+                    .collect(Collectors.toList());
         } else if (weekdays != null) {
-            webtoonPublicationDaysList = webtoonRepository.findByPublicationDaysAndWebtoonStatus(
+            webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatus(
                     PublicationDays.findPublicationDaysByKey(Integer.parseInt(weekdays)),WebtoonStatus.PUBLISH);
-            for(int i=0;i<webtoonPublicationDaysList.size();i++) {
-                webtoonViewList.add(WebtoonView.builder()
-                        .creator(webtoonPublicationDaysList.get(i).getCreator())
-                        .webtoonTitle(webtoonPublicationDaysList.get(i).getWebtoonTitle())
-                        .webtoonThumbnail(webtoonPublicationDaysList.get(i).getWebtoonThumbnail())
-                        .illustrator(webtoonPublicationDaysList.get(i).getIllustrator())
-                        .views(webtoonPublicationDaysList.get(i).getViews())
-                        .interestCount(webtoonPublicationDaysList.get(i).getInterestCount())
-                        .build());
-            }
+            webtoonEntityList.stream()
+                    .map(w->WebtoonView.toViewFromEntity(w))
+                    .collect(Collectors.toList());
         }
 
         return ResponseEntity.status(HttpStatus.OK)
