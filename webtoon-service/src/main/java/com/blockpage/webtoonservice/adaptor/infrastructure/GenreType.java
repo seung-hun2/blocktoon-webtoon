@@ -8,7 +8,7 @@ import java.util.Arrays;
 @Getter
 @AllArgsConstructor
 public enum GenreType {
-    FANTASY_DRAMA(01,"판타지 드라마"),
+    FANTASY_DRAMA(0,"판타지 드라마"),
     ROMANCE(1,"로맨스"),
     FANTASY(2,"판타지"),
     ROMANCE_FANTASY(3,"로맨스 판타지"),

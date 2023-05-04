@@ -9,19 +9,19 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum PublicationDays {
     MONDAY(0, "월"),
-    TUESDAY(0, "화"),
-    WEDNESDAY(0, "수"),
-    THURSDAY(0, "목"),
-    FRIDAY(0, "금"),
-    SATURDAY(0, "토"),
-    SUNDAY(0, "일");
+    TUESDAY(1, "화"),
+    WEDNESDAY(2, "수"),
+    THURSDAY(3, "목"),
+    FRIDAY(4, "금"),
+    SATURDAY(5, "토"),
+    SUNDAY(6, "일");
 
     int key;
     String value;
 
     public static PublicationDays findPublicationDaysByKey(int key){
         return Arrays.stream(PublicationDays.values())
-                .filter(k -> k.getKey()==key)
+                .filter(k -> k.getKey() == key)
                 .findFirst()
                 .get();
     }

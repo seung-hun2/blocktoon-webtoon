@@ -23,7 +23,7 @@ public class WebtoonEntity {
     private String illustrator;
     @Column
     @Enumerated(EnumType.STRING)
-    private String publicationDays;
+    private PublicationDays publicationDays;
     @Column
     private String webtoonMainImage;
     @Column
