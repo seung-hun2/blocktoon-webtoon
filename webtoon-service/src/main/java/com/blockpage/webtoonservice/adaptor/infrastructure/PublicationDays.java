@@ -19,10 +19,10 @@ public enum PublicationDays {
     int key;
     String value;
 
-    public static PublicationDays findPublicationDaysByKey(int key){
+    public static PublicationDays findPublicationDaysByKey(int key) {
         return Arrays.stream(PublicationDays.values())
-                .filter(k -> k.getKey() == key)
-                .findFirst()
-                .get();
+            .filter(k -> k.getKey() == key)
+            .findFirst()
+            .get();
     }
 }

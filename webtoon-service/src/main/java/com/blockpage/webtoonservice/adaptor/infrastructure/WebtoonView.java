@@ -14,14 +14,14 @@ public class WebtoonView {
     private int views;
     private int interestCount;
 
-    public static WebtoonView toViewFromEntity(WebtoonEntity webtoon){
+    public static WebtoonView toViewFromEntity(WebtoonEntity webtoon) {
         return WebtoonView.builder()
-                .creator(webtoon.getCreator())
-                .views(webtoon.getViews())
-                .interestCount(webtoon.getInterestCount())
-                .webtoonThumbnail(webtoon.getWebtoonThumbnail())
-                .webtoonTitle(webtoon.getWebtoonTitle())
-                .illustrator(webtoon.getIllustrator())
-                .build();
+            .creator(webtoon.getCreator())
+            .views(webtoon.getViews())
+            .interestCount(webtoon.getInterestCount())
+            .webtoonThumbnail(webtoon.getWebtoonThumbnail())
+            .webtoonTitle(webtoon.getWebtoonTitle())
+            .illustrator(webtoon.getIllustrator())
+            .build();
     }
 }
