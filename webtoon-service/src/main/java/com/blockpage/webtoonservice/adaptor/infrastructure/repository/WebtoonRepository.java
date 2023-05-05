@@ -1,5 +1,9 @@
-package com.blockpage.webtoonservice.adaptor.infrastructure;
+package com.blockpage.webtoonservice.adaptor.infrastructure.repository;
 
+import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +17,5 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long> {
     List<WebtoonEntity> findByWebtoonStatusOrderByViews(WebtoonStatus status);
 
     List<WebtoonEntity> findByCreatorId(Long creatorId);
+
 }

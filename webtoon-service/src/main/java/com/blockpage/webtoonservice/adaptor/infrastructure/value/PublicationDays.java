@@ -1,4 +1,4 @@
-package com.blockpage.webtoonservice.adaptor.infrastructure;
+package com.blockpage.webtoonservice.adaptor.infrastructure.value;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,10 @@
-package com.blockpage.webtoonservice.adaptor.infrastructure;
+package com.blockpage.webtoonservice.adaptor.infrastructure.entity;
 
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity

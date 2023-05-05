@@ -1,6 +1,11 @@
 package com.blockpage.webtoonservice.adaptor.web;
 
-import com.blockpage.webtoonservice.adaptor.infrastructure.*;
+import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
+import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
+import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +19,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/mock/v1/webtoons")
-public class MockWebtoonController {
+public class WebtoonController {
 
     private final WebtoonRepository webtoonRepository;
 

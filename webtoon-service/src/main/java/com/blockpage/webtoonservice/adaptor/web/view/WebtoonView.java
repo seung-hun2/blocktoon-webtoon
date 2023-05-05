@@ -1,5 +1,6 @@
-package com.blockpage.webtoonservice.adaptor.infrastructure;
+package com.blockpage.webtoonservice.adaptor.web.view;
 
+import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import lombok.Builder;
 import lombok.Getter;
 
