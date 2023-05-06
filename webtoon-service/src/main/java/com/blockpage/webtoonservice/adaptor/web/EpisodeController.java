@@ -4,6 +4,8 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.CreatorEpisodeView;
+import com.blockpage.webtoonservice.adaptor.web.view.EpisodeImageView;
+import com.blockpage.webtoonservice.adaptor.web.view.EpisodeImageView.EpisodeImages;
 import com.blockpage.webtoonservice.adaptor.web.view.EpisodeView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonDescribeView;
 import java.util.ArrayList;
@@ -46,6 +48,20 @@ public class EpisodeController {
         creatorEpisodeViews.add(new CreatorEpisodeView("4화다", 4, "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,"2023-05-22"));
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(creatorEpisodeViews));
+    }
+
+    @GetMapping("/view")
+    public ResponseEntity<ApiResponseView> webtoonApisode(@RequestParam Long webtoonId){
+        List<EpisodeImages> episodeImagesList = new ArrayList<>();
+        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+
+        EpisodeImageView episodeImageView = new EpisodeImageView(episodeImagesList,123,9.42,"김태근","명세 똑바로 해라","이게 명세다 2화","https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg");
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(episodeImageView));
+
+
     }
 
 
