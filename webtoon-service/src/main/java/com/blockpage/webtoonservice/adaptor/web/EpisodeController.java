@@ -42,22 +42,34 @@ public class EpisodeController {
     public ResponseEntity<ApiResponseView> myWebtoonSearch(@RequestParam Long memberId, @RequestParam Long webtoonId) {
         List<CreatorEpisodeView> creatorEpisodeViews = new ArrayList<>();
 
-        creatorEpisodeViews.add(new CreatorEpisodeView("1화다", 1, "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 2200,1000,"2023-05-01"));
-        creatorEpisodeViews.add(new CreatorEpisodeView("2화다", 2, "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,"2023-05-08"));
-        creatorEpisodeViews.add(new CreatorEpisodeView("3화다", 3, "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,"2023-05-15"));
-        creatorEpisodeViews.add(new CreatorEpisodeView("4화다", 4, "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,"2023-05-22"));
+        creatorEpisodeViews.add(new CreatorEpisodeView("1화다", 1,
+            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 2200, 1000,
+            "2023-05-01"));
+        creatorEpisodeViews.add(new CreatorEpisodeView("2화다", 2,
+            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,
+            "2023-05-08"));
+        creatorEpisodeViews.add(new CreatorEpisodeView("3화다", 3,
+            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,
+            "2023-05-15"));
+        creatorEpisodeViews.add(new CreatorEpisodeView("4화다", 4,
+            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,
+            "2023-05-22"));
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(creatorEpisodeViews));
     }
 
     @GetMapping("/view")
-    public ResponseEntity<ApiResponseView> webtoonApisode(@RequestParam Long webtoonId){
+    public ResponseEntity<ApiResponseView> webtoonApisode(@RequestParam Long webtoonId) {
         List<EpisodeImages> episodeImagesList = new ArrayList<>();
-        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
-        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
-        episodeImagesList.add(new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+        episodeImagesList.add(
+            new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+        episodeImagesList.add(
+            new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
+        episodeImagesList.add(
+            new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
 
-        EpisodeImageView episodeImageView = new EpisodeImageView(episodeImagesList,123,9.42,"김태근","명세 똑바로 해라","이게 명세다 2화","https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg");
+        EpisodeImageView episodeImageView = new EpisodeImageView(episodeImagesList, 123, 9.42, "김태근", "명세 똑바로 해라", "이게 명세다 2화",
+            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg");
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(episodeImageView));
 

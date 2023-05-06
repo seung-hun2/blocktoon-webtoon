@@ -39,5 +39,4 @@ public class EpisodeEntity {
     private int episodeNumber;
 
 
-
 }

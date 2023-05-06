@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Meta;
 @ToString
 @JsonInclude(Include.NON_NULL)
 public class ApiResponseView<T> {
+
     private final T data;
     private final Meta meta;
 
@@ -18,10 +19,11 @@ public class ApiResponseView<T> {
         this.meta = meta;
     }
 
-    public ApiResponseView(T data){
+    public ApiResponseView(T data) {
         this.data = data;
         this.meta = null;
     }
+
     public enum Sort {
         CREATED_AT,
         NONE
@@ -29,6 +31,7 @@ public class ApiResponseView<T> {
 
     @Getter
     private static class Pagination {
+
         private final int offset;
         private final int limit;
         private final long totalCount;

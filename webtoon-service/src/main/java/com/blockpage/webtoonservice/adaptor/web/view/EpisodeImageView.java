@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class EpisodeImageView {
+
     private List<EpisodeImages> images;
     private int commentCount;
     private double rating;
@@ -14,7 +15,8 @@ public class EpisodeImageView {
     private String nextEpisodeThumbnail;
 
     @Getter
-    public static class EpisodeImages{
+    public static class EpisodeImages {
+
         private String episodeImage;
 
         public EpisodeImages(String episodeImage) {
