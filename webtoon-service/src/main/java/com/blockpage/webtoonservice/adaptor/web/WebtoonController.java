@@ -5,6 +5,7 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRep
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
+import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.RequestWebtoon;
 import lombok.RequiredArgsConstructor;
@@ -27,23 +28,23 @@ public class WebtoonController {
     @PostMapping()
     public ResponseEntity enroll(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 등록하는 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body("웹툰이 생성되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰이 생성되었습니다."));
     }
 
     @PostMapping("/modifying")
     public ResponseEntity modifyWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body("웹툰 수정 요청되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 수정 요청되었습니다."));
     }
 
-    @PatchMapping("/admin/modifying")
+    @PatchMapping("/modifying/admin")
     public ResponseEntity receiveModifying(@RequestBody RequestWebtoon requestWebtoon, @RequestParam String result) {
         // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
         switch (result) {
             case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body("웹툰 수정요청이 승인되었습니다.");
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 승인되었습니다."));
             case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body("웹툰 수정요청이 반려되었습니다.");
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 반려되었습니다."));
             default:
                 return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
@@ -52,17 +53,17 @@ public class WebtoonController {
     @PostMapping("/remove")
     public ResponseEntity removeWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body("웹툰 삭제요청되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 삭제요청되었습니다."));
     }
 
-    @PatchMapping("/admin/remove")
+    @PatchMapping("/remove/admin")
     public ResponseEntity receiveRemoving(@RequestBody RequestWebtoon requestWebtoon, @RequestParam String result) {
         // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
         switch (result) {
             case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body("웹툰 삭제요청이 승인되었습니다.");
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 삭제요청이 승인되었습니다."));
             case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body("웹툰 삭제요청이 반려되었습니다.");
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 삭제요청이 반려되었습니다."));
             default:
                 return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
@@ -95,7 +96,7 @@ public class WebtoonController {
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(webtoonViewList);
+            .body(new ApiResponseView<>(webtoonViewList));
 
     }
 
@@ -112,7 +113,7 @@ public class WebtoonController {
             .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(webtoonViewList);
+            .body(new ApiResponseView<>(webtoonViewList));
 
     }
 
@@ -129,7 +130,7 @@ public class WebtoonController {
             .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
-            .body(webtoonViewList);
+            .body(new ApiResponseView<>(webtoonViewList));
 
     }
 
