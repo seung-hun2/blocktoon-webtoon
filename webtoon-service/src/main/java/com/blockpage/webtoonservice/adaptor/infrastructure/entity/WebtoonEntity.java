@@ -9,6 +9,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(schema = "webtoon")
 public class WebtoonEntity {
 
     @Id

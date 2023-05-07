@@ -7,11 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.sql.Date;
 import lombok.Getter;
 
 @Entity
 @Getter
+@Table(schema = "episode")
 public class EpisodeEntity {
 
     @Id
