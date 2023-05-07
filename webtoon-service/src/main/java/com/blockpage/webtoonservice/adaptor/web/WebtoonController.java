@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mock/v1/webtoons")
+@RequestMapping("/v1/webtoons")
 public class WebtoonController {
 
     private final WebtoonRepository webtoonRepository;
@@ -37,13 +37,13 @@ public class WebtoonController {
         if (genre != null) {
             webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatus(
                 GenreType.findGenreTypeByKey(Integer.parseInt(genre)), WebtoonStatus.PUBLISH);
-            webtoonEntityList.stream()
+            webtoonViewList = webtoonEntityList.stream()
                 .map(w -> WebtoonView.toViewFromEntity(w))
                 .collect(Collectors.toList());
         } else if (weekdays != null) {
             webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatus(
                 PublicationDays.findPublicationDaysByKey(Integer.parseInt(weekdays)), WebtoonStatus.PUBLISH);
-            webtoonEntityList.stream()
+            webtoonViewList = webtoonEntityList.stream()
                 .map(w -> WebtoonView.toViewFromEntity(w))
                 .collect(Collectors.toList());
         }
@@ -61,18 +61,9 @@ public class WebtoonController {
     public ResponseEntity byBest() {
         List<WebtoonEntity> webtoonEntityList = webtoonRepository.findByWebtoonStatusOrderByViews(WebtoonStatus.PUBLISH);
         List<WebtoonView> webtoonViewList = new ArrayList<>();
-
-        for (int i = 0; i < webtoonEntityList.size(); i++) {
-
-            webtoonViewList.add(WebtoonView.builder()
-                .creator(webtoonEntityList.get(i).getCreator())
-                .webtoonTitle(webtoonEntityList.get(i).getWebtoonTitle())
-                .webtoonThumbnail(webtoonEntityList.get(i).getWebtoonThumbnail())
-                .illustrator(webtoonEntityList.get(i).getIllustrator())
-                .views(webtoonEntityList.get(i).getViews())
-                .interestCount(webtoonEntityList.get(i).getInterestCount())
-                .build());
-        }
+        webtoonViewList = webtoonEntityList.stream()
+            .map(w -> WebtoonView.toViewFromEntity(w))
+            .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(webtoonViewList);
@@ -87,17 +78,9 @@ public class WebtoonController {
     public ResponseEntity byCreator() {
         List<WebtoonEntity> webtoonEntityList = webtoonRepository.findByCreatorId(1L);
         List<WebtoonView> webtoonViewList = new ArrayList<>();
-
-        for (int i = 0; i < webtoonEntityList.size(); i++) {
-            webtoonViewList.add(WebtoonView.builder()
-                .creator(webtoonEntityList.get(i).getCreator())
-                .webtoonTitle(webtoonEntityList.get(i).getWebtoonTitle())
-                .webtoonThumbnail(webtoonEntityList.get(i).getWebtoonThumbnail())
-                .illustrator(webtoonEntityList.get(i).getIllustrator())
-                .views(webtoonEntityList.get(i).getViews())
-                .interestCount(webtoonEntityList.get(i).getInterestCount())
-                .build());
-        }
+        webtoonViewList = webtoonEntityList.stream()
+            .map(w -> WebtoonView.toViewFromEntity(w))
+            .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(webtoonViewList);
