@@ -59,7 +59,7 @@ public class EpisodeController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<ApiResponseView> webtoonApisode(@RequestParam Long webtoonId) {
+    public ResponseEntity<ApiResponseView> webtoonEpisode(@RequestParam Long webtoonId) {
         List<EpisodeImages> episodeImagesList = new ArrayList<>();
         episodeImagesList.add(
             new EpisodeImages("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
