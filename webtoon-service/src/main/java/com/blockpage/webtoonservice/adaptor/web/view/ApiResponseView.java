@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.jpa.repository.Meta;
 
 @Getter
 @ToString
@@ -24,24 +23,40 @@ public class ApiResponseView<T> {
         this.meta = null;
     }
 
-    public enum Sort {
-        CREATED_AT,
-        NONE
-    }
-
     @Getter
-    private static class Pagination {
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Meta {
 
-        private final int offset;
-        private final int limit;
-        private final long totalCount;
+        private final Sort sort;
+        private final Pagination pagination;
 
-        public static Pagination DEFAULT_PAGING = new Pagination(0, 0, 0);
+        public static Meta DEFAULT_META = new Meta(Sort.CREATED_AT, Pagination.DEFAULT_PAGING);
 
-        private Pagination(int offset, int limit, long totalCount) {
-            this.offset = offset;
-            this.limit = limit;
-            this.totalCount = totalCount;
+        private Meta(Sort sort, Pagination pagination) {
+            this.sort = sort;
+            this.pagination = pagination;
+        }
+
+        public enum Sort {
+            CREATED_AT,
+            NONE
+        }
+
+        @Getter
+        private static class Pagination {
+
+            private final int offset;
+            private final int limit;
+            private final long totalCount;
+
+            public static Pagination DEFAULT_PAGING = new Pagination(0, 0, 0);
+
+            private Pagination(int offset, int limit, long totalCount) {
+                this.offset = offset;
+                this.limit = limit;
+                this.totalCount = totalCount;
+            }
         }
     }
+
 }
