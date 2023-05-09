@@ -35,7 +35,7 @@ public class EpisodeController {
             PublicationDays.MONDAY, GenreType.COMIC,
             "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
             episodeView);
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonDescribeViews));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView(webtoonDescribeViews));
     }
 
     @GetMapping("/creator")
@@ -55,7 +55,7 @@ public class EpisodeController {
             "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 100, 20,
             "2023-05-22"));
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(creatorEpisodeViews));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView(creatorEpisodeViews));
     }
 
     @GetMapping("/view")
@@ -71,7 +71,7 @@ public class EpisodeController {
         EpisodeImageView episodeImageView = new EpisodeImageView(episodeImagesList, 123, 9.42, "김태근", "명세 똑바로 해라", "이게 명세다 2화",
             "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg");
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(episodeImageView));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView(episodeImageView));
 
 
     }

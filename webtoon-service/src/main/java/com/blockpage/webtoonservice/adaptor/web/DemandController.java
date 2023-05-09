@@ -25,13 +25,13 @@ public class DemandController {
     @PostMapping("/webtoons/enroll")
     public ResponseEntity enroll(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 등록하는 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰이 생성되었습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰이 생성되었습니다."));
     }
 
     @PostMapping("/webtoons/modifying")
     public ResponseEntity modifyWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 수정 요청되었습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰 수정 요청되었습니다."));
     }
 
     @PatchMapping("/webtoons/modifying/admin")
@@ -39,9 +39,9 @@ public class DemandController {
         // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
         switch (result) {
             case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 승인되었습니다."));
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView("웹툰 수정요청이 승인되었습니다."));
             case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 반려되었습니다."));
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView("웹툰 수정요청이 반려되었습니다."));
             default:
                 return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
@@ -50,7 +50,7 @@ public class DemandController {
     @PostMapping("/webtoons/remove")
     public ResponseEntity removeWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 삭제요청되었습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰 삭제요청되었습니다."));
     }
 
     @PatchMapping("/webtoons/remove/admin")
