@@ -6,8 +6,11 @@ import com.blockpage.webtoonservice.adaptor.web.view.DemandEpisodeView.Images;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandWebtoonView;
 import com.blockpage.webtoonservice.application.port.in.RequestEpisode;
 import com.blockpage.webtoonservice.application.port.in.RequestWebtoon;
+import com.blockpage.webtoonservice.application.port.out.DomainPortImpl;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,22 +19,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("v1/demands")
 public class DemandController {
 
+    private final DomainPortImpl domainPort;
+
     @PostMapping("/webtoons/enroll")
-    public ResponseEntity enroll(@RequestBody RequestWebtoon requestWebtoon) {
+    public ResponseEntity enroll(@RequestPart RequestWebtoon requestWebtoon, @RequestPart MultipartFile main,
+        @RequestPart MultipartFile thumbnail) throws IOException {
         // 웹툰 등록하는 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰이 생성되었습니다."));
+        Long webtoonId = domainPort.webtoonEnroll(requestWebtoon, main, thumbnail);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰이 생성되었습니다."));
     }
 
     @PostMapping("/webtoons/modifying")
     public ResponseEntity modifyWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 수정 요청되었습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰 수정 요청되었습니다."));
     }
 
     @PatchMapping("/webtoons/modifying/admin")
@@ -39,9 +49,9 @@ public class DemandController {
         // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
         switch (result) {
             case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 승인되었습니다."));
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView("웹툰 수정요청이 승인되었습니다."));
             case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 반려되었습니다."));
+                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView("웹툰 수정요청이 반려되었습니다."));
             default:
                 return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
@@ -50,7 +60,7 @@ public class DemandController {
     @PostMapping("/webtoons/remove")
     public ResponseEntity removeWaiting(@RequestBody RequestWebtoon requestWebtoon) {
         // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 삭제요청되었습니다."));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView("웹툰 삭제요청되었습니다."));
     }
 
     @PatchMapping("/webtoons/remove/admin")
