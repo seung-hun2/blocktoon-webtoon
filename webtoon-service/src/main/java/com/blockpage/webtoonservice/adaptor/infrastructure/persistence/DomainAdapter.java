@@ -1,4 +1,4 @@
-package com.blockpage.webtoonservice.application.port.out;
+package com.blockpage.webtoonservice.adaptor.infrastructure.persistence;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
-public class DomainPortImpl {
+public class DomainAdapter {
 
     private final WebtoonRepository webtoonRepository;
     private final Storage storage;

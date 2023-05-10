@@ -1,10 +1,10 @@
-package com.blockpage.webtoonservice.adaptor.web.view;
+package com.blockpage.webtoonservice.application.port.out;
 
-import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
+import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import lombok.Getter;
 
 @Getter
-public class WebtoonView {
+public class ResponseWebtoon {
 
     private String webtoonTitle;
     private String webtoonThumbnail;
@@ -13,7 +13,7 @@ public class WebtoonView {
     private int views;
     private int interestCount;
 
-    public WebtoonView(String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, int views, int interestCount) {
+    public ResponseWebtoon(String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, int views, int interestCount) {
         this.webtoonTitle = webtoonTitle;
         this.webtoonThumbnail = webtoonThumbnail;
         this.creator = creator;
@@ -22,8 +22,8 @@ public class WebtoonView {
         this.interestCount = interestCount;
     }
 
-    public static WebtoonView toViewFromResponse(ResponseWebtoon webtoon) {
-        return new WebtoonView(
+    public static ResponseWebtoon toResponseFromEntity(WebtoonEntity webtoon) {
+        return new ResponseWebtoon(
             webtoon.getWebtoonTitle(),
             webtoon.getWebtoonThumbnail(),
             webtoon.getCreator(),
