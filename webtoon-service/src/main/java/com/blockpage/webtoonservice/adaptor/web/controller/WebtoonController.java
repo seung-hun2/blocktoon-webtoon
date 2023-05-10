@@ -37,6 +37,8 @@ public class WebtoonController {
             webtoonViewList = webtoonUseCase.findWebtoonByGenre(genre);
         } else if (weekdays != null) {
             webtoonViewList = webtoonUseCase.findWebtoonByWeekdays(weekdays);
+        }else{
+            return (ResponseEntity) ResponseEntity.badRequest();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
