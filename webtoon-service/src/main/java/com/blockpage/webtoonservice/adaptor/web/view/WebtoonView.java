@@ -1,6 +1,6 @@
 package com.blockpage.webtoonservice.adaptor.web.view;
 
-import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
+import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import lombok.Getter;
 
 @Getter
@@ -22,7 +22,7 @@ public class WebtoonView {
         this.interestCount = interestCount;
     }
 
-    public static WebtoonView toViewFromEntity(WebtoonEntity webtoon) {
+    public static WebtoonView toViewFromResponse(ResponseWebtoon webtoon) {
         return new WebtoonView(
             webtoon.getWebtoonTitle(),
             webtoon.getWebtoonThumbnail(),
