@@ -1,18 +1,20 @@
-package com.blockpage.webtoonservice.application.port.out;
+package com.blockpage.webtoonservice.adaptor.infrastructure.persistence;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
+import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
+import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class WebtoonPortImpl implements WebtoonPort {
+public class WebtoonAdaptor implements WebtoonPort {
 
     private final WebtoonRepository webtoonRepository;
 

@@ -6,7 +6,7 @@ import com.blockpage.webtoonservice.adaptor.web.view.DemandEpisodeView.Images;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandWebtoonView;
 import com.blockpage.webtoonservice.application.port.in.RequestEpisode;
 import com.blockpage.webtoonservice.application.port.in.RequestWebtoon;
-import com.blockpage.webtoonservice.application.port.out.DomainPortImpl;
+import com.blockpage.webtoonservice.adaptor.infrastructure.persistence.DomainAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("v1/demands")
 public class DemandController {
 
-    private final DomainPortImpl domainPort;
+    private final DomainAdapter domainPort;
 
     @PostMapping("/webtoons/enroll")
     public ResponseEntity enroll(@RequestPart RequestWebtoon requestWebtoon, @RequestPart MultipartFile main,
