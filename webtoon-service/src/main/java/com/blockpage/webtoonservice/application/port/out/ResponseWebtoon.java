@@ -22,6 +22,7 @@ public class ResponseWebtoon {
         this.interestCount = interestCount;
     }
 
+
     public static ResponseWebtoon toResponseFromEntity(WebtoonEntity webtoon) {
         return new ResponseWebtoon(
             webtoon.getWebtoonTitle(),
