@@ -1,4 +1,4 @@
-package com.blockpage.webtoonservice.adaptor.web;
+package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandEpisodeView;
