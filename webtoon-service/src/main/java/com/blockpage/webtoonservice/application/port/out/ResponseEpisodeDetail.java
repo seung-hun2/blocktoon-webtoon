@@ -2,6 +2,7 @@ package com.blockpage.webtoonservice.application.port.out;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.ImageEntity;
+import com.blockpage.webtoonservice.domain.Episode;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Builder;
@@ -35,4 +36,19 @@ public class ResponseEpisodeDetail {
             )
             .build();
     }
+
+    public static ResponseEpisodeDetail toResponseFromDomain(Episode episode) {
+        return ResponseEpisodeDetail.builder()
+            .episodeId(episode.getEpisodeId())
+            .commentCount(episode.getCommentCount())
+            .rating(episode.getRating())
+            .author(episode.getAuthor())
+            .authorWords(episode.getAuthorWords())
+            .nextEpisodeTitle(episode.getNextEpisodeTitle())
+            .nextEpisodeThumbnail(episode.getNextEpisodeThumbnail())
+            .images(episode.getImages().stream().map(ResponseEpisodeImage::toResponseFromDomain).toList())
+            .build();
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.application.port.out;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
+import com.blockpage.webtoonservice.domain.Episode;
 import java.sql.Date;
 import lombok.Getter;
 
@@ -26,6 +27,15 @@ public class ResponseEpisode {
             episode.getEpisodeThumbnail(),
             episode.getUploadDate(),
             episode.getTotalScore());
+    }
+
+    public static ResponseEpisode toResponseFromDomain(Episode episode) {
+        return new ResponseEpisode(
+            episode.getEpisodeTitle(),
+            episode.getEpisodeThumbnail(),
+            episode.getUploadDate(),
+            episode.getTotalScore()
+        );
     }
 
 }

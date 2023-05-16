@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.application.port.out;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.ImageEntity;
+import com.blockpage.webtoonservice.domain.Episode;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,4 +16,11 @@ public class ResponseEpisodeImage {
             .episodeImage(imageEntity.getImageUrl())
             .build();
     }
+
+    public static ResponseEpisodeImage toResponseFromDomain(Episode.Image image) {
+        return ResponseEpisodeImage.builder()
+            .episodeImage(image.getImages())
+            .build();
+    }
+
 }
