@@ -4,6 +4,7 @@ import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
+import com.blockpage.webtoonservice.domain.Webtoon;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +49,12 @@ public class WebtoonService implements WebtoonUseCase {
         webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).collect(Collectors.toList());
 
         return webtoonViewList;
+    }
+
+    @Override
+    public ResponseWebtoon findWebtoon(Long id) {
+        Webtoon webtoon = webtoonPort.findWebtoon(id);
+
+        return ResponseWebtoon.toResponseFromDomain(webtoon);
     }
 }
