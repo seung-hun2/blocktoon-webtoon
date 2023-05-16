@@ -39,6 +39,8 @@ public class EpisodeEntity extends BaseEntity {
     private int episodePrice;
     @Column
     private int episodeNumber;
+    @Column
+    private int commentCount;
 
 
 }

@@ -7,7 +7,9 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
+import com.blockpage.webtoonservice.domain.Webtoon;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,12 @@ import org.springframework.stereotype.Component;
 public class WebtoonAdaptor implements WebtoonPort {
 
     private final WebtoonRepository webtoonRepository;
+
+    @Override
+    public Webtoon findWebtoon(Long id) {
+        Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(id);
+        return Webtoon.toDomainFromEntity(webtoonEntity);
+    }
 
     @Override
     public List<ResponseWebtoon> findWebtoonByGenre(String type) {
@@ -75,4 +83,6 @@ public class WebtoonAdaptor implements WebtoonPort {
 
         return responseWebtoonList;
     }
+
+
 }

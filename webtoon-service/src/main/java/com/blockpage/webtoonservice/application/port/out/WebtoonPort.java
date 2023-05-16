@@ -1,5 +1,6 @@
 package com.blockpage.webtoonservice.application.port.out;
 
+import com.blockpage.webtoonservice.domain.Webtoon;
 import java.util.List;
 
 public interface WebtoonPort {
@@ -11,5 +12,7 @@ public interface WebtoonPort {
     List<ResponseWebtoon> findWebtoonBest();
 
     List<ResponseWebtoon> findWebtoonByCreator();
+
+    Webtoon findWebtoon(Long id);
 
 }

@@ -21,14 +21,13 @@ public class WebtoonController {
 
     private final WebtoonUseCase webtoonUseCase;
 
-
     /**
      * @param weekdays 요일별 웹툰 조회
      * @param genre    장르별 웹툰 조회
      */
 
     @GetMapping("")
-    public ResponseEntity byGenreOrWeekdays(@RequestParam(required = false) String weekdays,
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byGenreOrWeekdays(@RequestParam(required = false) String weekdays,
         @RequestParam(required = false) String genre) {
         List<WebtoonView> webtoonViewList = new ArrayList<>();
 
@@ -37,8 +36,8 @@ public class WebtoonController {
             webtoonViewList = webtoonUseCase.findWebtoonByGenre(genre);
         } else if (weekdays != null) {
             webtoonViewList = webtoonUseCase.findWebtoonByWeekdays(weekdays);
-        }else{
-            return (ResponseEntity) ResponseEntity.badRequest();
+        } else {
+            return (ResponseEntity<ApiResponseView<List<WebtoonView>>>) ResponseEntity.badRequest();
         }
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -51,7 +50,7 @@ public class WebtoonController {
      */
 
     @GetMapping("/best")
-    public ResponseEntity byBest() {
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byBest() {
 
         List<WebtoonView> webtoonViewList = webtoonUseCase.findWebtoonBest();
 
@@ -62,7 +61,7 @@ public class WebtoonController {
 
 
     @GetMapping("/creator")
-    public ResponseEntity byCreator() {
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byCreator() {
         // Authentication 으로 creatorId 받아와야함.
         List<WebtoonView> webtoonViewList = webtoonUseCase.findWebtoonByCreator();
 

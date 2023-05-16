@@ -5,7 +5,7 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRep
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
-import com.blockpage.webtoonservice.application.port.in.RequestWebtoon;
+import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase.RequestWebtoon;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
