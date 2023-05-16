@@ -1,12 +1,13 @@
 package com.blockpage.webtoonservice.application.port.out;
 
+import com.blockpage.webtoonservice.domain.Episode;
 import java.util.List;
 
 public interface EpisodePort {
 
-    List<ResponseEpisode> findEpisode(Long webtoonId);
+    List<Episode> findEpisode(Long webtoonId);
 
-    List<ResponseCreatorEpisode> findCreatorEpisode(Long webtoonId);
+    List<Episode> findCreatorEpisode(Long webtoonId);
 
-    ResponseEpisodeDetail findEpisodeDetail(Long episodeId);
+    Episode findEpisodeDetail(Long episodeId);
 }

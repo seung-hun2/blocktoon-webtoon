@@ -1,7 +1,6 @@
 package com.blockpage.webtoonservice.adaptor.web.view;
 
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
-import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeImage;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Builder;
@@ -35,10 +34,9 @@ public class EpisodeDetailView {
     }
 
 
-    public static EpisodeDetailView toViewFromResponse(ResponseEpisodeDetail responseEpisodeDetail,
-        List<ResponseEpisodeImage> responseEpisodeImages) {
+    public static EpisodeDetailView toViewFromResponse(ResponseEpisodeDetail responseEpisodeDetail) {
         return EpisodeDetailView.builder()
-            .images(responseEpisodeImages.stream()
+            .images(responseEpisodeDetail.getImages().stream()
                 .map(EpisodeImageView::toViewFromResponse)
                 .collect(Collectors.toList())
             )

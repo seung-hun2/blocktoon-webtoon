@@ -25,6 +25,15 @@ public class CreatorEpisodeView {
         this.uploadDate = uploadDate;
     }
 
+    public CreatorEpisodeView(ResponseCreatorEpisode responseCreatorEpisode) {
+        this.episodeTitle = responseCreatorEpisode.getEpisodeTitle();
+        this.episodeNumber = responseCreatorEpisode.getEpisodeNumber();
+        this.episodeThumbnail = responseCreatorEpisode.getEpisodeThumbnail();
+        this.totalScore = responseCreatorEpisode.getTotalScore();
+        this.participantCount = responseCreatorEpisode.getParticipantCount();
+        this.uploadDate = responseCreatorEpisode.getUploadDate();
+    }
+
     public static CreatorEpisodeView toViewFromResponse(ResponseCreatorEpisode responseCreatorEpisode) {
         return new CreatorEpisodeView(
             responseCreatorEpisode.getEpisodeTitle(),
