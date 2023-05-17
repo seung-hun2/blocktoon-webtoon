@@ -2,7 +2,6 @@ package com.blockpage.webtoonservice.domain;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import java.util.Arrays;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -68,16 +67,16 @@ public class Webtoon {
         }
     }
 
-    public static Webtoon toDomainFromEntity(Optional<WebtoonEntity> webtoon) {
+    public static Webtoon toDomainFromEntity(WebtoonEntity webtoon) {
         return Webtoon.builder()
-            .webtoonTitle(webtoon.get().getWebtoonTitle())
-            .webtoonMainImage(webtoon.get().getWebtoonMainImage())
-            .creator(webtoon.get().getCreator())
-            .illustrator(webtoon.get().getIllustrator())
-            .views(webtoon.get().getViews())
-            .interestCount(webtoon.get().getInterestCount())
-            .genre(GenreType.findGenreTypeByKey(webtoon.get().getGenreType().getKey()))
-            .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.get().getPublicationDays().getKey()))
+            .webtoonTitle(webtoon.getWebtoonTitle())
+            .webtoonMainImage(webtoon.getWebtoonMainImage())
+            .creator(webtoon.getCreator())
+            .illustrator(webtoon.getIllustrator())
+            .views(webtoon.getViews())
+            .interestCount(webtoon.getInterestCount())
+            .genre(GenreType.findGenreTypeByKey(webtoon.getGenreType().getKey()))
+            .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.getPublicationDays().getKey()))
             .build();
     }
 

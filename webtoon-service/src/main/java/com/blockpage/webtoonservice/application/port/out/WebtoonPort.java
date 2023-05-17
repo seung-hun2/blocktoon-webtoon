@@ -5,13 +5,13 @@ import java.util.List;
 
 public interface WebtoonPort {
 
-    List<ResponseWebtoon> findWebtoonByGenre(String type);
+    List<Webtoon> findWebtoonByGenre(String type);
 
-    List<ResponseWebtoon> findWebtoonByWeekdays(String type);
+    List<Webtoon> findWebtoonByWeekdays(String type);
 
-    List<ResponseWebtoon> findWebtoonBest();
+    List<Webtoon> findWebtoonBest();
 
-    List<ResponseWebtoon> findWebtoonByCreator();
+    List<Webtoon> findWebtoonByCreator();
 
     Webtoon findWebtoon(Long id);
 

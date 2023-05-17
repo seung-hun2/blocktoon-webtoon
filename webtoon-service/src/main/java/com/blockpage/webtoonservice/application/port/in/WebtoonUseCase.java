@@ -1,19 +1,18 @@
 package com.blockpage.webtoonservice.application.port.in;
 
-import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import java.util.List;
 import lombok.Getter;
 
 public interface WebtoonUseCase {
 
-    List<WebtoonView> findWebtoonByGenre(String type);
+    List<ResponseWebtoon> findWebtoonByGenre(String type);
 
-    List<WebtoonView> findWebtoonByWeekdays(String type);
+    List<ResponseWebtoon> findWebtoonByWeekdays(String type);
 
-    List<WebtoonView> findWebtoonBest();
+    List<ResponseWebtoon> findWebtoonBest();
 
-    List<WebtoonView> findWebtoonByCreator();
+    List<ResponseWebtoon> findWebtoonByCreator();
 
     ResponseWebtoon findWebtoon(Long id);
 
