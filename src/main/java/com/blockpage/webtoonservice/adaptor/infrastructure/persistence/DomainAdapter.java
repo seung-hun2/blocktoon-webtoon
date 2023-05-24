@@ -240,8 +240,6 @@ public class DomainAdapter implements DemandPort {
     @Transactional
     public void checkPostEpisodeDemand(Demand demand, String type, String target, String whether) throws ParseException {
         if (whether.equals("refuse")) {
-            // 거절되면 신청한게 신청거부로 상태변경 되어야 하고 , 끝
-            // 확인되면 신청한게 publish 로 변경되어야하고, 그전에 있던게 삭제됨으로 이동 해야한다 .
             Optional<EpisodeEntity> current = episodeRepository.findById(demand.getEpisodeId());
             switch (type) {
                 case "enroll":
@@ -298,30 +296,6 @@ public class DomainAdapter implements DemandPort {
         };
 
         return webtoonEntityList != null ? webtoonEntityList.stream().map(Demand::toDomainFromWebtoonEntity).toList() : null;
-
-//        List<Webtoon> webtoonList = webtoonEntityList != null ? webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList() : null;
-//        List<Demand> demandList = null;
-//        for (int i = 0; i < (webtoonList != null ? webtoonList.size() : 0); i++) {
-//            File file = new File(webtoonList.get(i).getWebtoonMainImage());
-//            DiskFileItem fileItem = new DiskFileItem("mainImage", Files.probeContentType(file.toPath()), false, file.getName(),
-//                (int) file.length(), file.getParentFile());
-//            InputStream input = new FileInputStream(file);
-//            OutputStream os = fileItem.getOutputStream();
-//            IOUtils.copy(input, os);
-//            MultipartFile multipartFile = new CommonsMultipartFile((FileItem) fileItem);
-//
-//            file = new File(webtoonList.get(i).getWebtoonThumbnail());
-//            fileItem = new DiskFileItem("thumbnail", Files.probeContentType(file.toPath()), false, file.getName(),
-//                (int) file.length(), file.getParentFile());
-//            input = new FileInputStream(file);
-//            os = fileItem.getOutputStream();
-//            IOUtils.copy(input, os);
-//            MultipartFile multipartFile1 = new CommonsMultipartFile((FileItem) fileItem);
-//
-//            demandList.add(Demand.toDomainFromEntity(webtoonList.get(i), multipartFile, multipartFile1));
-//        }
-
-//        return demandList;
     }
 
     @Override
