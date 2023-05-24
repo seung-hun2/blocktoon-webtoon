@@ -29,21 +29,12 @@ public class DemandView {
     private String uploadDate;
     private String authorWords;
     private String episodeThumbnail;
-    private List<Images> episodeImages;
+    private List<String> episodeImages;
     private Integer webtoonStatus;
 
-    @Getter
-    public static class Images {
-
-        private String image;
-
-        public Images(String image) {
-            this.image = image;
-        }
-    }
 
     public DemandView(String webtoonTitle, String episodeTitle, String uploadDate, String authorWords, String episodeThumbnail,
-        List<Images> episodeImages, Integer webtoonStatus) {
+        List<String> episodeImages, Integer webtoonStatus) {
         this.webtoonTitle = webtoonTitle;
         this.episodeTitle = episodeTitle;
         this.uploadDate = uploadDate;

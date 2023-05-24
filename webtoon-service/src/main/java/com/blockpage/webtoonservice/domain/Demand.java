@@ -103,14 +103,6 @@ public class Demand {
             .build();
     }
 
-    // episodeId
-//    private Integer episodeNumber;
-//    private Long webtoonId;
-//    private String episodeTitle;
-//    private String uploadDate;
-//    private String authorWords;
-//    private MultipartFile episodeThumbnail;
-//    private List<MultipartFile> episodeImages;
     public static Demand toDomainFromEpisodeEntity(EpisodeEntity episode) {
         return Demand.builder()
             .creatorId(episode.getCreatorId())
