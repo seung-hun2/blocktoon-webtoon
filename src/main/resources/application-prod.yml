@@ -18,8 +18,8 @@ spring:
     gcp:
       storage:
         credentials:
-          location: ${gcp.location}
-        project-id: ${gcp.project.id}
+          location: ${spring.cloud.gcp.storage.credentials.location}
+        project-id: ${spring.cloud.gcp.storage.credentials.project.id}
 
   servlet:
     multipart:
