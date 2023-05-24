@@ -19,8 +19,8 @@ public class Webtoon {
     private String webtoonMainImage;
     private String webtoonThumbnail;
     private GenreType genre;
-    private int interestCount;
-    private int views;
+    private Integer interestCount;
+    private Integer views;
 
     @Getter
     @AllArgsConstructor
@@ -35,10 +35,10 @@ public class Webtoon {
         COMIC(7, "코믹"),
         ;
 
-        private int key;
+        private Integer key;
         private String value;
 
-        public static GenreType findGenreTypeByKey(int key) {
+        public static GenreType findGenreTypeByKey(Integer key) {
             return Arrays.stream(GenreType.values())
                 .filter(t -> t.getKey() == key)
                 .findFirst().get();
@@ -56,10 +56,10 @@ public class Webtoon {
         SATURDAY(5, "토"),
         SUNDAY(6, "일");
 
-        int key;
+        Integer key;
         String value;
 
-        public static PublicationDays findPublicationDaysByKey(int key) {
+        public static PublicationDays findPublicationDaysByKey(Integer key) {
             return Arrays.stream(PublicationDays.values())
                 .filter(k -> k.getKey() == key)
                 .findFirst()

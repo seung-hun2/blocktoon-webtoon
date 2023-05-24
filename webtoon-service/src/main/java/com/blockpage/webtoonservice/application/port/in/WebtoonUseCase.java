@@ -23,8 +23,8 @@ public interface WebtoonUseCase {
         private String creator;
         private String webtoonTitle;
         private String webtoonDescription;
-        private int genre;
-        private int publicationDays;
+        private Integer genre;
+        private Integer publicationDays;
         private String illustrator;
 
 

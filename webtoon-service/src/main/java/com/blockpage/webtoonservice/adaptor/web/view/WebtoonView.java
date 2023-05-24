@@ -10,12 +10,12 @@ public class WebtoonView {
     private String webtoonMainImage;
     private String creator;
     private String illustrator;
-    private int views;
-    private int interestCount;
-    private int genreType;
+    private Integer views;
+    private Integer interestCount;
+    private Integer genreType;
 
-    public WebtoonView(String webtoonTitle, String webtoonMainImage, String creator, String illustrator, int views, int interestCount,
-        int genreType) {
+    public WebtoonView(String webtoonTitle, String webtoonMainImage, String creator, String illustrator, Integer views,
+        Integer interestCount, Integer genreType) {
         this.webtoonTitle = webtoonTitle;
         this.webtoonMainImage = webtoonMainImage;
         this.creator = creator;
