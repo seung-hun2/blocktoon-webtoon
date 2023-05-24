@@ -6,10 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "image")
 public class ImageEntity extends BaseEntity {
 
@@ -17,8 +23,24 @@ public class ImageEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private Long episodeId;
+    private Long webtoonId;
     @Column
-    private String imageUrl;
+    private Integer episodeNumber;
+    @Column
+    private Boolean erase;
+    @Column
+    private String image;
+    @Column
+    private Integer imageNumber;
+
+    public static ImageEntity toEntity(Long webtoonId, Integer episodeNumber, Integer imageNumber, String image) {
+        return ImageEntity.builder()
+            .webtoonId(webtoonId)
+            .episodeNumber(episodeNumber)
+            .imageNumber(imageNumber)
+            .image(image)
+            .erase(Boolean.FALSE)
+            .build();
+    }
 
 }
