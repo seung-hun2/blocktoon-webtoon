@@ -3,7 +3,6 @@ package com.blockpage.webtoonservice.domain;
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeImage;
-import java.sql.Date;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,14 +13,14 @@ import lombok.Getter;
 public class Episode {
 
     private String episodeTitle;
-    private int episodeNumber;
+    private Integer episodeNumber;
     private String episodeThumbnail;
-    private int totalScore;
-    private int participantCount;
-    private Date uploadDate;
+    private Integer totalScore;
+    private Integer participantCount;
+    private String uploadDate;
     private List<Image> images;
     private Long episodeId;
-    private int commentCount;
+    private Integer commentCount;
     private double rating;
     private String author;
     private String authorWords;
@@ -49,7 +48,7 @@ public class Episode {
             .episodeThumbnail(episodeEntity.getEpisodeThumbnail())
             .totalScore(episodeEntity.getTotalScore())
             .participantCount(episodeEntity.getParticipantCount())
-            .uploadDate(episodeEntity.getUploadDate())
+            .uploadDate(episodeEntity.getUploadDate().toString())
             .build();
     }
 

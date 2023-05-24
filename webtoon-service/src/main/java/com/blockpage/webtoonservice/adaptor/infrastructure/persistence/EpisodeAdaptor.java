@@ -4,6 +4,7 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.ImageEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.EpisodeRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepository;
+import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
@@ -18,6 +19,7 @@ public class EpisodeAdaptor implements EpisodePort {
 
     private final EpisodeRepository episodeRepository;
     private final ImageRepository imageRepository;
+    private final WebtoonRepository webtoonRepository;
 
     @Override
     public List<Episode> findEpisode(Long webtoonId) {
@@ -39,14 +41,15 @@ public class EpisodeAdaptor implements EpisodePort {
     }
 
     @Override
-    public Episode findEpisodeDetail(Long episodeId) {
+    public Episode findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber) {
 
         ResponseEpisodeDetail responseEpisodeDetail;
-        List<ImageEntity> imageEntityList = imageRepository.findByEpisodeId(episodeId);
+        List<ImageEntity> imageEntityList = imageRepository.findByWebtoonIdAndEpisodeNumber(webtoonId, episodeNumber);
         EpisodeEntity episodeEntity = episodeRepository.findById(episodeId).get();
-        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, imageEntityList);
-        Episode episode = Episode.toDomainFromResponse(responseEpisodeDetail);
+        String creator = webtoonRepository.findById(episodeId).get().getCreator();
 
-        return episode;
+        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList);
+
+        return Episode.toDomainFromResponse(responseEpisodeDetail);
     }
 }

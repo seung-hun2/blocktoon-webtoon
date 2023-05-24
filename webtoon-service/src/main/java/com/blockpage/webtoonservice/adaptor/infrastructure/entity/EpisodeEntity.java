@@ -1,26 +1,38 @@
 package com.blockpage.webtoonservice.adaptor.infrastructure.entity;
 
-import java.sql.Date;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
+import com.blockpage.webtoonservice.domain.Demand;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "episode")
 public class EpisodeEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private WebtoonEntity webtoon;
+    @Column
+    private Long webtoonId;
+    @Column
+    private Long creatorId;
     @Column
     private String episodeTitle;
     @Column
@@ -30,17 +42,52 @@ public class EpisodeEntity extends BaseEntity {
     @Column
     private String authorWords;
     @Column
-    private int totalScore;
+    private Integer totalScore;
     @Column
-    private int participantCount;
+    private Integer participantCount;
     @Column
-    private String episodeStatus;
+    @Enumerated(EnumType.STRING)
+    private WebtoonStatus episodeStatus;
     @Column
-    private int episodePrice;
+    private Integer episodePrice;
     @Column
-    private int episodeNumber;
+    private Integer episodeNumber;
     @Column
-    private int commentCount;
+    private Integer commentCount;
 
+    public void update(WebtoonStatus webtoonStatus) {
+        this.episodeStatus = webtoonStatus;
+    }
+
+    public static EpisodeEntity toEntity(Demand demand, int type) throws ParseException {
+
+        return EpisodeEntity.builder()
+            .episodeTitle(demand.getEpisodeTitle())
+            .episodeNumber(demand.getEpisodeNumber())
+            .creatorId(demand.getCreatorId())
+            .webtoonId(demand.getWebtoonId())
+            .uploadDate(new SimpleDateFormat("yyyyMMdd").parse(demand.getUploadDate()))
+            .authorWords(demand.getAuthorWords())
+            .episodeThumbnail(demand.getThumbnail())
+            .episodeStatus(WebtoonStatus.findWebtoonStatusByKey(type))
+            .build();
+    }
+
+    public static EpisodeEntity toEntity(Demand demand, String thumbnail, int type) throws ParseException {
+        return EpisodeEntity.builder()
+            .episodeTitle(demand.getEpisodeTitle())
+            .episodeNumber(demand.getEpisodeNumber())
+            .webtoonId(demand.getWebtoonId())
+            .creatorId(demand.getCreatorId())
+            .uploadDate(new SimpleDateFormat("yyyyMMdd").parse(demand.getUploadDate()))
+            .authorWords(demand.getAuthorWords())
+            .episodeThumbnail(thumbnail)
+            .episodeStatus(WebtoonStatus.findWebtoonStatusByKey(type))
+            .commentCount(0)
+            .episodePrice(4)
+            .participantCount(0)
+            .totalScore(0)
+            .build();
+    }
 
 }

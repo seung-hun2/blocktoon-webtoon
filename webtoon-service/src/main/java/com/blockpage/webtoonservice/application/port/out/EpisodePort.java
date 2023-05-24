@@ -9,5 +9,5 @@ public interface EpisodePort {
 
     List<Episode> findCreatorEpisode(Long webtoonId);
 
-    Episode findEpisodeDetail(Long episodeId);
+    Episode findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber);
 }

@@ -2,22 +2,21 @@ package com.blockpage.webtoonservice.application.port.out;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.domain.Episode;
-import java.sql.Date;
 import lombok.Getter;
 
 @Getter
 public class ResponseCreatorEpisode {
 
     private String episodeTitle;
-    private int episodeNumber;
+    private Integer episodeNumber;
     private String episodeThumbnail;
-    private int totalScore;
-    private int participantCount;
-    private Date uploadDate;
+    private Integer totalScore;
+    private Integer participantCount;
+    private String uploadDate;
 
 
-    public ResponseCreatorEpisode(String episodeTitle, int episodeNumber, String episodeThumbnail, int totalScore, int participantCount,
-        Date uploadDate) {
+    public ResponseCreatorEpisode(String episodeTitle, Integer episodeNumber, String episodeThumbnail, Integer totalScore,
+        Integer participantCount, String uploadDate) {
         this.episodeTitle = episodeTitle;
         this.episodeNumber = episodeNumber;
         this.episodeThumbnail = episodeThumbnail;
@@ -33,7 +32,7 @@ public class ResponseCreatorEpisode {
             episode.getEpisodeThumbnail(),
             episode.getTotalScore(),
             episode.getParticipantCount(),
-            episode.getUploadDate());
+            episode.getUploadDate().toString());
     }
 
     public static ResponseCreatorEpisode toResponseFromDomain(Episode episode) {
