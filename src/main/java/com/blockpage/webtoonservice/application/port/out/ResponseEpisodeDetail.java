@@ -21,15 +21,16 @@ public class ResponseEpisodeDetail {
     private String nextEpisodeTitle;
     private String nextEpisodeThumbnail;
 
-    public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList) {
+    public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList,
+        String nextTitle, String nextThumbnail) {
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
             .rating(9.9)
             .author(creator)
             .authorWords(episode.getAuthorWords())
-            .nextEpisodeTitle("두개 들고오기 기억하자")
-            .nextEpisodeThumbnail("두개 들고오기 사진 기억하자")
+            .nextEpisodeTitle(nextTitle)
+            .nextEpisodeThumbnail(nextThumbnail)
             .images(imageEntityList.stream()
                 .map(ResponseEpisodeImage::toResponseFromEntity)
                 .collect(Collectors.toList())

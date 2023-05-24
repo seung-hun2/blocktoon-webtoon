@@ -5,6 +5,7 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.ImageEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.EpisodeRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
@@ -25,7 +26,7 @@ public class EpisodeAdaptor implements EpisodePort {
     public List<Episode> findEpisode(Long webtoonId) {
 
         List<Episode> episodeList;
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonId(webtoonId);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatus(webtoonId, WebtoonStatus.PUBLISH);
         episodeList = episodeEntityList.stream().map(Episode::toDomainFromEntity).collect(Collectors.toList());
 
         return episodeList;
@@ -34,7 +35,7 @@ public class EpisodeAdaptor implements EpisodePort {
     @Override
     public List<Episode> findCreatorEpisode(Long webtoonId) {
         List<Episode> episodeList;
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonId(webtoonId);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatus(webtoonId, WebtoonStatus.PUBLISH);
         episodeList = episodeEntityList.stream().map(Episode::toDomainFromEntity)
             .collect(Collectors.toList());
         return episodeList;
@@ -46,9 +47,16 @@ public class EpisodeAdaptor implements EpisodePort {
         ResponseEpisodeDetail responseEpisodeDetail;
         List<ImageEntity> imageEntityList = imageRepository.findByWebtoonIdAndEpisodeNumber(webtoonId, episodeNumber);
         EpisodeEntity episodeEntity = episodeRepository.findById(episodeId).get();
-        String creator = webtoonRepository.findById(episodeId).get().getCreator();
+        String creator = webtoonRepository.findById(webtoonId).get().getCreator();
 
-        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.PUBLISH);
+        String nextTitle = "", nextThumbnail="";
+        if(episodeNumber < episodeEntityList.size()){
+            nextTitle = episodeEntityList.get(episodeNumber-1).getEpisodeTitle();
+            nextThumbnail = episodeEntityList.get(episodeNumber-1).getEpisodeThumbnail();
+        }
+
+        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle, nextThumbnail);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
     }

@@ -49,13 +49,13 @@ public class EpisodeController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<ApiResponseView<EpisodeDetailView>> webtoonEpisode(@RequestParam Long episodeId, @RequestParam Long webtoonId, @RequestParam Integer episodeNumber) {
+    public ResponseEntity<ApiResponseView<EpisodeDetailView>> webtoonEpisode(@RequestParam Long episodeId, @RequestParam Long webtoonId,
+        @RequestParam Integer episodeNumber) {
 
         ResponseEpisodeDetail responseEpisodeDetail = episodeUseCase.findEpisodeDetail(episodeId, webtoonId, episodeNumber);
         EpisodeDetailView episodeDetailView = EpisodeDetailView.toViewFromResponse(responseEpisodeDetail);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(episodeDetailView));
 
     }
-
 
 }
