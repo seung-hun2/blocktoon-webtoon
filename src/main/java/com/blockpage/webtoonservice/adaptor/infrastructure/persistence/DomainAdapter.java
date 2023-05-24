@@ -34,6 +34,7 @@ public class DomainAdapter implements DemandPort {
     private final ImageRepository imageRepository;
     private final Storage storage;
     private final String bucketName = "blockpage-bucket";
+    private final String imagePath = "https://storage.googleapis.com/blockpage-bucket/";
 
     @Override
     @Transactional
@@ -58,7 +59,7 @@ public class DomainAdapter implements DemandPort {
                 .build();
             storage.create(blobInfo2, demand.getWebtoonThumbnail().getBytes());
 
-            WebtoonEntity webtoonEntity = WebtoonEntity.toEntity(demand, mainUUID, thumbnailUUID, 0);
+            WebtoonEntity webtoonEntity = WebtoonEntity.toEntity(demand, imagePath + mainUUID, imagePath + thumbnailUUID, 0);
             webtoonRepository.save(webtoonEntity);
             System.out.println("IF");
         } else if (target.equals("webtoon") && type.equals("modify")) {
@@ -115,7 +116,7 @@ public class DomainAdapter implements DemandPort {
 
             }
 
-            WebtoonEntity webtoonEntity = WebtoonEntity.toEntity(demand, mainUUID, thumbnailUUID, 3);
+            WebtoonEntity webtoonEntity = WebtoonEntity.toEntity(demand, imagePath + mainUUID, imagePath + thumbnailUUID, 3);
             webtoonRepository.save(webtoonEntity);
             System.out.println("ELSEIF");
         }
@@ -149,7 +150,7 @@ public class DomainAdapter implements DemandPort {
                     .build();
                 storage.create(blobInfo1, demand.getEpisodeThumbnail().getBytes());
             }
-            EpisodeEntity episodeEntity = EpisodeEntity.toEntity(demand, thumbnail, 1);
+            EpisodeEntity episodeEntity = EpisodeEntity.toEntity(demand, imagePath + thumbnail, 1);
 
             e = episodeRepository.save(episodeEntity);
             System.out.println("IF");
@@ -169,7 +170,7 @@ public class DomainAdapter implements DemandPort {
                 thumbnail = episodeEntity.get().getEpisodeThumbnail();
             }
 
-            EpisodeEntity episodeEntity = EpisodeEntity.toEntity(demand, thumbnail, 3);
+            EpisodeEntity episodeEntity = EpisodeEntity.toEntity(demand, imagePath + thumbnail, 3);
             e = episodeRepository.save(episodeEntity);
 
         }
@@ -185,7 +186,7 @@ public class DomainAdapter implements DemandPort {
             storage.create(blobInfo1, multipartFileList.get(i - 1).getBytes());
 
             ImageEntity image = ImageEntity.toEntity(e.getWebtoonId(), e.getEpisodeNumber(), i,
-                multipartFileList.get(i - 1).getName());
+                imagePath + thumbnail);
             imageRepository.save(image);
         }
 

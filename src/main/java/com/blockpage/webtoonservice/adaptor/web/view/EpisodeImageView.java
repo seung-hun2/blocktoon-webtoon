@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class EpisodeImageView {
 
-    private Long episodeId;
     private String imageUrl;
 
     public EpisodeImageView(String episodeImage) {

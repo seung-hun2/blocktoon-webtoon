@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/webtoon_service?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  cloud:
+    gcp:
+      credentials:
+          location: file:/Users/jungseunghun/Desktop/GCPkey/blockpage-dcdece1ce974.json
+      project-id: blockpage
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
