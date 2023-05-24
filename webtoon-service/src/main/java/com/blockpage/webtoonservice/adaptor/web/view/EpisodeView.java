@@ -1,7 +1,6 @@
 package com.blockpage.webtoonservice.adaptor.web.view;
 
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisode;
-import java.sql.Date;
 import lombok.Getter;
 
 @Getter
@@ -9,11 +8,11 @@ public class EpisodeView {
 
     private String episodeTitle;
     private String episodeThumbnail;
-    private Date uploadDate;
-    private int totalScore;
+    private String uploadDate;
+    private Integer totalScore;
 
 
-    public EpisodeView(String episodeTitle, String episodeThumbnail, Date uploadDate, int totalScore) {
+    public EpisodeView(String episodeTitle, String episodeThumbnail, String uploadDate, Integer totalScore) {
         this.episodeTitle = episodeTitle;
         this.episodeThumbnail = episodeThumbnail;
         this.uploadDate = uploadDate;

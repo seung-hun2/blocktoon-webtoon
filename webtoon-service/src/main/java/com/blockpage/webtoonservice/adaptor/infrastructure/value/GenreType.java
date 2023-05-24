@@ -18,10 +18,10 @@ public enum GenreType {
     COMIC(7, "코믹"),
     ;
 
-    private int key;
+    private Integer key;
     private String value;
 
-    public static GenreType findGenreTypeByKey(int key) {
+    public static GenreType findGenreTypeByKey(Integer key) {
         return Arrays.stream(GenreType.values())
             .filter(t -> t.getKey() == key)
             .findFirst().get();

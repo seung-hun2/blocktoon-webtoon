@@ -1,22 +1,21 @@
 package com.blockpage.webtoonservice.adaptor.web.view;
 
 import com.blockpage.webtoonservice.application.port.out.ResponseCreatorEpisode;
-import java.sql.Date;
 import lombok.Getter;
 
 @Getter
 public class CreatorEpisodeView {
 
     private String episodeTitle;
-    private int episodeNumber;
+    private Integer episodeNumber;
     private String episodeThumbnail;
-    private int totalScore;
-    private int participantCount;
-    private Date uploadDate;
+    private Integer totalScore;
+    private Integer participantCount;
+    private String uploadDate;
 
 
-    public CreatorEpisodeView(String episodeTitle, int episodeNumber, String episodeThumbnail, int totalScore, int participantCount,
-        Date uploadDate) {
+    public CreatorEpisodeView(String episodeTitle, Integer episodeNumber, String episodeThumbnail, Integer totalScore,
+        Integer participantCount, String uploadDate) {
         this.episodeTitle = episodeTitle;
         this.episodeNumber = episodeNumber;
         this.episodeThumbnail = episodeThumbnail;

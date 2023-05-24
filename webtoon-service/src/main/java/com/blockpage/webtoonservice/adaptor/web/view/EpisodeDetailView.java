@@ -12,7 +12,7 @@ public class EpisodeDetailView {
 
     private List<EpisodeImageView> images;
     private Long episodeId;
-    private int commentCount;
+    private Integer commentCount;
     private double rating;
     private String author;
     private String authorWords;
@@ -20,7 +20,7 @@ public class EpisodeDetailView {
     private String nextEpisodeThumbnail;
 
 
-    public EpisodeDetailView(List<EpisodeImageView> images, Long episodeId, int commentCount, double rating, String author,
+    public EpisodeDetailView(List<EpisodeImageView> images, Long episodeId, Integer commentCount, double rating, String author,
         String authorWords,
         String nextEpisodeTitle, String nextEpisodeThumbnail) {
         this.images = images;

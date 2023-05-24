@@ -13,7 +13,7 @@ public class ResponseEpisodeImage {
 
     public static ResponseEpisodeImage toResponseFromEntity(ImageEntity imageEntity) {
         return ResponseEpisodeImage.builder()
-            .episodeImage(imageEntity.getImageUrl())
+            .episodeImage(imageEntity.getImage())
             .build();
     }
 

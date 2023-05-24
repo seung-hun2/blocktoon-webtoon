@@ -17,13 +17,13 @@ public enum WebtoonStatus {
     REMOVE(6, "삭제됨"),
     ;
 
-    int key;
+    Integer key;
     String value;
 
-    public static String findPublicationDaysByKey(int key) {
-        return Arrays.stream(PublicationDays.values())
+    public static WebtoonStatus findWebtoonStatusByKey(Integer key) {
+        return Arrays.stream(WebtoonStatus.values())
             .filter(k -> k.getKey() == key)
             .findFirst()
-            .get().toString();
+            .get();
     }
 }

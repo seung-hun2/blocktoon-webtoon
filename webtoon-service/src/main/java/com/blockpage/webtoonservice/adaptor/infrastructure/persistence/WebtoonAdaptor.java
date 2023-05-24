@@ -5,7 +5,6 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRep
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
-import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
 import com.blockpage.webtoonservice.domain.Webtoon;
 import java.util.List;
@@ -23,65 +22,65 @@ public class WebtoonAdaptor implements WebtoonPort {
     @Override
     public Webtoon findWebtoon(Long id) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(id);
-        return Webtoon.toDomainFromEntity(webtoonEntity);
+        return Webtoon.toDomainFromEntity(webtoonEntity.get());
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByGenre(String type) {
+    public List<Webtoon> findWebtoonByGenre(String type) {
 
         List<WebtoonEntity> webtoonEntityList;
-        List<ResponseWebtoon> responseWebtoonList;
+        List<Webtoon> webtoonList;
 
         webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatus(
             GenreType.findGenreTypeByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
-        responseWebtoonList = webtoonEntityList.stream()
-            .map(ResponseWebtoon::toResponseFromEntity)
+        webtoonList = webtoonEntityList.stream()
+            .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
-        return responseWebtoonList;
+        return webtoonList;
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByWeekdays(String type) {
+    public List<Webtoon> findWebtoonByWeekdays(String type) {
 
         List<WebtoonEntity> webtoonEntityList;
-        List<ResponseWebtoon> responseWebtoonList;
+        List<Webtoon> webtoonList;
 
         webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatus(
             PublicationDays.findPublicationDaysByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
-        responseWebtoonList = webtoonEntityList.stream()
-            .map(ResponseWebtoon::toResponseFromEntity)
+        webtoonList = webtoonEntityList.stream()
+            .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
-        return responseWebtoonList;
+        return webtoonList;
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonBest() {
+    public List<Webtoon> findWebtoonBest() {
         List<WebtoonEntity> webtoonEntityList;
-        List<ResponseWebtoon> responseWebtoonList;
+        List<Webtoon> webtoonList;
 
         webtoonEntityList = webtoonRepository.findByWebtoonStatusOrderByViews(WebtoonStatus.PUBLISH);
 
-        responseWebtoonList = webtoonEntityList.stream()
-            .map(ResponseWebtoon::toResponseFromEntity)
+        webtoonList = webtoonEntityList.stream()
+            .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
 
-        return responseWebtoonList;
+        return webtoonList;
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByCreator() {
+    public List<Webtoon> findWebtoonByCreator() {
 
         List<WebtoonEntity> webtoonEntityList;
-        List<ResponseWebtoon> responseWebtoonList;
+        List<Webtoon> webtoonList;
 
         webtoonEntityList = webtoonRepository.findByCreatorId(1L);
-        responseWebtoonList = webtoonEntityList.stream()
-            .map(ResponseWebtoon::toResponseFromEntity)
+        webtoonList = webtoonEntityList.stream()
+            .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
 
-        return responseWebtoonList;
+        return webtoonList;
     }
 
 

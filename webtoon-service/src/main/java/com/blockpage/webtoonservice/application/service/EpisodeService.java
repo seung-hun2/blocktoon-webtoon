@@ -31,8 +31,8 @@ public class EpisodeService implements EpisodeUseCase {
     }
 
     @Override
-    public ResponseEpisodeDetail findEpisodeDetail(Long episodeId) {
-        Episode episode = episodePort.findEpisodeDetail(episodeId);
+    public ResponseEpisodeDetail findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber) {
+        Episode episode = episodePort.findEpisodeDetail(episodeId, webtoonId, episodeNumber);
 
         return ResponseEpisodeDetail.toResponseFromDomain(episode);
     }

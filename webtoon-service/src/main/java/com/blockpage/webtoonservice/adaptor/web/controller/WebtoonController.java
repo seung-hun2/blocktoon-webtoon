@@ -3,7 +3,7 @@ package com.blockpage.webtoonservice.adaptor.web.controller;
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
-import java.util.ArrayList;
+import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,16 +29,18 @@ public class WebtoonController {
     @GetMapping("")
     public ResponseEntity<ApiResponseView<List<WebtoonView>>> byGenreOrWeekdays(@RequestParam(required = false) String weekdays,
         @RequestParam(required = false) String genre) {
-        List<WebtoonView> webtoonViewList = new ArrayList<>();
+        List<ResponseWebtoon> responseWebtoonList;
 
         System.out.println("weekdays = " + weekdays);
         if (genre != null) {
-            webtoonViewList = webtoonUseCase.findWebtoonByGenre(genre);
+            responseWebtoonList = webtoonUseCase.findWebtoonByGenre(genre);
         } else if (weekdays != null) {
-            webtoonViewList = webtoonUseCase.findWebtoonByWeekdays(weekdays);
+            responseWebtoonList = webtoonUseCase.findWebtoonByWeekdays(weekdays);
         } else {
             return (ResponseEntity<ApiResponseView<List<WebtoonView>>>) ResponseEntity.badRequest();
         }
+
+        List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(new ApiResponseView<>(webtoonViewList));
@@ -52,7 +54,8 @@ public class WebtoonController {
     @GetMapping("/best")
     public ResponseEntity<ApiResponseView<List<WebtoonView>>> byBest() {
 
-        List<WebtoonView> webtoonViewList = webtoonUseCase.findWebtoonBest();
+        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findWebtoonBest();
+        List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(new ApiResponseView<>(webtoonViewList));
@@ -63,7 +66,8 @@ public class WebtoonController {
     @GetMapping("/creator")
     public ResponseEntity<ApiResponseView<List<WebtoonView>>> byCreator() {
         // Authentication 으로 creatorId 받아와야함.
-        List<WebtoonView> webtoonViewList = webtoonUseCase.findWebtoonByCreator();
+        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findWebtoonByCreator();
+        List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 
         return ResponseEntity.status(HttpStatus.OK)
             .body(new ApiResponseView<>(webtoonViewList));

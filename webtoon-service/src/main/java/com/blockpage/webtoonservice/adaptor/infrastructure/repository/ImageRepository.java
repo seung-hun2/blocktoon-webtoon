@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
 
-    List<ImageEntity> findByEpisodeId(Long episodeId);
+    List<ImageEntity> findByWebtoonIdAndEpisodeNumber(Long webtoonId, Integer EpisodeNumber);
 }

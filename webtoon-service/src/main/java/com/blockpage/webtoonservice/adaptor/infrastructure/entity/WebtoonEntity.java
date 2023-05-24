@@ -3,6 +3,7 @@ package com.blockpage.webtoonservice.adaptor.infrastructure.entity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
+import com.blockpage.webtoonservice.domain.Demand;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -44,7 +45,7 @@ public class WebtoonEntity extends BaseEntity {
     @Column
     private String webtoonThumbnail;
     @Column
-    private int interestCount;
+    private Integer interestCount;
     @Column
     @Enumerated(EnumType.STRING)
     private GenreType genreType;
@@ -54,7 +55,30 @@ public class WebtoonEntity extends BaseEntity {
     @Column
     private Long creatorId;
     @Column
-    private int views;
+    private Integer views;
+
+    public void update(WebtoonStatus webtoonStatus) {
+        this.webtoonStatus = webtoonStatus;
+    }
+
+
+    public static WebtoonEntity toEntity(Demand demand, String mainUUID, String thumbnailUUID, int type) {
+        return WebtoonEntity.builder()
+            .creator(demand.getCreator())
+            .webtoonStatus(WebtoonStatus.findWebtoonStatusByKey(type))
+            .webtoonDescription(demand.getWebtoonDescription())
+            .webtoonTitle(demand.getWebtoonTitle())
+            .webtoonMainImage(mainUUID)
+            .webtoonThumbnail(thumbnailUUID)
+            .creatorId(demand.getCreatorId())
+            .genreType(demand.getGenre() != null ? GenreType.findGenreTypeByKey(demand.getGenre()) : null)
+            .publicationDays(
+                demand.getPublicationDays() != null ? PublicationDays.findPublicationDaysByKey(demand.getPublicationDays()) : null)
+            .interestCount(0)
+            .illustrator(demand.getIllustrator())
+            .views(0)
+            .build();
+    }
 
 
 }

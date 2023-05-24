@@ -11,13 +11,13 @@ public class ResponseWebtoon {
     private String webtoonMainImage;
     private String creator;
     private String illustrator;
-    private int views;
-    private int interestCount;
-    private int genreType;
-    private int publicationDays;
+    private Integer views;
+    private Integer interestCount;
+    private Integer genreType;
+    private Integer publicationDays;
 
-    public ResponseWebtoon(String webtoonTitle, String webtoonMainImage, String creator, String illustrator, int views, int interestCount,
-        int genreType, int publicationDays) {
+    public ResponseWebtoon(String webtoonTitle, String webtoonMainImage, String creator, String illustrator, Integer views,
+        Integer interestCount, Integer genreType, Integer publicationDays) {
         this.webtoonTitle = webtoonTitle;
         this.webtoonMainImage = webtoonMainImage;
         this.creator = creator;

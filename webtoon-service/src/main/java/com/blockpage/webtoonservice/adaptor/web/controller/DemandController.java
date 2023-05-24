@@ -1,22 +1,20 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
-import com.blockpage.webtoonservice.adaptor.infrastructure.persistence.DomainAdapter;
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
-import com.blockpage.webtoonservice.adaptor.web.view.DemandEpisodeView;
-import com.blockpage.webtoonservice.adaptor.web.view.DemandEpisodeView.Images;
-import com.blockpage.webtoonservice.adaptor.web.view.DemandWebtoonView;
-import com.blockpage.webtoonservice.application.port.in.EpisodeUseCase.RequestEpisode;
-import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase.RequestWebtoon;
+import com.blockpage.webtoonservice.adaptor.web.view.DemandView;
+import com.blockpage.webtoonservice.application.port.DemandDto;
+import com.blockpage.webtoonservice.application.port.in.DemandUseCase;
+import com.blockpage.webtoonservice.application.port.in.DemandUseCase.DemandQuery;
+import com.blockpage.webtoonservice.application.port.in.RequestDemand;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -28,185 +26,55 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("v1/demands")
 public class DemandController {
 
-    private final DomainAdapter domainPort;
+    private final DemandUseCase demandUseCase;
+    private final Long creatorId = 1L;
 
-    // TODO: findQuery Inner Class 로 생성 -> type 을 이용하여 생성자 구성
-    // ex) FindPurchaseQuery(String type)                           // inner class
-    // var query = FindProductUseCase.FindPurchaseQuery(type);      // inner class
-    // FindProductDto dto = findProductUseCase.findProduct(query);
-    // ProductView view = new ProductView(dto);
-    // return ResponseEntity.ok(new ApiWrapperResponse(view));
+    @PostMapping("")
+    public ResponseEntity<ApiResponseView<String>> postDemand(@RequestParam String target, @RequestParam String type,
+        @RequestPart RequestDemand requestDemand,
+        @RequestPart(required = false) MultipartFile webtoonMainImage,
+        @RequestPart(required = false) MultipartFile webtoonThumbnail,
+        @RequestPart(required = false) MultipartFile episodeThumbnail,
+        @RequestPart(required = false) List<MultipartFile> episodeImage) throws IOException, ParseException {
 
-    @PostMapping("/webtoons/enroll")
-    public ResponseEntity<ApiResponseView> enroll(@RequestPart RequestWebtoon requestWebtoon, @RequestPart MultipartFile main,
-        @RequestPart MultipartFile thumbnail) throws IOException {
-        // 웹툰 등록하는 서비스 로직 구현
-        Long webtoonId = domainPort.webtoonEnroll(requestWebtoon, main, thumbnail);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰이 생성되었습니다."));
-    }
-
-    @PostMapping("/webtoons/modifying")
-    public ResponseEntity modifyWaiting(@RequestBody RequestWebtoon requestWebtoon) {
-        // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 수정 요청되었습니다."));
-    }
-
-    @PatchMapping("/webtoons/modifying/admin")
-    public ResponseEntity receiveModifying(@RequestBody RequestWebtoon requestWebtoon, @RequestParam String result) {
-        // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
-        switch (result) {
-            case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 승인되었습니다."));
-            case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 수정요청이 반려되었습니다."));
-            default:
-                return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        //creatorId Authentication 으로 받아오기 !
+        if (episodeThumbnail == null) {
+            // webtoon 이 등록 -> query 로 매핑 할 때 달라져야 함
+            demandUseCase.postDemand(
+                DemandQuery.toQueryFromWebtoon(creatorId, target, type, requestDemand, webtoonMainImage, webtoonThumbnail));
+        } else {
+            // episode 가 등록 -> query 매핑
+            demandUseCase.postDemand(
+                DemandQuery.toQueryFromEpisode(creatorId, target, type, requestDemand, episodeThumbnail, episodeImage));
         }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(""));
     }
 
-    @PostMapping("/webtoons/remove")
-    public ResponseEntity removeWaiting(@RequestBody RequestWebtoon requestWebtoon) {
-        // 웹툰 수정요청 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("웹툰 삭제요청되었습니다."));
-    }
+    @PutMapping("")
+    public ResponseEntity<ApiResponseView<String>> checkDemand(@RequestParam String target, @RequestParam String type,
+        @RequestParam String whether, @RequestParam(required = false) Long webtoonId,
+        @RequestParam(required = false) Long episodeId) throws IOException, ParseException {
 
-    @PatchMapping("/webtoons/remove/admin")
-    public ResponseEntity receiveRemoving(@RequestBody RequestWebtoon requestWebtoon, @RequestParam String result) {
-        // result 값에 따라 승인인지 반려인지 확인해서 넘겨줘야함
-        switch (result) {
-            case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 삭제요청이 승인되었습니다."));
-            case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("웹툰 삭제요청이 반려되었습니다."));
-            default:
-                return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        if (webtoonId != null) {
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, creatorId, webtoonId));
+        } else if (episodeId != null) {
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, creatorId, episodeId));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseView<>("실패 하셨습니다."));
         }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(""));
     }
 
+    @GetMapping("")
+    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(@RequestParam String target, @RequestParam String type)
+        throws IOException {
 
-    @PostMapping("/episodes/enroll")
-    public ResponseEntity episodeEnroll(@RequestBody RequestEpisode requestEpisode) {
-        // 에피소드 등록 요청 생성 서비스 로직 구현
+        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, creatorId));
+        List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("에피소드 등록 요청이 완료되었습니다."));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));
     }
-
-    @PatchMapping("/episodes/enroll/admin")
-    public ResponseEntity adminEnroll(@RequestBody RequestEpisode requestEpisode, @RequestParam String result) {
-        // 에피소드 등록 요청 생성 서비스 로직 구현
-        switch (result) {
-            case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 등록 요청이 승인되었습니다."));
-            case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 등록 요청이 반려되었습니다."));
-            default:
-                return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/episodes/modify")
-    public ResponseEntity episodeModify(@RequestBody RequestEpisode requestEpisode) {
-        // 에피소드 수정 요청 생성 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("에피소드 수정 요청이 완료되었습니다."));
-    }
-
-    @PatchMapping("/episodes/modify/admin")
-    public ResponseEntity adminModify(@RequestBody RequestEpisode requestEpisode, @RequestParam String result) {
-        // 에피소드 수정 요청 생성 서비스 로직 구현
-        switch (result) {
-            case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 수정 요청이 승인되었습니다."));
-            case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 수정 요청이 반려되었습니다."));
-            default:
-                return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/episodes/remove")
-    public ResponseEntity episodeRemove(@RequestBody RequestEpisode requestEpisode) {
-        // 에피소드 삭제 요청 생성 서비스 로직 구현
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>("에피소드 삭제 요청이 완료되었습니다."));
-    }
-
-    @PatchMapping("/episodes/remove/admin")
-    public ResponseEntity adminRemove(@RequestBody RequestEpisode requestEpisode, @RequestParam String result) {
-        // 에피소드 삭제 요청 생성 서비스 로직 구현
-        switch (result) {
-            case "accept":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 삭제 요청이 승인되었습니다."));
-            case "reject":
-                return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>("에피소드 삭제 요청이 반려되었습니다."));
-            default:
-                return (ResponseEntity) ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping("/webtoons")
-    public ResponseEntity webtoonDemand(@RequestParam String status) {
-        List<DemandWebtoonView> demandWebtoonViews = new ArrayList<>();
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 0));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 1));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 2));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 3));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 4));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 5));
-
-        demandWebtoonViews.add(new DemandWebtoonView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg",
-            "https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg", 6));
-
-        // status 에 따라 수정인지 삭제인지 구분하는 서비스 로직 구현
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandWebtoonViews));
-    }
-
-    @GetMapping("/episodes")
-    public ResponseEntity episodeDemand(@RequestParam String status) {
-
-        List<DemandEpisodeView> demandEpisodeViewList = new ArrayList<>();
-        List<Images> imagesList = new ArrayList<>();
-        imagesList.add(new Images("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
-        imagesList.add(new Images("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
-        imagesList.add(new Images("https://user-images.githubusercontent.com/97498405/235885340-d63630ec-85ec-4801-bf73-ac83f96c3bd2.jpg"));
-
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 0));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 1));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 2));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 3));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 4));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 5));
-        demandEpisodeViewList.add(new DemandEpisodeView("웹툰 기모링", "재밌는 웹툰입니다아~", "코믹", "금", "만화가",
-            imagesList, 6));
-
-        // status 에 따라 수정인지 삭제인지 구분하는 서비스 로직 구현
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandEpisodeViewList));
-    }
-
 
 }

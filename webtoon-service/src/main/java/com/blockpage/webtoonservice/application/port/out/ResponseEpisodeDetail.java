@@ -14,19 +14,19 @@ public class ResponseEpisodeDetail {
 
     private List<ResponseEpisodeImage> images;
     private Long episodeId;
-    private int commentCount;
+    private Integer commentCount;
     private double rating;
     private String author;
     private String authorWords;
     private String nextEpisodeTitle;
     private String nextEpisodeThumbnail;
 
-    public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, List<ImageEntity> imageEntityList) {
+    public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList) {
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
             .rating(9.9)
-            .author(episode.getWebtoon().getCreator())
+            .author(creator)
             .authorWords(episode.getAuthorWords())
             .nextEpisodeTitle("두개 들고오기 기억하자")
             .nextEpisodeThumbnail("두개 들고오기 사진 기억하자")

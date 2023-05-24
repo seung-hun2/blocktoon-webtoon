@@ -2,7 +2,6 @@ package com.blockpage.webtoonservice.domain;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import java.util.Arrays;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,8 +19,8 @@ public class Webtoon {
     private String webtoonMainImage;
     private String webtoonThumbnail;
     private GenreType genre;
-    private int interestCount;
-    private int views;
+    private Integer interestCount;
+    private Integer views;
 
     @Getter
     @AllArgsConstructor
@@ -36,10 +35,10 @@ public class Webtoon {
         COMIC(7, "코믹"),
         ;
 
-        private int key;
+        private Integer key;
         private String value;
 
-        public static GenreType findGenreTypeByKey(int key) {
+        public static GenreType findGenreTypeByKey(Integer key) {
             return Arrays.stream(GenreType.values())
                 .filter(t -> t.getKey() == key)
                 .findFirst().get();
@@ -57,10 +56,10 @@ public class Webtoon {
         SATURDAY(5, "토"),
         SUNDAY(6, "일");
 
-        int key;
+        Integer key;
         String value;
 
-        public static PublicationDays findPublicationDaysByKey(int key) {
+        public static PublicationDays findPublicationDaysByKey(Integer key) {
             return Arrays.stream(PublicationDays.values())
                 .filter(k -> k.getKey() == key)
                 .findFirst()
@@ -68,16 +67,16 @@ public class Webtoon {
         }
     }
 
-    public static Webtoon toDomainFromEntity(Optional<WebtoonEntity> webtoon) {
+    public static Webtoon toDomainFromEntity(WebtoonEntity webtoon) {
         return Webtoon.builder()
-            .webtoonTitle(webtoon.get().getWebtoonTitle())
-            .webtoonMainImage(webtoon.get().getWebtoonMainImage())
-            .creator(webtoon.get().getCreator())
-            .illustrator(webtoon.get().getIllustrator())
-            .views(webtoon.get().getViews())
-            .interestCount(webtoon.get().getInterestCount())
-            .genre(GenreType.findGenreTypeByKey(webtoon.get().getGenreType().getKey()))
-            .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.get().getPublicationDays().getKey()))
+            .webtoonTitle(webtoon.getWebtoonTitle())
+            .webtoonMainImage(webtoon.getWebtoonMainImage())
+            .creator(webtoon.getCreator())
+            .illustrator(webtoon.getIllustrator())
+            .views(webtoon.getViews())
+            .interestCount(webtoon.getInterestCount())
+            .genre(GenreType.findGenreTypeByKey(webtoon.getGenreType().getKey()))
+            .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.getPublicationDays().getKey()))
             .build();
     }
 

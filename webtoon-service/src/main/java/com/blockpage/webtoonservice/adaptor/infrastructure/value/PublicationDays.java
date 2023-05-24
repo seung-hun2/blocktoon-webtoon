@@ -16,10 +16,10 @@ public enum PublicationDays {
     SATURDAY(5, "토"),
     SUNDAY(6, "일");
 
-    int key;
+    Integer key;
     String value;
 
-    public static PublicationDays findPublicationDaysByKey(int key) {
+    public static PublicationDays findPublicationDaysByKey(Integer key) {
         return Arrays.stream(PublicationDays.values())
             .filter(k -> k.getKey() == key)
             .findFirst()

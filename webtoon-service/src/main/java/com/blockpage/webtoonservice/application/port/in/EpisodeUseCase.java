@@ -12,7 +12,7 @@ public interface EpisodeUseCase {
 
     List<ResponseCreatorEpisode> findCreatorEpisode(Long webtoonId);
 
-    ResponseEpisodeDetail findEpisodeDetail(Long episodeId);
+    ResponseEpisodeDetail findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber);
 
     @Getter
     class RequestEpisode {
