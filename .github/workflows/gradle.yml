@@ -32,6 +32,9 @@ jobs:
         spring.datasource.password: ${{ secrets.DB_PASSWORD }}
         spring.cloud.gcp.storage.credentials.location: ${{secrets.GCP_LOCATION}}
         spring.cloud.gcp.storage.credentials.project-id: ${{secrets.GCP_PROJECT_ID}}
+        spring.servlet.multipart.max-file-size: 10MB
+        spring.servlet.multipart.max-request-size: 10MB
+        
     
     # Gradlew 실행 허용
     - name: Run chmod to make gradlew executable
