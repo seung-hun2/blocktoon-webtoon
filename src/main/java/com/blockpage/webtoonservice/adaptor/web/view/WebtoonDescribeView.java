@@ -37,7 +37,7 @@ public class WebtoonDescribeView {
         this.illustrator = responseWebtoon.getIllustrator();
         this.publicationDays = PublicationDays.findPublicationDaysByKey(responseWebtoon.getPublicationDays());
         this.genre = GenreType.findGenreTypeByKey(responseWebtoon.getGenreType());
-        this.webtoonMainImage = responseWebtoon.getWebtoonMainImage();
+        this.webtoonMainImage = responseWebtoon.getWebtoonThumbnail();
         this.episodeViewList = episodeViewList;
     }
 }
