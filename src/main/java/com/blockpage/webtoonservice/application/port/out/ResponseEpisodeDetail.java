@@ -23,10 +23,14 @@ public class ResponseEpisodeDetail {
 
     public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList,
         String nextTitle, String nextThumbnail) {
+        double rating = 0.0;
+        if(episode.getParticipantCount()!=0) {
+            rating = episode.getTotalScore() / episode.getParticipantCount();
+        }
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
-            .rating(9.9)
+            .rating(rating)
             .author(creator)
             .authorWords(episode.getAuthorWords())
             .nextEpisodeTitle(nextTitle)
