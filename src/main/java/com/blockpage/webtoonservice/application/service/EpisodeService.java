@@ -17,9 +17,9 @@ public class EpisodeService implements EpisodeUseCase {
     private final EpisodePort episodePort;
 
     @Override
-    public List<ResponseEpisode> findEpisode(Long webtoonId) {
+    public List<ResponseEpisode> findEpisode(Long webtoonId, String sort) {
 
-        List<Episode> episodeList = episodePort.findEpisode(webtoonId);
+        List<Episode> episodeList = episodePort.findEpisode(webtoonId, sort);
 
         return episodeList.stream().map(ResponseEpisode::toResponseFromDomain).toList();
     }

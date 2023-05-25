@@ -2,6 +2,7 @@ package com.blockpage.webtoonservice.adaptor.web.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import javax.swing.Painter;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -30,16 +31,16 @@ public class ApiResponseView<T> {
         private final Sort sort;
         private final Pagination pagination;
 
-        public static Meta DEFAULT_META = new Meta(Sort.CREATED_AT, Pagination.DEFAULT_PAGING);
+        public static Meta DEFAULT_META = new Meta("DESC", Pagination.DEFAULT_PAGING);
 
-        private Meta(Sort sort, Pagination pagination) {
-            this.sort = sort;
+        public Meta(String sort, Pagination pagination) {
+            this.sort = Sort.valueOf(sort);
             this.pagination = pagination;
         }
 
         public enum Sort {
-            CREATED_AT,
-            NONE
+            DESC,
+            ASC,
         }
 
         @Getter

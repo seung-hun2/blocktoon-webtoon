@@ -8,7 +8,7 @@ import lombok.Getter;
 
 public interface EpisodeUseCase {
 
-    List<ResponseEpisode> findEpisode(Long webtoonId);
+    List<ResponseEpisode> findEpisode(Long webtoonId, String sort);
 
     List<ResponseCreatorEpisode> findCreatorEpisode(Long webtoonId);
 

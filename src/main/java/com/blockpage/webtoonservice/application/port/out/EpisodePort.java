@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface EpisodePort {
 
-    List<Episode> findEpisode(Long webtoonId);
+    List<Episode> findEpisode(Long webtoonId, String sort);
 
     List<Episode> findCreatorEpisode(Long webtoonId);
 
