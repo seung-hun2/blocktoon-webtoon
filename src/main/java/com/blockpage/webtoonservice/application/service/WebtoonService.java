@@ -56,4 +56,12 @@ public class WebtoonService implements WebtoonUseCase {
 
         return ResponseWebtoon.toResponseFromDomain(webtoon);
     }
+
+    @Override
+    public List<ResponseWebtoon> findAll(String creator, String illustrator, String title) {
+        List<ResponseWebtoon> responseWebtoonList;
+        List<Webtoon> webtoonList = webtoonPort.findAll(creator, illustrator, title);
+        responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).toList();
+        return responseWebtoonList;
+    }
 }

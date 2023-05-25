@@ -15,4 +15,6 @@ public interface WebtoonPort {
 
     Webtoon findWebtoon(Long id);
 
+    List<Webtoon> findAll(String creator, String illustrator, String title);
+
 }

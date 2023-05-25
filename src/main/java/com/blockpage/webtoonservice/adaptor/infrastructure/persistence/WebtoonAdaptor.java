@@ -2,6 +2,7 @@ package com.blockpage.webtoonservice.adaptor.infrastructure.persistence;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
+import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonSpecification;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +25,28 @@ public class WebtoonAdaptor implements WebtoonPort {
     public Webtoon findWebtoon(Long id) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(id);
         return Webtoon.toDomainFromEntity(webtoonEntity.get());
+    }
+
+    @Override
+    public List<Webtoon> findAll(String creator, String illustrator, String webtoonTitle) {
+
+        Specification<WebtoonEntity> spec = (root, query, criteriaBuilder) -> null;
+
+        if (creator != null) {
+            spec = spec.and(WebtoonSpecification.equalCreator(creator));
+        }
+        if (illustrator != null) {
+            spec = spec.and(WebtoonSpecification.equalIllustrator(illustrator));
+        }
+        if (webtoonTitle != null) {
+            spec = spec.and(WebtoonSpecification.equalTitle(webtoonTitle));
+        }
+        List<WebtoonEntity> webtoonEntityList = webtoonRepository.findAll(spec);
+
+        List<Webtoon> webtoonList;
+        webtoonList = webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList();
+
+        return webtoonList;
     }
 
     @Override

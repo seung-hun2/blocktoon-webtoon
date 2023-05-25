@@ -16,6 +16,8 @@ public interface WebtoonUseCase {
 
     ResponseWebtoon findWebtoon(Long id);
 
+    List<ResponseWebtoon> findAll(String creator, String illustrator, String title);
+
     @Getter
     public class RequestWebtoon {
 
