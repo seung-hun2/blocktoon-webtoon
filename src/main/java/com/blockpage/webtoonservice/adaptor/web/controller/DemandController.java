@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class DemandController {
         @RequestPart(required = false) MultipartFile episodeThumbnail,
         @RequestPart(required = false) List<MultipartFile> episodeImage) throws IOException, ParseException {
 
-        //creatorId Authentication 으로 받아오기 !
+        // creatorId Authentication 으로 받아오기 !
         if (episodeThumbnail == null) {
             // webtoon 이 등록 -> query 로 매핑 할 때 달라져야 함
             demandUseCase.postDemand(
@@ -68,10 +69,10 @@ public class DemandController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(@RequestParam String target, @RequestParam String type)
-        throws IOException {
+    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(@RequestParam String target, @RequestParam String type,
+        @RequestParam Integer pageNo) throws IOException {
 
-        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, creatorId));
+        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, creatorId, pageNo));
         List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));

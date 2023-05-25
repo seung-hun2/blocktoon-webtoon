@@ -4,6 +4,7 @@ import com.blockpage.webtoonservice.domain.Demand;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface DemandPort {
 
@@ -23,8 +24,8 @@ public interface DemandPort {
 
     void checkRemoveEpisodeDemand(Demand demand, String whether);
 
-    List<Demand> getWebtoonDemand(Demand demand, String type) throws IOException;
+    List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException;
 
-    List<Demand> getEpisodeDemand(Demand demand, String type);
+    List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo);
 
 }

@@ -4,6 +4,8 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
@@ -21,5 +23,5 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
     void deleteByEpisodeTitleAndCreatorIdAndEpisodeStatus(String title, Long creatorId, WebtoonStatus status);
 
-    List<EpisodeEntity> findByCreatorIdAndEpisodeStatus(Long creatorId, WebtoonStatus status);
+    Page<EpisodeEntity> findByCreatorIdAndEpisodeStatus(Long creatorId, WebtoonStatus status, Pageable pageable);
 }

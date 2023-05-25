@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface DemandUseCase {
@@ -30,6 +31,7 @@ public interface DemandUseCase {
         MultipartFile webtoonThumbnail;
         MultipartFile episodeThumbnail;
         List<MultipartFile> episodeImage;
+        Integer pageNo;
 
         public static DemandQuery toQueryFromWebtoon(Long creatorId, String target, String type, RequestDemand requestDemand,
             MultipartFile webtoonMainImage, MultipartFile webtoonThumbnail) {
@@ -65,11 +67,12 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromId(String target, String type, Long id){
+        public static DemandQuery toQueryFromId(String target, String type, Long id, Integer pageNo){
             return DemandQuery.builder()
                 .target(target)
                 .type(type)
                 .id(id)
+                .pageNo(pageNo)
                 .build();
         }
 
