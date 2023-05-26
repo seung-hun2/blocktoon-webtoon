@@ -8,15 +8,14 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, JpaSpecificationExecutor<WebtoonEntity> {
 
-    List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatus(GenreType genre, WebtoonStatus status);
+    List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatusOrderByViews(GenreType genre, WebtoonStatus status);
 
-    List<WebtoonEntity> findByPublicationDaysAndWebtoonStatus(PublicationDays publicationDays, WebtoonStatus status);
+    List<WebtoonEntity> findByPublicationDaysAndWebtoonStatusOrderByViews(PublicationDays publicationDays, WebtoonStatus status);
 
     List<WebtoonEntity> findByWebtoonStatusOrderByViews(WebtoonStatus status);
 

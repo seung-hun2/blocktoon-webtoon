@@ -67,9 +67,9 @@ public class WebtoonController {
 
     @GetMapping("/creator")
     public ResponseEntity<ApiResponseView<List<WebtoonView>>> byCreator() {
-        // Authentication 으로 creatorId 받아와야함.
-        String creatorId = "xxx@gmail.com";
-        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findWebtoonByCreator(creatorId);
+        // Authentication 으로 memberId 받아와야함.
+        String memberId = "xxx@gmail.com";
+        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findWebtoonByCreator(memberId);
         List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 
         return ResponseEntity.status(HttpStatus.OK)

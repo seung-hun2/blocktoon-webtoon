@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class ResponseWebtoon {
 
+    private Long webtoonId;
     private String webtoonTitle;
     private String webtoonThumbnail;
     private String creator;
@@ -16,8 +17,9 @@ public class ResponseWebtoon {
     private Integer genreType;
     private Integer publicationDays;
 
-    public ResponseWebtoon(String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
+    public ResponseWebtoon(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
         Integer interestCount, Integer genreType, Integer publicationDays) {
+        this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonThumbnail = webtoonThumbnail;
         this.creator = creator;
@@ -31,6 +33,7 @@ public class ResponseWebtoon {
 
     public static ResponseWebtoon toResponseFromEntity(WebtoonEntity webtoon) {
         return new ResponseWebtoon(
+            webtoon.getId(),
             webtoon.getWebtoonTitle(),
             webtoon.getWebtoonThumbnail(),
             webtoon.getCreator(),
@@ -44,6 +47,7 @@ public class ResponseWebtoon {
 
     public static ResponseWebtoon toResponseFromDomain(Webtoon webtoon) {
         return new ResponseWebtoon(
+            webtoon.getWebtoonId(),
             webtoon.getWebtoonTitle(),
             webtoon.getWebtoonThumbnail(),
             webtoon.getCreator(),

@@ -1,9 +1,22 @@
+server:
+  port: 8084
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${eureka.client.service-url.defaultZone}
+
 spring:
+  application:
+    name: webtoon-service
+    
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${spring.datasource.url}
     username: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
 
   jpa:
     properties:
@@ -18,7 +31,7 @@ spring:
     gcp:
       storage:
         credentials:
-          location: ${spring.cloud.gcp.storage.credentials.location}
+          location: classpath:gcpkey.json
         project-id: ${spring.cloud.gcp.storage.credentials.project.id}
 
   servlet:

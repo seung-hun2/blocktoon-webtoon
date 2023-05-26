@@ -2,6 +2,7 @@ package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandView;
+import com.blockpage.webtoonservice.adaptor.web.view.MessageView;
 import com.blockpage.webtoonservice.application.port.DemandDto;
 import com.blockpage.webtoonservice.application.port.in.DemandUseCase;
 import com.blockpage.webtoonservice.application.port.in.DemandUseCase.DemandQuery;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.bridge.Message;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class DemandController {
     private final String creatorId = "xxx@gmail.com";
 
     @PostMapping("")
-    public ResponseEntity<ApiResponseView<String>> postDemand(@RequestParam String target, @RequestParam String type,
+    public ResponseEntity<ApiResponseView<MessageView>> postDemand(@RequestParam String target, @RequestParam String type,
         @RequestPart RequestDemand requestDemand,
         @RequestPart(required = false) MultipartFile webtoonMainImage,
         @RequestPart(required = false) MultipartFile webtoonThumbnail,
@@ -49,11 +51,11 @@ public class DemandController {
                 DemandQuery.toQueryFromEpisode(creatorId, target, type, requestDemand, episodeThumbnail, episodeImage));
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(""));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
     }
 
     @PutMapping("")
-    public ResponseEntity<ApiResponseView<String>> checkDemand(@RequestParam String target, @RequestParam String type,
+    public ResponseEntity<ApiResponseView<MessageView>> checkDemand(@RequestParam String target, @RequestParam String type,
         @RequestParam String whether, @RequestParam(required = false) Long webtoonId,
         @RequestParam(required = false) Long episodeId) throws IOException, ParseException {
 
@@ -62,13 +64,13 @@ public class DemandController {
         } else if (episodeId != null) {
             demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, creatorId, episodeId));
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseView<>("실패 하셨습니다."));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseView<>(new MessageView("실패 하였습니다.")));
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(""));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
     }
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(@RequestParam String target, @RequestParam String type,
         @RequestParam Integer pageNo) throws IOException {
 
