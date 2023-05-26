@@ -28,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class DemandController {
 
     private final DemandUseCase demandUseCase;
-    private final Long creatorId = 1L;
+    private final String creatorId = "xxx@gmail.com";
 
     @PostMapping("")
     public ResponseEntity<ApiResponseView<String>> postDemand(@RequestParam String target, @RequestParam String type,

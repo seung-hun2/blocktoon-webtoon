@@ -24,7 +24,7 @@ public interface DemandUseCase {
         String target;
         String type;
         String whether;
-        Long creatorId;
+        String creatorId;
         Long id;
         RequestDemand requestDemand;
         MultipartFile webtoonMainImage;
@@ -33,7 +33,7 @@ public interface DemandUseCase {
         List<MultipartFile> episodeImage;
         Integer pageNo;
 
-        public static DemandQuery toQueryFromWebtoon(Long creatorId, String target, String type, RequestDemand requestDemand,
+        public static DemandQuery toQueryFromWebtoon(String creatorId, String target, String type, RequestDemand requestDemand,
             MultipartFile webtoonMainImage, MultipartFile webtoonThumbnail) {
             return DemandQuery.builder()
                 .creatorId(creatorId)
@@ -45,7 +45,7 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromEpisode(Long creatorId, String target, String type, RequestDemand requestDemand,
+        public static DemandQuery toQueryFromEpisode(String creatorId, String target, String type, RequestDemand requestDemand,
             MultipartFile episodeThumbnail, List<MultipartFile> episodeImage) {
             return DemandQuery.builder()
                 .creatorId(creatorId)
@@ -57,7 +57,7 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromId(String target, String type, String whether, Long creatorId, Long id) {
+        public static DemandQuery toQueryFromId(String target, String type, String whether, String creatorId, Long id) {
             return DemandQuery.builder()
                 .id(id)
                 .creatorId(creatorId)
@@ -67,11 +67,11 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromId(String target, String type, Long id, Integer pageNo){
+        public static DemandQuery toQueryFromId(String target, String type, String creatorId, Integer pageNo){
             return DemandQuery.builder()
                 .target(target)
                 .type(type)
-                .id(id)
+                .creatorId(creatorId)
                 .pageNo(pageNo)
                 .build();
         }

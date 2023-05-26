@@ -32,7 +32,7 @@ public class EpisodeEntity extends BaseEntity {
     @Column
     private Long webtoonId;
     @Column
-    private Long creatorId;
+    private String creatorId;
     @Column
     private String episodeTitle;
     @Column

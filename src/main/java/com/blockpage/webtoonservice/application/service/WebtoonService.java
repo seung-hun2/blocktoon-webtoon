@@ -42,9 +42,9 @@ public class WebtoonService implements WebtoonUseCase {
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByCreator() {
+    public List<ResponseWebtoon> findWebtoonByCreator(String creatorId) {
         List<ResponseWebtoon> responseWebtoonList;
-        List<Webtoon> webtoonList = webtoonPort.findWebtoonByCreator();
+        List<Webtoon> webtoonList = webtoonPort.findWebtoonByCreator(creatorId);
         responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).collect(Collectors.toList());
 
         return responseWebtoonList;

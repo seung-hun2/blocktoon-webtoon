@@ -11,7 +11,7 @@ public interface WebtoonPort {
 
     List<Webtoon> findWebtoonBest();
 
-    List<Webtoon> findWebtoonByCreator();
+    List<Webtoon> findWebtoonByCreator(String creatorId);
 
     Webtoon findWebtoon(Long id);
 

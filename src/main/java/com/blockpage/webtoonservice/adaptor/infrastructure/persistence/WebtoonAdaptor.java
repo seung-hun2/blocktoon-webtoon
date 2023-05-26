@@ -94,12 +94,12 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
-    public List<Webtoon> findWebtoonByCreator() {
+    public List<Webtoon> findWebtoonByCreator(String creatorId) {
 
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findByCreatorId(1L);
+        webtoonEntityList = webtoonRepository.findByCreatorId(creatorId);
         webtoonList = webtoonEntityList.stream()
             .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
