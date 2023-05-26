@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/episodes")
+@RequestMapping("/webtoon-service/v1/episodes")
 @Slf4j
 public class EpisodeController {
 

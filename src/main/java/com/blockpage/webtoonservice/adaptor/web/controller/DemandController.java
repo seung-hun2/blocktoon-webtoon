@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/demands")
+@RequestMapping("/webtoon-service/v1/demands")
 public class DemandController {
 
     private final DemandUseCase demandUseCase;
