@@ -55,7 +55,7 @@ public class WebtoonAdaptor implements WebtoonPort {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatus(
+        webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatusOrderByViews(
             GenreType.findGenreTypeByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
         webtoonList = webtoonEntityList.stream()
@@ -70,7 +70,7 @@ public class WebtoonAdaptor implements WebtoonPort {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatus(
+        webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatusOrderByViews(
             PublicationDays.findPublicationDaysByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
         webtoonList = webtoonEntityList.stream()
