@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class DemandDto {
 
-    private Long creatorId;
+    private String creatorId;
     private String creator;
     private String webtoonTitle;
     private String webtoonDescription;

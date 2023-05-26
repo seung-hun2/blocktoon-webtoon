@@ -53,7 +53,7 @@ public class WebtoonEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private WebtoonStatus webtoonStatus;
     @Column
-    private Long creatorId;
+    private String creatorId;
     @Column
     private Integer views;
 

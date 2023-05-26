@@ -24,11 +24,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/demands")
+@RequestMapping("/webtoon-service/v1/demands")
 public class DemandController {
 
     private final DemandUseCase demandUseCase;
-    private final Long creatorId = 1L;
+    private final String creatorId = "xxx@gmail.com";
 
     @PostMapping("")
     public ResponseEntity<ApiResponseView<String>> postDemand(@RequestParam String target, @RequestParam String type,

@@ -12,7 +12,7 @@ public interface WebtoonUseCase {
 
     List<ResponseWebtoon> findWebtoonBest();
 
-    List<ResponseWebtoon> findWebtoonByCreator();
+    List<ResponseWebtoon> findWebtoonByCreator(String creatorId);
 
     ResponseWebtoon findWebtoon(Long id);
 

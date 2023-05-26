@@ -20,13 +20,13 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, J
 
     List<WebtoonEntity> findByWebtoonStatusOrderByViews(WebtoonStatus status);
 
-    List<WebtoonEntity> findByCreatorId(Long creatorId);
+    List<WebtoonEntity> findByCreatorId(String creatorId);
 
-    Page<WebtoonEntity> findByCreatorIdAndWebtoonStatus(Long creatorId, WebtoonStatus webtoonStatus, Pageable pageable);
+    Page<WebtoonEntity> findByCreatorIdAndWebtoonStatus(String creatorId, WebtoonStatus webtoonStatus, Pageable pageable);
 
-    Optional<WebtoonEntity> findByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, Long creatorId, WebtoonStatus status);
+    Optional<WebtoonEntity> findByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, String creatorId, WebtoonStatus status);
 
-    void deleteByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, Long creatorId, WebtoonStatus status);
+    void deleteByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, String creatorId, WebtoonStatus status);
 
 
 }

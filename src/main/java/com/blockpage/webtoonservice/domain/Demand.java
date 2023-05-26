@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class Demand {
 
-    private Long creatorId;
+    private String creatorId;
     private String creator;
     private String webtoonTitle;
     private String webtoonDescription;
@@ -40,7 +40,7 @@ public class Demand {
 
     public static Demand toDomainFromWebtoon(DemandQuery demandQuery) {
         return Demand.builder()
-            .creatorId(demandQuery.getRequestDemand().getCreatorId())
+            .creatorId(demandQuery.getCreatorId())
             .creator(demandQuery.getRequestDemand().getCreator())
             .webtoonTitle(demandQuery.getRequestDemand().getWebtoonTitle())
             .webtoonDescription(demandQuery.getRequestDemand().getWebtoonDescription())
@@ -54,7 +54,7 @@ public class Demand {
 
     public static Demand toDomainFromGet(DemandQuery demandQuery) {
         return Demand.builder()
-            .creatorId(demandQuery.getId())
+            .creatorId(demandQuery.getCreatorId())
             .target(demandQuery.getTarget())
             .type(demandQuery.getType())
             .build();
@@ -74,20 +74,6 @@ public class Demand {
             .build();
     }
 
-
-    public static Demand toDomainFromEntity(Webtoon webtoon, MultipartFile webtoonMainImage, MultipartFile webtoonThumbnail) {
-        return Demand.builder()
-            .creatorId(webtoon.getCreatorId())
-            .creator(webtoon.getCreator())
-            .webtoonTitle(webtoon.getWebtoonTitle())
-            .webtoonDescription(webtoon.getWebtoonDescription())
-            .genre(webtoon.getGenre().getKey())
-            .publicationDays(webtoon.getPublicationDays().getKey())
-            .illustrator(webtoon.getIllustrator())
-            .webtoonMainImage(webtoonMainImage)
-            .webtoonThumbnail(webtoonThumbnail)
-            .build();
-    }
 
     public static Demand toDomainFromWebtoonEntity(WebtoonEntity webtoon) {
         return Demand.builder()
