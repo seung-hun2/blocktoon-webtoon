@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class RequestDemand {
 
-    private Long creatorId;
+    private String creatorId;
     private String creator;
     private String webtoonTitle;
     private String webtoonDescription;
