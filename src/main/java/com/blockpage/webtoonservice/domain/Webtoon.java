@@ -10,6 +10,7 @@ import lombok.Getter;
 @Builder
 public class Webtoon {
 
+    private Long webtoonId;
     private String webtoonTitle;
     private String webtoonDescription;
     private Long creatorId;
@@ -69,6 +70,7 @@ public class Webtoon {
 
     public static Webtoon toDomainFromEntity(WebtoonEntity webtoon) {
         return Webtoon.builder()
+            .webtoonId(webtoon.getId())
             .webtoonTitle(webtoon.getWebtoonTitle())
             .webtoonMainImage(webtoon.getWebtoonMainImage())
             .creator(webtoon.getCreator())
