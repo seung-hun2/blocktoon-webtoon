@@ -7,17 +7,17 @@ import lombok.Getter;
 public class WebtoonView {
 
     private String webtoonTitle;
-    private String webtoonMainImage;
+    private String webtoonThumbnail;
     private String creator;
     private String illustrator;
     private Integer views;
     private Integer interestCount;
     private Integer genreType;
 
-    public WebtoonView(String webtoonTitle, String webtoonMainImage, String creator, String illustrator, Integer views,
+    public WebtoonView(String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
         Integer interestCount, Integer genreType) {
         this.webtoonTitle = webtoonTitle;
-        this.webtoonMainImage = webtoonMainImage;
+        this.webtoonThumbnail = webtoonThumbnail;
         this.creator = creator;
         this.illustrator = illustrator;
         this.views = views;
@@ -28,7 +28,7 @@ public class WebtoonView {
     public static WebtoonView toViewFromResponse(ResponseWebtoon webtoon) {
         return new WebtoonView(
             webtoon.getWebtoonTitle(),
-            webtoon.getWebtoonMainImage(),
+            webtoon.getWebtoonThumbnail(),
             webtoon.getCreator(),
             webtoon.getIllustrator(),
             webtoon.getViews(),

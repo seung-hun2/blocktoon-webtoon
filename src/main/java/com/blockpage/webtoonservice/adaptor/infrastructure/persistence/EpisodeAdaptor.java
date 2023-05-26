@@ -23,10 +23,18 @@ public class EpisodeAdaptor implements EpisodePort {
     private final WebtoonRepository webtoonRepository;
 
     @Override
-    public List<Episode> findEpisode(Long webtoonId) {
+    public List<Episode> findEpisode(Long webtoonId, String sort) {
 
         List<Episode> episodeList;
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatus(webtoonId, WebtoonStatus.PUBLISH);
+        List<EpisodeEntity> episodeEntityList = null;
+        if(sort.equals("ASC")){
+            episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberAsc(webtoonId,
+                WebtoonStatus.PUBLISH);
+        }else if (sort.equals("DESC")){
+            episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+                WebtoonStatus.PUBLISH);
+        }
+
         episodeList = episodeEntityList.stream().map(Episode::toDomainFromEntity).collect(Collectors.toList());
 
         return episodeList;
@@ -35,7 +43,8 @@ public class EpisodeAdaptor implements EpisodePort {
     @Override
     public List<Episode> findCreatorEpisode(Long webtoonId) {
         List<Episode> episodeList;
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatus(webtoonId, WebtoonStatus.PUBLISH);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+            WebtoonStatus.PUBLISH);
         episodeList = episodeEntityList.stream().map(Episode::toDomainFromEntity)
             .collect(Collectors.toList());
         return episodeList;
@@ -50,13 +59,14 @@ public class EpisodeAdaptor implements EpisodePort {
         String creator = webtoonRepository.findById(webtoonId).get().getCreator();
 
         List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.PUBLISH);
-        String nextTitle = "", nextThumbnail="";
-        if(episodeNumber < episodeEntityList.size()){
-            nextTitle = episodeEntityList.get(episodeNumber-1).getEpisodeTitle();
-            nextThumbnail = episodeEntityList.get(episodeNumber-1).getEpisodeThumbnail();
+        String nextTitle = "", nextThumbnail = "";
+        if (episodeNumber < episodeEntityList.size()) {
+            nextTitle = episodeEntityList.get(episodeNumber - 1).getEpisodeTitle();
+            nextThumbnail = episodeEntityList.get(episodeNumber - 1).getEpisodeThumbnail();
         }
 
-        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle, nextThumbnail);
+        responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle,
+            nextThumbnail);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
     }

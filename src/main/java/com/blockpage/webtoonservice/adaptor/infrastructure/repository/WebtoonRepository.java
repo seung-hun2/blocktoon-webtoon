@@ -6,9 +6,13 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long> {
+public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, JpaSpecificationExecutor<WebtoonEntity> {
 
     List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatus(GenreType genre, WebtoonStatus status);
 
@@ -18,7 +22,7 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long> {
 
     List<WebtoonEntity> findByCreatorId(Long creatorId);
 
-    List<WebtoonEntity> findByCreatorIdAndWebtoonStatus(Long creatorId, WebtoonStatus webtoonStatus);
+    Page<WebtoonEntity> findByCreatorIdAndWebtoonStatus(Long creatorId, WebtoonStatus webtoonStatus, Pageable pageable);
 
     Optional<WebtoonEntity> findByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, Long creatorId, WebtoonStatus status);
 

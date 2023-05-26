@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,15 +78,15 @@ public class DemandService implements DemandUseCase {
     public List<DemandDto> getDemand(DemandQuery demandQuery) throws IOException {
         if (demandQuery.getTarget().equals("webtoon")) {
             Demand demand = Demand.toDomainFromGet(demandQuery);
-            List<Demand> demands = demandPort.getWebtoonDemand(demand, demandQuery.getType()) != null ? demandPort.getWebtoonDemand(demand,
-                demandQuery.getType()) : new ArrayList<>();
+            List<Demand> demands = demandPort.getWebtoonDemand(demand, demandQuery.getType(), demandQuery.getPageNo());
+
             return demands.stream().map(DemandDto::toDtoFromDomain).toList();
 
         } else if (demandQuery.getTarget().equals("episode")) {
             Demand demand = Demand.toDomainFromGet(demandQuery);
             System.out.println("demand = " + demand.getEpisodeTitle());
-            List<Demand> demands = demandPort.getEpisodeDemand(demand, demandQuery.getType()) != null ? demandPort.getEpisodeDemand(demand,
-                demandQuery.getType()) : new ArrayList<>();
+            List<Demand> demands = demandPort.getEpisodeDemand(demand, demandQuery.getType(), demandQuery.getPageNo()) != null ? demandPort.getEpisodeDemand(demand,
+                demandQuery.getType(), demandQuery.getPageNo()) : new ArrayList<>();
             return demands.stream().map(DemandDto::toDtoFromDomain).toList();
         }
         return null;

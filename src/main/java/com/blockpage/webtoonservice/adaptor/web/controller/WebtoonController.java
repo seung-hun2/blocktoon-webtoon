@@ -4,8 +4,10 @@ import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +74,19 @@ public class WebtoonController {
         return ResponseEntity.status(HttpStatus.OK)
             .body(new ApiResponseView<>(webtoonViewList));
 
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> searchAll(
+        @RequestParam(required = false) String creator,
+        @RequestParam(required = false) String illustrator,
+        @RequestParam(required = false) String title) {
+
+        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findAll(creator, illustrator, title);
+
+        List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonViewList));
     }
 
 

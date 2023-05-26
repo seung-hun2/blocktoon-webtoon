@@ -20,6 +20,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -285,35 +288,38 @@ public class DomainAdapter implements DemandPort {
     }
 
     @Override
-    public List<Demand> getWebtoonDemand(Demand demand, String type) throws IOException {
+    public List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException {
+        Pageable pageable = PageRequest.of(pageNo,10);
 
-        List<WebtoonEntity> webtoonEntityList = switch (type) {
+        Page<WebtoonEntity> webtoonEntityList = switch (type) {
             case "modify" -> webtoonRepository.findByCreatorIdAndWebtoonStatus(demand.getCreatorId(),
-                WebtoonStatus.findWebtoonStatusByKey(3));
+                WebtoonStatus.findWebtoonStatusByKey(3), pageable);
             case "remove" -> webtoonRepository.findByCreatorIdAndWebtoonStatus(demand.getCreatorId(),
-                WebtoonStatus.findWebtoonStatusByKey(5));
+                WebtoonStatus.findWebtoonStatusByKey(5), pageable);
             default -> null;
         };
 
-        return webtoonEntityList != null ? webtoonEntityList.stream().map(Demand::toDomainFromWebtoonEntity).toList() : null;
+
+        return webtoonEntityList.stream().map(Demand::toDomainFromWebtoonEntity).toList();
     }
 
     @Override
-    public List<Demand> getEpisodeDemand(Demand demand, String type) {
+    public List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo) {
 
-        List<EpisodeEntity> episodeEntityList = null;
+        Pageable pageable = PageRequest.of(pageNo, 10);
+        Page<EpisodeEntity> episodeEntityList = null;
         switch (type) {
             case "enroll":
                 episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(1));
+                    WebtoonStatus.findWebtoonStatusByKey(1), pageable);
                 break;
             case "modify":
                 episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(3));
+                    WebtoonStatus.findWebtoonStatusByKey(3), pageable);
                 break;
             case "remove":
                 episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(5));
+                    WebtoonStatus.findWebtoonStatusByKey(5), pageable);
                 break;
         }
         List<Episode> episodeList = episodeEntityList != null ? episodeEntityList.stream().map(Episode::toDomainFromEntity).toList() : null;

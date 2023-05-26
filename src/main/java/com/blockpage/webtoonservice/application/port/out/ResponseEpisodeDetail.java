@@ -26,7 +26,7 @@ public class ResponseEpisodeDetail {
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
-            .rating(9.9)
+            .rating(episode.getParticipantCount() != 0 ? episode.getTotalScore() / episode.getParticipantCount() : 0)
             .author(creator)
             .authorWords(episode.getAuthorWords())
             .nextEpisodeTitle(nextTitle)

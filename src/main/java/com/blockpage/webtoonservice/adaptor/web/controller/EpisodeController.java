@@ -1,6 +1,8 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
+import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView.Meta;
+import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView.Meta.Sort;
 import com.blockpage.webtoonservice.adaptor.web.view.CreatorEpisodeView;
 import com.blockpage.webtoonservice.adaptor.web.view.EpisodeDetailView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonDescribeView;
@@ -12,6 +14,7 @@ import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,20 +25,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/episodes")
+@Slf4j
 public class EpisodeController {
 
     private final EpisodeUseCase episodeUseCase;
     private final WebtoonUseCase webtoonUseCase;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponseView<WebtoonDescribeView>> episodeSearch(@RequestParam Long webtoonId) {
+    public ResponseEntity<ApiResponseView<WebtoonDescribeView>> episodeSearch(@RequestParam Long webtoonId,
+        @RequestParam(required = false, defaultValue = "DESC") String sort) {
 
-        List<ResponseEpisode> responseEpisodeList = episodeUseCase.findEpisode(webtoonId);
         ResponseWebtoon responseWebtoon = webtoonUseCase.findWebtoon(webtoonId);
+        List<ResponseEpisode> responseEpisodeList = episodeUseCase.findEpisode(webtoonId, sort);
 
         WebtoonDescribeView webtoonDescribeView = new WebtoonDescribeView(responseEpisodeList, responseWebtoon);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonDescribeView));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonDescribeView, new Meta(sort, null)));
     }
 
     @GetMapping("/creator")
