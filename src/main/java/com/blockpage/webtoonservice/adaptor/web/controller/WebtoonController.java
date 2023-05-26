@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/webtoon-service/v1/webtoons")
-@RequestMapping("/v1/webtoons")
+@RequestMapping("/webtoon-service/v1/webtoons")
 public class WebtoonController {
 
     private final WebtoonUseCase webtoonUseCase;
