@@ -15,27 +15,32 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    # JDK 17 세팅
+    # JDK 11 세팅
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         
+    - name: Gcp Json Create
+      id: create-json
+      uses: jsdaniell/create-json@v1.2.2
+      with:
+        name: "gcpkey.json"
+        json: ${{ secrets.GCP_BUCKETKEY_JSON }}
+        dir: 'src/main/resources/'
+      
     - name: Set Yaml
       uses: microsoft/variable-substitution@v1
       with:
-        files: './src/main/resources/application-prod.yml' 
+        files: './src/main/resources/application-prod.yml'
       env:
         spring.datasource.url: ${{ secrets.DB_URL }} 
         spring.datasource.username: ${{ secrets.DB_USERNAME }}
         spring.datasource.password: ${{ secrets.DB_PASSWORD }}
-        spring.cloud.gcp.storage.credentials.location: ${{secrets.GCP_LOCATION}}
-        spring.cloud.gcp.storage.credentials.project-id: ${{secrets.GCP_PROJECT_ID}}
-        spring.servlet.multipart.max-file-size: 10MB
-        spring.servlet.multipart.max-request-size: 10MB
+        spring.gcp.storage.project-id: ${{ secrets.GCP_PROJECT_ID }}
+        eureka.client.service-url.defaultZone: ${{secrets.VM_EUREKA_DEFAULTZONE}}
         
-    
     # Gradlew 실행 허용
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
