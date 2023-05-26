@@ -8,6 +8,9 @@ eureka:
       defaultZone: ${eureka.client.service-url.defaultZone}
 
 spring:
+  application:
+    name: webtoon-service
+    
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${spring.datasource.url}
@@ -28,7 +31,7 @@ spring:
     gcp:
       storage:
         credentials:
-          location: ${spring.cloud.gcp.storage.credentials.location}
+          location: classpath:gcpkey.json
         project-id: ${spring.cloud.gcp.storage.credentials.project.id}
 
   servlet:
