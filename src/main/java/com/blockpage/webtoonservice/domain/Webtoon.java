@@ -73,6 +73,7 @@ public class Webtoon {
             .webtoonId(webtoon.getId())
             .webtoonTitle(webtoon.getWebtoonTitle())
             .webtoonMainImage(webtoon.getWebtoonMainImage())
+            .webtoonThumbnail(webtoon.getWebtoonThumbnail())
             .creator(webtoon.getCreator())
             .illustrator(webtoon.getIllustrator())
             .views(webtoon.getViews())

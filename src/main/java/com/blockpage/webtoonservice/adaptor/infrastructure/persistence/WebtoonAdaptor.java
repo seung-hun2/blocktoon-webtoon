@@ -24,6 +24,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     @Override
     public Webtoon findWebtoon(Long id) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(id);
+        System.out.println("webtoonEntity.get().getWebtoonThumbnail() = " + webtoonEntity.get().getWebtoonThumbnail());
         return Webtoon.toDomainFromEntity(webtoonEntity.get());
     }
 
