@@ -14,7 +14,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, JpaSpecificationExecutor<WebtoonEntity> {
 
-//    Page<WebtoonEntity> findAll(Specification<WebtoonEntity> spec, Pageable pageable);
     List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatus(GenreType genre, WebtoonStatus status);
 
     List<WebtoonEntity> findByPublicationDaysAndWebtoonStatus(PublicationDays publicationDays, WebtoonStatus status);
