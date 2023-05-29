@@ -16,8 +16,8 @@ public class InterestCountMessageListener {
     private final InterestUseCase interestUseCase;
 
     @KafkaListener(
-        topics = "${spring.kafka.topicName1}",
-        groupId = "${spring.kafka.groupName1}",
+        topics = "${spring.kafka.interestTopic}",
+        groupId = "${spring.kafka.interestGroup}",
         containerFactory = "kafkaListenerContainerFactory"
     )
     public void listenWithHeaders(@Payload InterestCountMessage interestCountMessage, @Headers MessageHeaders messageHeaders) {

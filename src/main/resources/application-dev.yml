@@ -16,10 +16,10 @@ spring:
 
   kafka:
     bootstrapAddress: localhost:9092
-    topicName: view-count
-    topicName1: interest-count
-    groupName: view-count-group
-    groupName2: interest-count-group
+    viewTopic: viewCount
+    interestTopic: interestCount
+    viewGroup: viewCountGroup
+    interestGroup: interestCountGroup
 
   jpa:
     properties:

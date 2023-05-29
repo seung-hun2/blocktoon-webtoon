@@ -21,7 +21,7 @@ public class InterestCountConsumerConfig {
     @Value("${spring.kafka.bootstrapAddress}")
     private String bootStrapServer;
 
-    @Value("${spring.kafka.groupName1}")
+    @Value("${spring.kafka.interestGroup}")
     private String groupName;
 
     @Bean

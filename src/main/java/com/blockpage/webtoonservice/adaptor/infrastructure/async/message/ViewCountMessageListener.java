@@ -16,8 +16,8 @@ public class ViewCountMessageListener {
     private final ViewCountUseCase viewCountUseCase;
 
     @KafkaListener(
-        topics = "${spring.kafka.topicName}",
-        groupId = "${spring.kafka.groupName}",
+        topics = "${spring.kafka.viewTopic}",
+        groupId = "${spring.kafka.viewGroup}",
         containerFactory = "kafkaListenerContainerFactory"
     )
     public void listenWithHeaders(@Payload ViewCountMessage viewCountMessage, @Headers MessageHeaders messageHeaders) {

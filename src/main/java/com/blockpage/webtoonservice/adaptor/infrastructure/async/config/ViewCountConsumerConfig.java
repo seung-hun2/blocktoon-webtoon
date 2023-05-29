@@ -21,7 +21,7 @@ public class ViewCountConsumerConfig {
     @Value("${spring.kafka.bootstrapAddress}")
     private String bootStrapServer;
 
-    @Value("${spring.kafka.groupName}")
+    @Value("${spring.kafka.viewGroup}")
     private String groupName;
 
     @Bean
