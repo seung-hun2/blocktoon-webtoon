@@ -65,6 +65,10 @@ public class WebtoonEntity extends BaseEntity {
         this.views = views;
     }
 
+    public void updateInterestCount(Integer interestCount){
+        this.interestCount = interestCount;
+    }
+
 
     public static WebtoonEntity toEntity(Demand demand, String mainUUID, String thumbnailUUID, int type) {
         return WebtoonEntity.builder()

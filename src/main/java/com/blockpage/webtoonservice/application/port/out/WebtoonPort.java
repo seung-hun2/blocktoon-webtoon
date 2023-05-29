@@ -19,4 +19,6 @@ public interface WebtoonPort {
 
     void updateViewCount(Long webtoonId, Integer viewCount);
 
+    void updateInterestCount(Long webtoonId, Integer interestCount);
+
 }
