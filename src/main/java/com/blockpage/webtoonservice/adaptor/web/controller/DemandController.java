@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -30,10 +31,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class DemandController {
 
     private final DemandUseCase demandUseCase;
-    private final String creatorId = "xxx@gmail.com";
 
     @PostMapping("")
-    public ResponseEntity<ApiResponseView<MessageView>> postDemand(@RequestParam String target, @RequestParam String type,
+    public ResponseEntity<ApiResponseView<MessageView>> postDemand(
+        @RequestHeader String email,
+        @RequestParam String target,
+        @RequestParam String type,
         @RequestPart RequestDemand requestDemand,
         @RequestPart(required = false) MultipartFile webtoonMainImage,
         @RequestPart(required = false) MultipartFile webtoonThumbnail,
@@ -44,25 +47,29 @@ public class DemandController {
         if (episodeThumbnail == null) {
             // webtoon 이 등록 -> query 로 매핑 할 때 달라져야 함
             demandUseCase.postDemand(
-                DemandQuery.toQueryFromWebtoon(creatorId, target, type, requestDemand, webtoonMainImage, webtoonThumbnail));
+                DemandQuery.toQueryFromWebtoon(email, target, type, requestDemand, webtoonMainImage, webtoonThumbnail));
         } else {
             // episode 가 등록 -> query 매핑
             demandUseCase.postDemand(
-                DemandQuery.toQueryFromEpisode(creatorId, target, type, requestDemand, episodeThumbnail, episodeImage));
+                DemandQuery.toQueryFromEpisode(email, target, type, requestDemand, episodeThumbnail, episodeImage));
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
     }
 
     @PutMapping("")
-    public ResponseEntity<ApiResponseView<MessageView>> checkDemand(@RequestParam String target, @RequestParam String type,
-        @RequestParam String whether, @RequestParam(required = false) Long webtoonId,
+    public ResponseEntity<ApiResponseView<MessageView>> checkDemand(
+        @RequestHeader String email,
+        @RequestParam String target,
+        @RequestParam String type,
+        @RequestParam String whether,
+        @RequestParam(required = false) Long webtoonId,
         @RequestParam(required = false) Long episodeId) throws IOException, ParseException {
 
         if (webtoonId != null) {
-            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, creatorId, webtoonId));
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, email, webtoonId));
         } else if (episodeId != null) {
-            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, creatorId, episodeId));
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, email, episodeId));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseView<>(new MessageView("실패 하였습니다.")));
         }
@@ -71,10 +78,13 @@ public class DemandController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(@RequestParam String target, @RequestParam String type,
+    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(
+        @RequestHeader String email,
+        @RequestParam String target,
+        @RequestParam String type,
         @RequestParam Integer pageNo) throws IOException {
 
-        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, creatorId, pageNo));
+        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, email, pageNo));
         List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));
