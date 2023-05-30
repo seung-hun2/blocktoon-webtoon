@@ -17,6 +17,12 @@ spring:
     username: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
+  kafka:
+    bootstrapAddress: ${spring.kafka.bootstrapAddress}
+    viewTopic: viewCount
+    interestTopic: interestCount
+    viewGroup: viewCountGroup
+    interestGroup: interestCountGroup
 
   jpa:
     properties:
