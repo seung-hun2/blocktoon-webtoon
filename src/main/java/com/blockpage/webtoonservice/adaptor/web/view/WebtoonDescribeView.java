@@ -15,18 +15,24 @@ public class WebtoonDescribeView {
     private String webtoonTitle;
     private String creator;
     private String illustrator;
-    private PublicationDays publicationDays;
-    private GenreType genre;
-    private String webtoonThumbnail;
+    private String description;
+    private String publicationDays;
+    private String genre;
+    private String webtoonMainImage;
+    private Integer views;
+    private Integer interestCount;
     private List<ResponseEpisode> episodeViewList;
 
     public WebtoonDescribeView(List<ResponseEpisode> episodeViewList, ResponseWebtoon responseWebtoon) {
         this.webtoonTitle = responseWebtoon.getWebtoonTitle();
         this.creator = responseWebtoon.getCreator();
         this.illustrator = responseWebtoon.getIllustrator();
-        this.publicationDays = PublicationDays.findPublicationDaysByKey(responseWebtoon.getPublicationDays());
-        this.genre = GenreType.findGenreTypeByKey(responseWebtoon.getGenreType());
-        this.webtoonThumbnail = responseWebtoon.getWebtoonThumbnail();
+        this.description = responseWebtoon.getDescription();
+        this.publicationDays = PublicationDays.findPublicationDaysByKey(responseWebtoon.getPublicationDays()).getValue();
+        this.genre = GenreType.findGenreTypeByKey(responseWebtoon.getGenreType()).getValue();
+        this.webtoonMainImage = responseWebtoon.getWebtoonMainImage();
+        this.views = responseWebtoon.getViews();
+        this.interestCount = responseWebtoon.getInterestCount();
         this.episodeViewList = episodeViewList;
     }
 }
