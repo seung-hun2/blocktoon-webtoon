@@ -17,4 +17,8 @@ public interface WebtoonPort {
 
     List<Webtoon> findAll(String creator, String illustrator, String title);
 
+    void updateViewCount(Long webtoonId, Integer viewCount);
+
+    void updateInterestCount(Long webtoonId, Integer interestCount);
+
 }

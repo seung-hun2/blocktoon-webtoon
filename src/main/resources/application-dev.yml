@@ -14,6 +14,13 @@ spring:
     username: root
     password: 1234
 
+  kafka:
+    bootstrapAddress: localhost:9092
+    viewTopic: viewCount
+    interestTopic: interestCount
+    viewGroup: viewCountGroup
+    interestGroup: interestCountGroup
+
   jpa:
     properties:
       hibernate:
@@ -26,7 +33,7 @@ spring:
   cloud:
     gcp:
       credentials:
-          location: file:/Users/jungseunghun/Desktop/GCPkey/blockpage-dcdece1ce974.json
+        location: file:/Users/jungseunghun/Desktop/GCPkey/blockpage-dcdece1ce974.json
       project-id: blockpage
 
   servlet:

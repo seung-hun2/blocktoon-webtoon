@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -48,6 +49,22 @@ public class WebtoonAdaptor implements WebtoonPort {
         webtoonList = webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList();
 
         return webtoonList;
+    }
+
+    @Override
+    @Transactional
+    public void updateViewCount(Long webtoonId, Integer viewCount) {
+        Integer views = webtoonRepository.findById(webtoonId).get().getViews();
+        webtoonRepository.findById(webtoonId).get().updateViewCount(views + viewCount);
+    }
+
+    @Override
+    @Transactional
+    public void updateInterestCount(Long webtoonId, Integer interestCount) {
+        Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(webtoonId);
+        Integer interests = webtoonEntity.get().getInterestCount();
+
+        webtoonEntity.get().updateInterestCount(interests + interestCount);
     }
 
     @Override
