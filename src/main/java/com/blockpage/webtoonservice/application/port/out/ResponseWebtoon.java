@@ -10,6 +10,8 @@ public class ResponseWebtoon {
     private Long webtoonId;
     private String webtoonTitle;
     private String webtoonThumbnail;
+    private String webtoonMainImage;
+    private String description;
     private String creator;
     private String illustrator;
     private Integer views;
@@ -17,11 +19,13 @@ public class ResponseWebtoon {
     private Integer genreType;
     private Integer publicationDays;
 
-    public ResponseWebtoon(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
-        Integer interestCount, Integer genreType, Integer publicationDays) {
+    public ResponseWebtoon(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String webtoonMainImage, String description,
+        String creator, String illustrator, Integer views, Integer interestCount, Integer genreType, Integer publicationDays) {
         this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonThumbnail = webtoonThumbnail;
+        this.webtoonMainImage = webtoonMainImage;
+        this.description = description;
         this.creator = creator;
         this.illustrator = illustrator;
         this.views = views;
@@ -31,25 +35,13 @@ public class ResponseWebtoon {
     }
 
 
-    public static ResponseWebtoon toResponseFromEntity(WebtoonEntity webtoon) {
-        return new ResponseWebtoon(
-            webtoon.getId(),
-            webtoon.getWebtoonTitle(),
-            webtoon.getWebtoonThumbnail(),
-            webtoon.getCreator(),
-            webtoon.getIllustrator(),
-            webtoon.getViews(),
-            webtoon.getInterestCount(),
-            webtoon.getGenreType().getKey(),
-            webtoon.getPublicationDays().getKey()
-        );
-    }
-
     public static ResponseWebtoon toResponseFromDomain(Webtoon webtoon) {
         return new ResponseWebtoon(
             webtoon.getWebtoonId(),
             webtoon.getWebtoonTitle(),
             webtoon.getWebtoonThumbnail(),
+            webtoon.getWebtoonMainImage(),
+            webtoon.getWebtoonDescription(),
             webtoon.getCreator(),
             webtoon.getIllustrator(),
             webtoon.getViews(),
