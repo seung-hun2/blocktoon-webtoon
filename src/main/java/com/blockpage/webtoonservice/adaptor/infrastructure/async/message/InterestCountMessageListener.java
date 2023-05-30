@@ -18,7 +18,7 @@ public class InterestCountMessageListener {
     @KafkaListener(
         topics = "${spring.kafka.interestTopic}",
         groupId = "${spring.kafka.interestGroup}",
-        containerFactory = "kafkaListenerContainerFactory"
+        containerFactory = "viewKafkaListenerContainerFactory"
     )
     public void listenWithHeaders(@Payload InterestCountMessage interestCountMessage, @Headers MessageHeaders messageHeaders) {
         interestUseCase.updateInterest(InterestQuery.toRequestInterest(interestCountMessage));

@@ -25,7 +25,7 @@ public class ViewCountConsumerConfig {
     private String groupName;
 
     @Bean
-    public ConsumerFactory<String, ViewCountMessage> consumerFactory() {
+    public ConsumerFactory<String, ViewCountMessage> viewConsumerFactory() {
         JsonDeserializer<ViewCountMessage> deserializer = new JsonDeserializer<>(ViewCountMessage.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
@@ -44,9 +44,9 @@ public class ViewCountConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ViewCountMessage> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, ViewCountMessage> viewKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, ViewCountMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(viewConsumerFactory());
         return factory;
     }
 }

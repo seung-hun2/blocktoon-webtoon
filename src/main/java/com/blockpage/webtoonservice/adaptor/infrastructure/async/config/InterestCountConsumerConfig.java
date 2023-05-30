@@ -1,6 +1,6 @@
 package com.blockpage.webtoonservice.adaptor.infrastructure.async.config;
 
-import com.blockpage.webtoonservice.adaptor.infrastructure.async.message.ViewCountMessage;
+import com.blockpage.webtoonservice.adaptor.infrastructure.async.message.InterestCountMessage;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -25,8 +25,8 @@ public class InterestCountConsumerConfig {
     private String groupName;
 
     @Bean
-    public ConsumerFactory<String, ViewCountMessage> consumerFactory() {
-        JsonDeserializer<ViewCountMessage> deserializer = new JsonDeserializer<>(ViewCountMessage.class);
+    public ConsumerFactory<String, InterestCountMessage> interestConsumerFactory() {
+        JsonDeserializer<InterestCountMessage> deserializer = new JsonDeserializer<>(InterestCountMessage.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
         deserializer.setUseTypeMapperForKey(true);
@@ -34,7 +34,7 @@ public class InterestCountConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(consumerFactoryConfig(deserializer), new StringDeserializer(), deserializer);
     }
 
-    private Map<String, Object> consumerFactoryConfig(JsonDeserializer<ViewCountMessage> deserializer) {
+    private Map<String, Object> consumerFactoryConfig(JsonDeserializer<InterestCountMessage> deserializer) {
         HashMap<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServer);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupName);
@@ -44,9 +44,9 @@ public class InterestCountConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ViewCountMessage> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ViewCountMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, InterestCountMessage> interestKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, InterestCountMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(interestConsumerFactory());
         return factory;
     }
 }
