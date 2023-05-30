@@ -58,11 +58,12 @@ public class EpisodeAdaptor implements EpisodePort {
         EpisodeEntity episodeEntity = episodeRepository.findById(episodeId).get();
         String creator = webtoonRepository.findById(webtoonId).get().getCreator();
 
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.PUBLISH);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus.PUBLISH, webtoonId);
         String nextTitle = "", nextThumbnail = "";
+
         if (episodeNumber < episodeEntityList.size()) {
-            nextTitle = episodeEntityList.get(episodeNumber - 1).getEpisodeTitle();
-            nextThumbnail = episodeEntityList.get(episodeNumber - 1).getEpisodeThumbnail();
+            nextTitle = episodeEntityList.get(episodeNumber).getEpisodeTitle();
+            nextThumbnail = episodeEntityList.get(episodeNumber).getEpisodeThumbnail();
         }
 
         responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle,

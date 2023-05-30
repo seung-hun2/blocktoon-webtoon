@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
-    List<EpisodeEntity> findByEpisodeStatus(WebtoonStatus status);
+    List<EpisodeEntity> findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus status, Long webtoonId);
 
     List<EpisodeEntity> findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(Long webtoonId, WebtoonStatus status);
     List<EpisodeEntity> findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberAsc(Long webtoonId, WebtoonStatus status);
