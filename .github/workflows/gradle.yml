@@ -40,8 +40,9 @@ jobs:
         spring.datasource.password: ${{ secrets.DB_PASSWORD }}
         spring.gcp.storage.project-id: ${{ secrets.GCP_PROJECT_ID }}
         eureka.client.service-url.defaultZone: ${{secrets.EUREKA_DEFAULT_ZONE}}
-        
-    # Gradlew 실행 허용
+        spring.kafka.bootstrapAddress: ${{secrets.KAFKA_BOOTSTRAP_ADDRESS}}
+
+      # Gradlew 실행 허용
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
     # Gradle build (Test 제외)
