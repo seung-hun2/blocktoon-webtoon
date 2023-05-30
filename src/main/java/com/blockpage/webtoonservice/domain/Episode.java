@@ -43,6 +43,7 @@ public class Episode {
 
     public static Episode toDomainFromEntity(EpisodeEntity episodeEntity) {
         return Episode.builder()
+            .episodeId(episodeEntity.getId())
             .episodeTitle(episodeEntity.getEpisodeTitle())
             .episodeNumber(episodeEntity.getEpisodeNumber())
             .episodeThumbnail(episodeEntity.getEpisodeThumbnail())
