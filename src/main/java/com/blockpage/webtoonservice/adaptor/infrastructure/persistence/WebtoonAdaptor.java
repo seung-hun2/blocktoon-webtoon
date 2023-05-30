@@ -61,8 +61,10 @@ public class WebtoonAdaptor implements WebtoonPort {
     @Override
     @Transactional
     public void updateInterestCount(Long webtoonId, Integer interestCount) {
-        Integer interests = webtoonRepository.findById(webtoonId).get().getInterestCount();
-        webtoonRepository.findById(webtoonId).get().updateInterestCount(interests + interestCount);
+        Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(webtoonId);
+        Integer interests = webtoonEntity.get().getInterestCount();
+
+        webtoonEntity.get().updateInterestCount(interests + interestCount);
     }
 
     @Override
