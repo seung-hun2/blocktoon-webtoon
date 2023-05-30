@@ -7,13 +7,15 @@ import lombok.Getter;
 @Getter
 public class ResponseEpisode {
 
+    private Integer episodeNumber;
     private String episodeTitle;
     private String episodeThumbnail;
     private String uploadDate;
     private Integer totalScore;
 
 
-    public ResponseEpisode(String episodeTitle, String episodeThumbnail, String uploadDate, Integer totalScore) {
+    public ResponseEpisode(Integer episodeNumber, String episodeTitle, String episodeThumbnail, String uploadDate, Integer totalScore) {
+        this.episodeNumber = episodeNumber;
         this.episodeTitle = episodeTitle;
         this.episodeThumbnail = episodeThumbnail;
         this.uploadDate = uploadDate;
@@ -22,6 +24,7 @@ public class ResponseEpisode {
 
     public static ResponseEpisode toResponseFromEntity(EpisodeEntity episode) {
         return new ResponseEpisode(
+            episode.getEpisodeNumber(),
             episode.getEpisodeTitle(),
             episode.getEpisodeThumbnail(),
             episode.getUploadDate().toString(),
@@ -30,6 +33,7 @@ public class ResponseEpisode {
 
     public static ResponseEpisode toResponseFromDomain(Episode episode) {
         return new ResponseEpisode(
+            episode.getEpisodeNumber(),
             episode.getEpisodeTitle(),
             episode.getEpisodeThumbnail(),
             episode.getUploadDate(),
