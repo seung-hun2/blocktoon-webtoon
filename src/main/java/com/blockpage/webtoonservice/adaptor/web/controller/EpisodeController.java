@@ -31,7 +31,7 @@ public class EpisodeController {
     private final EpisodeUseCase episodeUseCase;
     private final WebtoonUseCase webtoonUseCase;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<ApiResponseView<WebtoonDescribeView>> episodeSearch(@RequestParam Long webtoonId,
         @RequestParam(required = false, defaultValue = "DESC") String sort) {
 
