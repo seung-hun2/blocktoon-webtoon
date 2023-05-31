@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.application.service;
 
 import com.blockpage.webtoonservice.application.port.in.InterestUseCase;
+import com.blockpage.webtoonservice.application.port.in.RatingUseCase;
 import com.blockpage.webtoonservice.application.port.in.ViewCountUseCase;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, InterestUseCase {
+public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, InterestUseCase, RatingUseCase {
 
     private final WebtoonPort webtoonPort;
 
@@ -76,5 +77,10 @@ public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, Interes
     @Override
     public void updateInterest(InterestQuery interestQuery) {
         webtoonPort.updateInterestCount(interestQuery.getWebtoonId(), interestQuery.getInterestCount());
+    }
+
+    @Override
+    public void updateRating(RatingQuery ratingQuery) {
+        webtoonPort.updateRating(ratingQuery.getWebtoonId(), ratingQuery.getTotalScore(), ratingQuery.getParticipantCount());
     }
 }

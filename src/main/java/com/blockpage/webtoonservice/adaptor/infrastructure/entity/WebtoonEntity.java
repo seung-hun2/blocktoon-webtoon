@@ -56,6 +56,10 @@ public class WebtoonEntity extends BaseEntity {
     private String creatorId;
     @Column
     private Integer views;
+    @Column
+    private Integer totalScore;
+    @Column
+    private Integer participantCount;
 
     public void update(WebtoonStatus webtoonStatus) {
         this.webtoonStatus = webtoonStatus;
@@ -65,10 +69,14 @@ public class WebtoonEntity extends BaseEntity {
         this.views = views;
     }
 
-    public void updateInterestCount(Integer interestCount){
+    public void updateInterestCount(Integer interestCount) {
         this.interestCount = interestCount;
     }
 
+    public void updateRating(Integer totalScore, Integer participantCount){
+        this.totalScore = totalScore;
+        this.participantCount = participantCount;
+    }
 
     public static WebtoonEntity toEntity(Demand demand, String mainUUID, String thumbnailUUID, int type) {
         return WebtoonEntity.builder()
@@ -85,6 +93,8 @@ public class WebtoonEntity extends BaseEntity {
             .interestCount(0)
             .illustrator(demand.getIllustrator())
             .views(0)
+            .totalScore(0)
+            .participantCount(0)
             .build();
     }
 

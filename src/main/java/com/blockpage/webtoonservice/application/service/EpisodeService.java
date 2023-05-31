@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.application.service;
 
 import com.blockpage.webtoonservice.application.port.in.EpisodeUseCase;
+import com.blockpage.webtoonservice.application.port.in.RatingUseCase;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseCreatorEpisode;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisode;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EpisodeService implements EpisodeUseCase {
+public class EpisodeService implements EpisodeUseCase, RatingUseCase {
 
     private final EpisodePort episodePort;
 
@@ -37,4 +38,8 @@ public class EpisodeService implements EpisodeUseCase {
         return ResponseEpisodeDetail.toResponseFromDomain(episode);
     }
 
+    @Override
+    public void updateRating(RatingQuery ratingQuery) {
+        episodePort.updateRating(ratingQuery.getEpisodeId(), ratingQuery.getTotalScore(), ratingQuery.getParticipantCount());
+    }
 }
