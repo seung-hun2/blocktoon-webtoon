@@ -3,6 +3,7 @@ package com.blockpage.webtoonservice.domain;
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeImage;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +45,7 @@ public class Episode {
     }
 
     public static Episode toDomainFromEntity(EpisodeEntity episodeEntity) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
         return Episode.builder()
             .episodeId(episodeEntity.getId())
             .episodeTitle(episodeEntity.getEpisodeTitle())
@@ -51,7 +53,7 @@ public class Episode {
             .episodeThumbnail(episodeEntity.getEpisodeThumbnail())
             .totalScore(episodeEntity.getTotalScore())
             .participantCount(episodeEntity.getParticipantCount())
-            .uploadDate(episodeEntity.getUploadDate().toString())
+            .uploadDate(simpleDateFormat.format(episodeEntity.getUploadDate()))
             .build();
     }
 
