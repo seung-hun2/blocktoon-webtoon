@@ -39,7 +39,7 @@ public class DemandController {
         @RequestHeader String email,
         @RequestParam String target,
         @RequestParam String type,
-        @RequestBody RequestDemand requestDemand,
+        @ModelAttribute RequestDemand requestDemand,
         @ModelAttribute MultipartFile webtoonMainImage,
         @ModelAttribute MultipartFile webtoonThumbnail,
         @ModelAttribute MultipartFile episodeThumbnail,
