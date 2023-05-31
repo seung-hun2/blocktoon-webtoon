@@ -10,12 +10,16 @@ import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EpisodeAdaptor implements EpisodePort {
 
     private final EpisodeRepository episodeRepository;
@@ -27,10 +31,10 @@ public class EpisodeAdaptor implements EpisodePort {
 
         List<Episode> episodeList;
         List<EpisodeEntity> episodeEntityList = null;
-        if(sort.equals("ASC")){
+        if (sort.equals("ASC")) {
             episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberAsc(webtoonId,
                 WebtoonStatus.PUBLISH);
-        }else if (sort.equals("DESC")){
+        } else if (sort.equals("DESC")) {
             episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
                 WebtoonStatus.PUBLISH);
         }
@@ -58,7 +62,8 @@ public class EpisodeAdaptor implements EpisodePort {
         EpisodeEntity episodeEntity = episodeRepository.findById(episodeId).get();
         String creator = webtoonRepository.findById(webtoonId).get().getCreator();
 
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus.PUBLISH, webtoonId);
+        List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus.PUBLISH,
+            webtoonId);
         String nextTitle = "", nextThumbnail = "";
 
         if (episodeNumber < episodeEntityList.size()) {
@@ -70,5 +75,19 @@ public class EpisodeAdaptor implements EpisodePort {
             nextThumbnail);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
+    }
+
+    @Override
+    @Transactional
+    public void updateRating(Long episodeId, Integer totalScore, Integer participantCount) {
+        Optional<EpisodeEntity> episodeEntity = episodeRepository.findById(episodeId);
+        Integer total = episodeEntity.get().getTotalScore();
+        Integer participants = episodeEntity.get().getParticipantCount();
+        episodeEntity.get().updateRating(totalScore + total, participants + participantCount);
+        log.info("before total : " + totalScore);
+        log.info("after total : " + (total + totalScore));
+        log.info("before participantCount : " + participantCount);
+        log.info("after participantCount : " + (participants + participantCount));
+
     }
 }

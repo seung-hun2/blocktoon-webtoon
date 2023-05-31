@@ -59,18 +59,9 @@ public class EpisodeEntity extends BaseEntity {
         this.episodeStatus = webtoonStatus;
     }
 
-    public static EpisodeEntity toEntity(Demand demand, int type) throws ParseException {
-
-        return EpisodeEntity.builder()
-            .episodeTitle(demand.getEpisodeTitle())
-            .episodeNumber(demand.getEpisodeNumber())
-            .creatorId(demand.getCreatorId())
-            .webtoonId(demand.getWebtoonId())
-            .uploadDate(new SimpleDateFormat("yyyyMMdd").parse(demand.getUploadDate()))
-            .authorWords(demand.getAuthorWords())
-            .episodeThumbnail(demand.getThumbnail())
-            .episodeStatus(WebtoonStatus.findWebtoonStatusByKey(type))
-            .build();
+    public void updateRating(Integer totalScore, Integer participantCount){
+        this.totalScore = totalScore;
+        this.participantCount = participantCount;
     }
 
     public static EpisodeEntity toEntity(Demand demand, String thumbnail, int type) throws ParseException {
