@@ -18,8 +18,11 @@ spring:
     bootstrapAddress: localhost:9092
     viewTopic: viewCount
     interestTopic: interestCount
+    ratingTopic: rating
     viewGroup: viewCountGroup
     interestGroup: interestCountGroup
+    ratingGroup: ratingGroup
+
 
   jpa:
     properties:
