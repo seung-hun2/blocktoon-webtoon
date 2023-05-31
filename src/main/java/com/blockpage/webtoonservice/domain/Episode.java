@@ -26,6 +26,8 @@ public class Episode {
     private String authorWords;
     private String nextEpisodeTitle;
     private String nextEpisodeThumbnail;
+    private double nextRating;
+    private String nextUploadDate;
 
     @Getter
     @Builder
@@ -63,6 +65,8 @@ public class Episode {
             .authorWords(responseEpisodeDetail.getAuthorWords())
             .nextEpisodeTitle(responseEpisodeDetail.getNextEpisodeTitle())
             .nextEpisodeThumbnail(responseEpisodeDetail.getNextEpisodeThumbnail())
+            .nextRating(responseEpisodeDetail.getNextRating())
+            .nextUploadDate(responseEpisodeDetail.getNextUploadDate())
             .build();
     }
 
