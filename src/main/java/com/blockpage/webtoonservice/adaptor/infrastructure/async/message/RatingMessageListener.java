@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RatingMessageListener {
 
-    private final RatingUseCase ratingUseCase;
+    private final RatingUseCase webtoonService;
+    private final RatingUseCase episodeService;
 
     @KafkaListener(
         topics = "${spring.kafka.ratingTopic}",
@@ -23,6 +24,7 @@ public class RatingMessageListener {
         containerFactory = "ratingKafkaListenerContainerFactory"
     )
     public void listenWithHeaders(@Payload RatingMessage ratingMessage, @Headers MessageHeaders messageHeaders) {
-        ratingUseCase.updateRating(RatingQuery.fromMessage(ratingMessage));
+        webtoonService.updateRating(RatingQuery.fromMessage(ratingMessage));
+        episodeService.updateRating(RatingQuery.fromMessage(ratingMessage));
     }
 }
