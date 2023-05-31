@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,16 +33,16 @@ public class DemandController {
 
     private final DemandUseCase demandUseCase;
 
-    @PostMapping("")
+    @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<ApiResponseView<MessageView>> postDemand(
         @RequestHeader String email,
         @RequestParam String target,
         @RequestParam String type,
-        @RequestPart RequestDemand requestDemand,
-        @RequestPart(required = false) MultipartFile webtoonMainImage,
-        @RequestPart(required = false) MultipartFile webtoonThumbnail,
-        @RequestPart(required = false) MultipartFile episodeThumbnail,
-        @RequestPart(required = false) List<MultipartFile> episodeImage) throws IOException, ParseException {
+        @ModelAttribute RequestDemand requestDemand,
+        @ModelAttribute MultipartFile webtoonMainImage,
+        @ModelAttribute MultipartFile webtoonThumbnail,
+        @ModelAttribute MultipartFile episodeThumbnail,
+        @ModelAttribute List<MultipartFile> episodeImage) throws IOException, ParseException {
 
         // creatorId Authentication 으로 받아오기 !
         if (episodeThumbnail == null) {
