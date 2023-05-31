@@ -20,9 +20,11 @@ public class ResponseEpisodeDetail {
     private String authorWords;
     private String nextEpisodeTitle;
     private String nextEpisodeThumbnail;
+    private double nextRating;
+    private String nextUploadDate;
 
     public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList,
-        String nextTitle, String nextThumbnail) {
+        String nextTitle, String nextThumbnail, double nextRating, String nextUploadDate) {
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
@@ -31,6 +33,8 @@ public class ResponseEpisodeDetail {
             .authorWords(episode.getAuthorWords())
             .nextEpisodeTitle(nextTitle)
             .nextEpisodeThumbnail(nextThumbnail)
+            .nextRating(nextRating)
+            .nextUploadDate(nextUploadDate)
             .images(imageEntityList.stream()
                 .map(ResponseEpisodeImage::toResponseFromEntity)
                 .collect(Collectors.toList())
@@ -47,6 +51,8 @@ public class ResponseEpisodeDetail {
             .authorWords(episode.getAuthorWords())
             .nextEpisodeTitle(episode.getNextEpisodeTitle())
             .nextEpisodeThumbnail(episode.getNextEpisodeThumbnail())
+            .nextRating(episode.getNextRating())
+            .nextUploadDate(episode.getNextUploadDate())
             .images(episode.getImages().stream().map(ResponseEpisodeImage::toResponseFromDomain).toList())
             .build();
     }

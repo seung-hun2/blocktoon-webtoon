@@ -9,6 +9,7 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,15 +65,21 @@ public class EpisodeAdaptor implements EpisodePort {
 
         List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus.PUBLISH,
             webtoonId);
-        String nextTitle = "", nextThumbnail = "";
+        String nextTitle = "", nextThumbnail = "", nextUploadDate = "";
+        double nextRating = 0;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
 
         if (episodeNumber < episodeEntityList.size()) {
             nextTitle = episodeEntityList.get(episodeNumber).getEpisodeTitle();
             nextThumbnail = episodeEntityList.get(episodeNumber).getEpisodeThumbnail();
+            nextUploadDate = simpleDateFormat.format(episodeEntityList.get(episodeNumber).getUploadDate());
+            if (episodeEntityList.get(episodeNumber).getParticipantCount() != 0) {
+                nextRating =
+                    episodeEntityList.get(episodeNumber).getTotalScore() / episodeEntityList.get(episodeNumber).getParticipantCount();
+            }
         }
-
         responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle,
-            nextThumbnail);
+            nextThumbnail, nextRating, nextUploadDate);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
     }
