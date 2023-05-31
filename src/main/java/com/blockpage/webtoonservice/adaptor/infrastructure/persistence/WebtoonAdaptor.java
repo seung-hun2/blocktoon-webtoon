@@ -12,11 +12,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class WebtoonAdaptor implements WebtoonPort {
 
@@ -64,6 +67,19 @@ public class WebtoonAdaptor implements WebtoonPort {
         Integer interests = webtoonEntity.get().getInterestCount();
 
         webtoonEntity.get().updateInterestCount(interests + interestCount);
+    }
+
+    @Override
+    @Transactional
+    public void updateRating(Long webtoonId, Integer totalScore, Integer participantCount) {
+        Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(webtoonId);
+        Integer total = webtoonEntity.get().getTotalScore();
+        Integer participants = webtoonEntity.get().getParticipantCount();
+        webtoonEntity.get().updateRating(totalScore + total, participants + participantCount);
+        log.info("before total : " + totalScore);
+        log.info("after total : " + (total + totalScore));
+        log.info("before participantCount : " + participantCount);
+        log.info("after participantCount : " + (participants + participantCount));
     }
 
     @Override
