@@ -18,11 +18,12 @@ public class EpisodeDetailView {
     private String authorWords;
     private String nextEpisodeTitle;
     private String nextEpisodeThumbnail;
+    private double nextRating;
+    private String nextUploadDate;
 
 
     public EpisodeDetailView(List<EpisodeImageView> images, Long episodeId, Integer commentCount, double rating, String author,
-        String authorWords,
-        String nextEpisodeTitle, String nextEpisodeThumbnail) {
+        String authorWords, String nextEpisodeTitle, String nextEpisodeThumbnail, double nextRating, String nextUploadDate) {
         this.images = images;
         this.episodeId = episodeId;
         this.commentCount = commentCount;
@@ -31,6 +32,8 @@ public class EpisodeDetailView {
         this.authorWords = authorWords;
         this.nextEpisodeTitle = nextEpisodeTitle;
         this.nextEpisodeThumbnail = nextEpisodeThumbnail;
+        this.nextRating = nextRating;
+        this.nextUploadDate = nextUploadDate;
     }
 
 
@@ -47,6 +50,8 @@ public class EpisodeDetailView {
             .authorWords(responseEpisodeDetail.getAuthorWords())
             .nextEpisodeTitle(responseEpisodeDetail.getNextEpisodeTitle())
             .nextEpisodeThumbnail(responseEpisodeDetail.getNextEpisodeThumbnail())
+            .nextRating(responseEpisodeDetail.getNextRating())
+            .nextUploadDate(responseEpisodeDetail.getNextUploadDate())
             .build();
     }
 
