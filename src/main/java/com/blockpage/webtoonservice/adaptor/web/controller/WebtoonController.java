@@ -11,6 +11,7 @@ import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,9 +67,8 @@ public class WebtoonController {
 
 
     @GetMapping("/creator")
-    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byCreator() {
-        // Authentication 으로 memberId 받아와야함.
-        String memberId = "xxx@gmail.com";
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byCreator(
+        @RequestHeader String memberId) {
         List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findWebtoonByCreator(memberId);
         List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 
