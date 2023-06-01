@@ -34,7 +34,7 @@ public class DemandController {
 
     private final DemandUseCase demandUseCase;
 
-    @PostMapping(consumes = {"multipart/form-data"})
+    @PostMapping
     public ResponseEntity<ApiResponseView<MessageView>> postDemand(
         @RequestHeader String email,
         @RequestParam String target,
