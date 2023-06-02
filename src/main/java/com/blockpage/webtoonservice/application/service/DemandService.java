@@ -85,8 +85,10 @@ public class DemandService implements DemandUseCase {
         } else if (demandQuery.getTarget().equals("episode")) {
             Demand demand = Demand.toDomainFromGet(demandQuery);
             System.out.println("demand = " + demand.getEpisodeTitle());
-            List<Demand> demands = demandPort.getEpisodeDemand(demand, demandQuery.getType(), demandQuery.getPageNo()) != null ? demandPort.getEpisodeDemand(demand,
-                demandQuery.getType(), demandQuery.getPageNo()) : new ArrayList<>();
+            List<Demand> demands =
+                demandPort.getEpisodeDemand(demand, demandQuery.getType(), demandQuery.getPageNo()) != null ? demandPort.getEpisodeDemand(
+                    demand, demandQuery.getType(), demandQuery.getPageNo()) : new ArrayList<>();
+
             return demands.stream().map(DemandDto::toDtoFromDomain).toList();
         }
         return null;

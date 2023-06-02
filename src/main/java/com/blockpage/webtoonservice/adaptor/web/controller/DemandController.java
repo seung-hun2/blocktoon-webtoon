@@ -36,7 +36,7 @@ public class DemandController {
 
     @PostMapping
     public ResponseEntity<ApiResponseView<MessageView>> postDemand(
-        @RequestHeader String email,
+        @RequestHeader String memberId,
         @RequestParam String target,
         @RequestParam String type,
         @ModelAttribute RequestDemand requestDemand,
@@ -49,11 +49,11 @@ public class DemandController {
         if (episodeThumbnail == null) {
             // webtoon 이 등록 -> query 로 매핑 할 때 달라져야 함
             demandUseCase.postDemand(
-                DemandQuery.toQueryFromWebtoon(email, target, type, requestDemand, webtoonMainImage, webtoonThumbnail));
+                DemandQuery.toQueryFromWebtoon(memberId, target, type, requestDemand, webtoonMainImage, webtoonThumbnail));
         } else {
             // episode 가 등록 -> query 매핑
             demandUseCase.postDemand(
-                DemandQuery.toQueryFromEpisode(email, target, type, requestDemand, episodeThumbnail, episodeImage));
+                DemandQuery.toQueryFromEpisode(memberId, target, type, requestDemand, episodeThumbnail, episodeImage));
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
@@ -61,7 +61,7 @@ public class DemandController {
 
     @PutMapping("")
     public ResponseEntity<ApiResponseView<MessageView>> checkDemand(
-        @RequestHeader String email,
+        @RequestHeader String memberId,
         @RequestParam String target,
         @RequestParam String type,
         @RequestParam String whether,
@@ -69,9 +69,9 @@ public class DemandController {
         @RequestParam(required = false) Long episodeId) throws IOException, ParseException {
 
         if (webtoonId != null) {
-            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, email, webtoonId));
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, memberId, webtoonId));
         } else if (episodeId != null) {
-            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, email, episodeId));
+            demandUseCase.checkDemand(DemandQuery.toQueryFromId(target, type, whether, memberId, episodeId));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponseView<>(new MessageView("실패 하였습니다.")));
         }
@@ -81,12 +81,11 @@ public class DemandController {
 
     @GetMapping()
     public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(
-        @RequestHeader String email,
         @RequestParam String target,
         @RequestParam String type,
         @RequestParam Integer pageNo) throws IOException {
 
-        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, email, pageNo));
+        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, pageNo));
         List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));

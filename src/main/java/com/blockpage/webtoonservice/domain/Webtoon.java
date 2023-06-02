@@ -19,6 +19,7 @@ public class Webtoon {
     private PublicationDays publicationDays;
     private String webtoonMainImage;
     private String webtoonThumbnail;
+    private String webtoonStatus;
     private GenreType genre;
     private Integer interestCount;
     private Integer views;
@@ -79,6 +80,7 @@ public class Webtoon {
             .illustrator(webtoon.getIllustrator())
             .views(webtoon.getViews())
             .interestCount(webtoon.getInterestCount())
+            .webtoonStatus(webtoon.getWebtoonStatus().getValue())
             .genre(GenreType.findGenreTypeByKey(webtoon.getGenreType().getKey()))
             .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.getPublicationDays().getKey()))
             .build();

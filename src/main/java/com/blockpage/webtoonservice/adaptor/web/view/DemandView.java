@@ -16,6 +16,7 @@ import lombok.Getter;
 @JsonInclude(Include.NON_NULL)
 public class DemandView {
 
+    private Long webtoonId;
     private String webtoonTitle;
     private String webtoonDescription;
     private String genre;
@@ -25,12 +26,17 @@ public class DemandView {
     private String webtoonThumbnail;
     private Integer episodeStatus;
 
+    private Long episodeId;
     private String episodeTitle;
     private String uploadDate;
     private String authorWords;
     private String episodeThumbnail;
     private List<String> episodeImages;
     private Integer webtoonStatus;
+
+    private String main;
+    private String thumbnail;
+    private List<String> images;
 
 
     public DemandView(String webtoonTitle, String episodeTitle, String uploadDate, String authorWords, String episodeThumbnail,
@@ -58,15 +64,20 @@ public class DemandView {
 
     public static DemandView toView(DemandDto demandDto) {
         return DemandView.builder()
+            .webtoonId(demandDto.getWebtoonId())
             .webtoonTitle(demandDto.getWebtoonTitle())
             .webtoonDescription(demandDto.getWebtoonDescription())
             .genre(demandDto.getGenre() != null ? GenreType.findGenreTypeByKey(demandDto.getGenre()).toString() : null)
             .publicationDays(demandDto.getPublicationDays() != null ? PublicationDays.findPublicationDaysByKey(demandDto.getPublicationDays()).toString() : null)
             .webtoonMainImage(demandDto.getWebtoonMainImage() != null ? demandDto.getWebtoonMainImage().getName() : null)
             .webtoonThumbnail(demandDto.getWebtoonThumbnail() != null ? demandDto.getWebtoonThumbnail().getName() : null)
+            .episodeId(demandDto.getEpisodeId())
             .episodeTitle(demandDto.getEpisodeTitle() != null ? demandDto.getEpisodeTitle() : null)
             .uploadDate(demandDto.getUploadDate() != null ? demandDto.getUploadDate().toString() : null)
             .authorWords(demandDto.getAuthorWords() != null ? demandDto.getAuthorWords() : null)
+            .main(demandDto.getMain())
+            .thumbnail(demandDto.getThumbnail())
+            .images(demandDto.getImages())
             .build();
     }
 }

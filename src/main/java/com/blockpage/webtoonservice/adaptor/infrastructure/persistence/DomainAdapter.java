@@ -15,6 +15,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -289,17 +290,13 @@ public class DomainAdapter implements DemandPort {
 
     @Override
     public List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException {
-        Pageable pageable = PageRequest.of(pageNo,10);
+        Pageable pageable = PageRequest.of(pageNo, 10);
 
         Page<WebtoonEntity> webtoonEntityList = switch (type) {
-            case "modify" -> webtoonRepository.findByCreatorIdAndWebtoonStatus(demand.getCreatorId(),
-                WebtoonStatus.findWebtoonStatusByKey(3), pageable);
-            case "remove" -> webtoonRepository.findByCreatorIdAndWebtoonStatus(demand.getCreatorId(),
-                WebtoonStatus.findWebtoonStatusByKey(5), pageable);
+            case "modify" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(3), pageable);
+            case "remove" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(5), pageable);
             default -> null;
         };
-
-
         return webtoonEntityList.stream().map(Demand::toDomainFromWebtoonEntity).toList();
     }
 
@@ -310,22 +307,16 @@ public class DomainAdapter implements DemandPort {
         Page<EpisodeEntity> episodeEntityList = null;
         switch (type) {
             case "enroll":
-                episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(1), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(1), pageable);
                 break;
             case "modify":
-                episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(3), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(3), pageable);
                 break;
             case "remove":
-                episodeEntityList = episodeRepository.findByCreatorIdAndEpisodeStatus(demand.getCreatorId(),
-                    WebtoonStatus.findWebtoonStatusByKey(5), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(5), pageable);
                 break;
         }
-        List<Episode> episodeList = episodeEntityList != null ? episodeEntityList.stream().map(Episode::toDomainFromEntity).toList() : null;
-        List<Demand> demandList = null;
 
-        return episodeEntityList != null ?
-            episodeEntityList.stream().map(Demand::toDomainFromEpisodeEntity).collect(Collectors.toList()) : null;
+        return episodeEntityList.stream().map(Demand::toDomainFromEpisodeEntity).toList();
     }
 }

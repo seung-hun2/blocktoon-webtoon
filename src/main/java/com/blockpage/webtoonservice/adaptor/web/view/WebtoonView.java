@@ -14,9 +14,10 @@ public class WebtoonView {
     private Integer views;
     private Integer interestCount;
     private Integer genreType;
+    private String webtoonStatus;
 
     public WebtoonView(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
-        Integer interestCount, Integer genreType) {
+        Integer interestCount, Integer genreType, String webtoonStatus) {
         this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonThumbnail = webtoonThumbnail;
@@ -25,6 +26,7 @@ public class WebtoonView {
         this.views = views;
         this.interestCount = interestCount;
         this.genreType = genreType;
+        this.webtoonStatus = webtoonStatus;
     }
 
     public static WebtoonView toViewFromResponse(ResponseWebtoon webtoon) {
@@ -36,6 +38,7 @@ public class WebtoonView {
             webtoon.getIllustrator(),
             webtoon.getViews(),
             webtoon.getInterestCount(),
-            webtoon.getGenreType());
+            webtoon.getGenreType(),
+            webtoon.getWebtoonStatus());
     }
 }

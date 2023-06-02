@@ -23,5 +23,5 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
     void deleteByEpisodeTitleAndCreatorIdAndEpisodeStatus(String title, String creatorId, WebtoonStatus status);
 
-    Page<EpisodeEntity> findByCreatorIdAndEpisodeStatus(String creatorId, WebtoonStatus status, Pageable pageable);
+    Page<EpisodeEntity> findByEpisodeStatus(WebtoonStatus status, Pageable pageable);
 }
