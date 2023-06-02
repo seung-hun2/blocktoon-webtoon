@@ -32,6 +32,9 @@ public interface DemandUseCase {
         MultipartFile episodeThumbnail;
         List<MultipartFile> episodeImage;
         Integer pageNo;
+        Long webtoonId;
+        Long episodeId;
+
 
         public static DemandQuery toQueryFromWebtoon(String creatorId, String target, String type, RequestDemand requestDemand,
             MultipartFile webtoonMainImage, MultipartFile webtoonThumbnail) {

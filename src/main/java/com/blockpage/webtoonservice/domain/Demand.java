@@ -46,6 +46,7 @@ public class Demand {
         return Demand.builder()
             .creatorId(demandQuery.getCreatorId())
             .creator(demandQuery.getRequestDemand().getCreatorNickname())
+            .webtoonId(demandQuery.getWebtoonId())
             .webtoonTitle(demandQuery.getRequestDemand().getWebtoonTitle())
             .webtoonDescription(demandQuery.getRequestDemand().getWebtoonDescription())
             .genre(demandQuery.getRequestDemand().getGenre())

@@ -19,6 +19,7 @@ public class WebtoonDescribeView {
     private String publicationDays;
     private String genre;
     private String webtoonMainImage;
+    private String webtoonThumbnail;
     private Integer views;
     private Integer interestCount;
     private List<ResponseEpisode> episodeViewList;
@@ -31,6 +32,7 @@ public class WebtoonDescribeView {
         this.publicationDays = PublicationDays.findPublicationDaysByKey(responseWebtoon.getPublicationDays()).getValue();
         this.genre = GenreType.findGenreTypeByKey(responseWebtoon.getGenreType()).getValue();
         this.webtoonMainImage = responseWebtoon.getWebtoonMainImage();
+        this.webtoonThumbnail = responseWebtoon.getWebtoonThumbnail();
         this.views = responseWebtoon.getViews();
         this.interestCount = responseWebtoon.getInterestCount();
         this.episodeViewList = episodeViewList;
