@@ -21,7 +21,7 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, J
 
     List<WebtoonEntity> findByCreatorId(String creatorId);
 
-    Page<WebtoonEntity> findByCreatorIdAndWebtoonStatus(String creatorId, WebtoonStatus webtoonStatus, Pageable pageable);
+    Page<WebtoonEntity> findByWebtoonStatus(WebtoonStatus webtoonStatus, Pageable pageable);
 
     Optional<WebtoonEntity> findByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, String creatorId, WebtoonStatus status);
 

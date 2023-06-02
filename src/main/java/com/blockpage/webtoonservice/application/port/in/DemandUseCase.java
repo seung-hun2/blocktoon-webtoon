@@ -67,11 +67,10 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromId(String target, String type, String creatorId, Integer pageNo){
+        public static DemandQuery toQueryFromId(String target, String type, Integer pageNo){
             return DemandQuery.builder()
                 .target(target)
                 .type(type)
-                .creatorId(creatorId)
                 .pageNo(pageNo)
                 .build();
         }

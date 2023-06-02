@@ -22,11 +22,16 @@ public class DemandDto {
     private MultipartFile webtoonThumbnail;
 
     private Long webtoonId;
+    private Long episodeId;
     private Integer episodeNumber;
     private String episodeTitle;
     private String uploadDate;
     private MultipartFile episodeThumbnail;
     private List<MultipartFile> episodeImages;
+
+    private String main;
+    private String thumbnail;
+    private List<String> images;
 
     public static DemandDto toDtoFromDomain(Demand demand) {
         return DemandDto.builder()
@@ -41,11 +46,15 @@ public class DemandDto {
             .webtoonMainImage(demand.getWebtoonMainImage())
             .webtoonThumbnail(demand.getWebtoonThumbnail())
             .episodeNumber(demand.getEpisodeNumber())
+            .episodeId(demand.getEpisodeId())
             .episodeTitle(demand.getEpisodeTitle())
             .uploadDate(demand.getUploadDate())
             .authorWords(demand.getAuthorWords())
             .episodeThumbnail(demand.getEpisodeThumbnail())
             .episodeImages(demand.getEpisodeImages())
+            .main(demand.getMain())
+            .thumbnail(demand.getThumbnail())
+            .images(demand.getImages())
             .build();
     }
 }
