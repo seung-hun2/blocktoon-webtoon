@@ -316,20 +316,6 @@ public class DomainAdapter implements DemandPort {
                 episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(5), pageable);
                 break;
         }
-        List<Demand> demandList;
-//        for (int i = 0; i < (episodeEntityList != null ? episodeEntityList.getSize() : 0); i++) {
-//            List<Long> webtoonIds = episodeEntityList.get().map(EpisodeEntity::getWebtoonId).toList();
-//            List<Integer> episodeNumbers = episodeEntityList.get().map(EpisodeEntity::getEpisodeNumber).toList();
-//            List<String> imageEntityList = new ArrayList<>();
-//            for (int j = 0; j < episodeNumbers.get(i); j++) {
-//                //image 들 ,,
-//                imageEntityList.add(imageRepository.findByWebtoonIdAndEpisodeNumber(webtoonIds.get(j), episodeNumbers.get(j)).get(j).getImage());
-//            }
-//            demandList.set(i,Demand.toDomainFromEpisodeEntity(episodeEntityList.toList().get(i)));
-//        }
-//        for (int i = 0; i < (episodeEntityList != null ? episodeEntityList.getSize() : 0); i++) {
-//            demandList.set(i, Demand.toDomainFromEpisodeEntity(episodeEntityList.toList().get(i)));
-//        }
 
         return episodeEntityList.stream().map(Demand::toDomainFromEpisodeEntity).toList();
     }
