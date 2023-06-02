@@ -10,11 +10,14 @@ import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,5 +99,13 @@ public class EpisodeAdaptor implements EpisodePort {
         log.info("before participantCount : " + participantCount);
         log.info("after participantCount : " + (participants + participantCount));
 
+    }
+
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void scheduleTask() {
+        Date now = new Date();
+        episodeRepository.bulkPriceChange(now);
     }
 }
