@@ -46,7 +46,6 @@ public class EpisodeController {
 
     @GetMapping("/creator")
     public ResponseEntity<ApiResponseView<List<CreatorEpisodeView>>> myWebtoonSearch(
-        @RequestHeader Long memberId,
         @RequestParam Long webtoonId) {
 
         List<ResponseCreatorEpisode> responseCreatorEpisodeList = episodeUseCase.findCreatorEpisode(webtoonId);
