@@ -81,4 +81,21 @@ public class EpisodeEntity extends BaseEntity {
             .build();
     }
 
+    public static EpisodeEntity copyEntity(EpisodeEntity episode) {
+        return EpisodeEntity.builder()
+            .episodeTitle(episode.getEpisodeTitle())
+            .episodeNumber(episode.getEpisodeNumber())
+            .webtoonId(episode.getWebtoonId())
+            .creatorId(episode.getCreatorId())
+            .uploadDate(episode.getUploadDate())
+            .authorWords(episode.getAuthorWords())
+            .episodeThumbnail(episode.getEpisodeThumbnail())
+            .episodeStatus(episode.getEpisodeStatus())
+            .commentCount(0)
+            .episodePrice(4)
+            .participantCount(0)
+            .totalScore(0)
+            .build();
+    }
+
 }

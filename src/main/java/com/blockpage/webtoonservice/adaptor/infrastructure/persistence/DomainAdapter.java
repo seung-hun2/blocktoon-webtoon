@@ -6,6 +6,8 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.EpisodeRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.DemandPort;
 import com.blockpage.webtoonservice.domain.Demand;
@@ -132,6 +134,10 @@ public class DomainAdapter implements DemandPort {
     public void removeWebtoonDemand(Demand demand) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(),
             demand.getCreatorId(), WebtoonStatus.PUBLISH);
+        System.out.println("demand.getWebtoonTitle() = " + demand.getWebtoonTitle());
+        System.out.println("demand.getCreatorId() = " + demand.getCreatorId());
+        WebtoonEntity webtoon = WebtoonEntity.copyEntity(webtoonEntity.get());
+        webtoonRepository.save(webtoon);
         webtoonEntity.get().update(WebtoonStatus.REMOVE_WAITING);
     }
 
@@ -201,6 +207,8 @@ public class DomainAdapter implements DemandPort {
     public void removeEpisodeDemand(Demand demand) {
         Optional<EpisodeEntity> episodeEntity = episodeRepository.findByWebtoonIdAndEpisodeNumberAndEpisodeStatus(demand.getWebtoonId(),
             demand.getEpisodeNumber(), WebtoonStatus.PUBLISH);
+        EpisodeEntity episode = EpisodeEntity.copyEntity(episodeEntity.get());
+        episodeRepository.save(episode);
         episodeEntity.get().update(WebtoonStatus.REMOVE_WAITING);
     }
 
@@ -263,6 +271,12 @@ public class DomainAdapter implements DemandPort {
             String episodeTitle = current.get().getEpisodeTitle();
             Optional<EpisodeEntity> episodeEntity = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
                 WebtoonStatus.PUBLISH);
+            switch (type) {
+                case "remove":
+
+                default:
+            }
+
             episodeEntity.get().update(WebtoonStatus.REMOVE);
             current.get().update(WebtoonStatus.PUBLISH);
 

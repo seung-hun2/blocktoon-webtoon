@@ -98,5 +98,24 @@ public class WebtoonEntity extends BaseEntity {
             .build();
     }
 
+    public static WebtoonEntity copyEntity(WebtoonEntity webtoon) {
+        return WebtoonEntity.builder()
+            .creator(webtoon.getCreator())
+            .webtoonStatus(webtoon.getWebtoonStatus())
+            .webtoonDescription(webtoon.getWebtoonDescription())
+            .webtoonTitle(webtoon.getWebtoonTitle())
+            .webtoonMainImage(webtoon.getWebtoonMainImage())
+            .webtoonThumbnail(webtoon.getWebtoonThumbnail())
+            .creatorId(webtoon.getCreatorId())
+            .genreType(webtoon.getGenreType())
+            .publicationDays(webtoon.getPublicationDays())
+            .interestCount(0)
+            .illustrator(webtoon.getIllustrator())
+            .views(0)
+            .totalScore(0)
+            .participantCount(0)
+            .build();
+    }
+
 
 }
