@@ -1,6 +1,10 @@
 package com.blockpage.webtoonservice.adaptor.web.view;
 
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
+import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
+import java.util.Arrays;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
@@ -18,6 +22,9 @@ public class WebtoonView {
 
     private Integer publicationDays;
     private String webtoonDescription;
+
+
+
 
     public WebtoonView(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String creator, String illustrator, Integer views,
         Integer interestCount, Integer genre, String webtoonStatus, Integer publicationDays, String webtoonDescription) {
@@ -49,4 +56,5 @@ public class WebtoonView {
             webtoon.getDescription()
         );
     }
+
 }

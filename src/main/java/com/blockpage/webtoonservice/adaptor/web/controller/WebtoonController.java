@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
+import com.blockpage.webtoonservice.adaptor.web.view.SearchWebtoonView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
@@ -78,12 +79,12 @@ public class WebtoonController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ApiResponseView<List<WebtoonView>>> searchAll(
+    public ResponseEntity<ApiResponseView<List<SearchWebtoonView>>> searchAll(
         @RequestParam String keyword) {
 
         List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findAll(keyword);
 
-        List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
+        List<SearchWebtoonView> webtoonViewList = responseWebtoonList.stream().map(SearchWebtoonView::searchView).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonViewList));
     }
