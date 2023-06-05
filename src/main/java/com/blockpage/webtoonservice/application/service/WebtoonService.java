@@ -61,9 +61,9 @@ public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, Interes
     }
 
     @Override
-    public List<ResponseWebtoon> findAll(String creator, String illustrator, String title) {
+    public List<ResponseWebtoon> findAll(String keyword) {
         List<ResponseWebtoon> responseWebtoonList;
-        List<Webtoon> webtoonList = webtoonPort.findAll(creator, illustrator, title);
+        List<Webtoon> webtoonList = webtoonPort.findAll(keyword);
         responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).toList();
         return responseWebtoonList;
     }

@@ -79,11 +79,9 @@ public class WebtoonController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponseView<List<WebtoonView>>> searchAll(
-        @RequestParam(required = false) String creator,
-        @RequestParam(required = false) String illustrator,
-        @RequestParam(required = false) String title) {
+        @RequestParam String keyword) {
 
-        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findAll(creator, illustrator, title);
+        List<ResponseWebtoon> responseWebtoonList = webtoonUseCase.findAll(keyword);
 
         List<WebtoonView> webtoonViewList = responseWebtoonList.stream().map(WebtoonView::toViewFromResponse).toList();
 

@@ -34,21 +34,15 @@ public class WebtoonAdaptor implements WebtoonPort {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Webtoon> findAll(String creator, String illustrator, String webtoonTitle) {
+    public List<Webtoon> findAll(String keyword) {
 
-        Specification<WebtoonEntity> spec = (root, query, criteriaBuilder) -> null;
+        Specification<WebtoonEntity> spec = Specification.where(WebtoonSpecification.findByCreator(keyword));
 
-        if (creator != null) {
-            spec = spec.and(WebtoonSpecification.equalCreator(creator));
+        if (keyword != null) {
+            spec = spec.or((WebtoonSpecification.containingTitle(keyword)));
         }
-        if (illustrator != null) {
-            spec = spec.and(WebtoonSpecification.equalIllustrator(illustrator));
-        }
-        if (webtoonTitle != null) {
-            spec = spec.and(WebtoonSpecification.equalTitle(webtoonTitle));
-        }
+
         List<WebtoonEntity> webtoonEntityList = webtoonRepository.findAll(spec);
-
         List<Webtoon> webtoonList;
         webtoonList = webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList();
 
