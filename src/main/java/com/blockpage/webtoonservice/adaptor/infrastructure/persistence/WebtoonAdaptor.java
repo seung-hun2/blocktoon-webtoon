@@ -26,12 +26,14 @@ public class WebtoonAdaptor implements WebtoonPort {
     private final WebtoonRepository webtoonRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Webtoon findWebtoon(Long id) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(id);
         return Webtoon.toDomainFromEntity(webtoonEntity.get());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findAll(String creator, String illustrator, String webtoonTitle) {
 
         Specification<WebtoonEntity> spec = (root, query, criteriaBuilder) -> null;
@@ -83,6 +85,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonByGenre(String type) {
 
         List<WebtoonEntity> webtoonEntityList;
@@ -98,6 +101,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonByWeekdays(String type) {
 
         List<WebtoonEntity> webtoonEntityList;
@@ -113,6 +117,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonBest() {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
@@ -127,6 +132,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonByCreator(String creatorId) {
 
         List<WebtoonEntity> webtoonEntityList;

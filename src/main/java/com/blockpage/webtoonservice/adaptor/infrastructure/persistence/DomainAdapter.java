@@ -289,6 +289,7 @@ public class DomainAdapter implements DemandPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException {
         Pageable pageable = PageRequest.of(pageNo, 10);
 
@@ -301,6 +302,7 @@ public class DomainAdapter implements DemandPort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo) {
 
         Pageable pageable = PageRequest.of(pageNo, 10);
