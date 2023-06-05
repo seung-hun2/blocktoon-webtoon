@@ -46,6 +46,8 @@ public class Episode {
 
     public static Episode toDomainFromEntity(EpisodeEntity episodeEntity) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
+        double rating = 0;
+        if(episodeEntity.getParticipantCount()!=0) rating = episodeEntity.getTotalScore()/episodeEntity.getParticipantCount();
         return Episode.builder()
             .episodeId(episodeEntity.getId())
             .episodeTitle(episodeEntity.getEpisodeTitle())
@@ -54,6 +56,7 @@ public class Episode {
             .totalScore(episodeEntity.getTotalScore())
             .participantCount(episodeEntity.getParticipantCount())
             .uploadDate(simpleDateFormat.format(episodeEntity.getUploadDate()))
+            .rating(rating)
             .build();
     }
 

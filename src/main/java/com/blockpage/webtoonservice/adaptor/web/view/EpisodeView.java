@@ -9,14 +9,14 @@ public class EpisodeView {
     private String episodeTitle;
     private String episodeThumbnail;
     private String uploadDate;
-    private Integer totalScore;
+    private double rating;
 
 
-    public EpisodeView(String episodeTitle, String episodeThumbnail, String uploadDate, Integer totalScore) {
+    public EpisodeView(String episodeTitle, String episodeThumbnail, String uploadDate, double rating) {
         this.episodeTitle = episodeTitle;
         this.episodeThumbnail = episodeThumbnail;
         this.uploadDate = uploadDate;
-        this.totalScore = totalScore;
+        this.rating = rating;
     }
 
     public static EpisodeView toViewFromResponse(ResponseEpisode responseEpisode) {
@@ -24,7 +24,7 @@ public class EpisodeView {
             responseEpisode.getEpisodeTitle(),
             responseEpisode.getEpisodeThumbnail(),
             responseEpisode.getUploadDate(),
-            responseEpisode.getTotalScore());
+            responseEpisode.getRating());
     }
 
 }

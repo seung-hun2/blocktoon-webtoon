@@ -12,37 +12,28 @@ public class ResponseEpisode {
     private String episodeTitle;
     private String episodeThumbnail;
     private String uploadDate;
-    private Integer totalScore;
+    private double rating;
 
 
     public ResponseEpisode(Long episodeId, Integer episodeNumber, String episodeTitle, String episodeThumbnail, String uploadDate,
-        Integer totalScore) {
+        double rating) {
         this.episodeId = episodeId;
         this.episodeNumber = episodeNumber;
         this.episodeTitle = episodeTitle;
         this.episodeThumbnail = episodeThumbnail;
         this.uploadDate = uploadDate;
-        this.totalScore = totalScore;
-    }
-
-    public static ResponseEpisode toResponseFromEntity(EpisodeEntity episode) {
-        return new ResponseEpisode(
-            episode.getId(),
-            episode.getEpisodeNumber(),
-            episode.getEpisodeTitle(),
-            episode.getEpisodeThumbnail(),
-            episode.getUploadDate().toString(),
-            episode.getTotalScore());
+        this.rating = rating;
     }
 
     public static ResponseEpisode toResponseFromDomain(Episode episode) {
+
         return new ResponseEpisode(
             episode.getEpisodeId(),
             episode.getEpisodeNumber(),
             episode.getEpisodeTitle(),
             episode.getEpisodeThumbnail(),
             episode.getUploadDate(),
-            episode.getTotalScore()
+            episode.getRating()
         );
     }
 
