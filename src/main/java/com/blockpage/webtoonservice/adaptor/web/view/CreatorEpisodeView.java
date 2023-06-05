@@ -12,16 +12,18 @@ public class CreatorEpisodeView {
     private Integer totalScore;
     private Integer participantCount;
     private String uploadDate;
+    private String webtoonStatus;
 
 
     public CreatorEpisodeView(String episodeTitle, Integer episodeNumber, String episodeThumbnail, Integer totalScore,
-        Integer participantCount, String uploadDate) {
+        Integer participantCount, String uploadDate, String webtoonStatus) {
         this.episodeTitle = episodeTitle;
         this.episodeNumber = episodeNumber;
         this.episodeThumbnail = episodeThumbnail;
         this.totalScore = totalScore;
         this.participantCount = participantCount;
         this.uploadDate = uploadDate;
+        this.webtoonStatus = webtoonStatus;
     }
 
     public CreatorEpisodeView(ResponseCreatorEpisode responseCreatorEpisode) {
@@ -31,16 +33,7 @@ public class CreatorEpisodeView {
         this.totalScore = responseCreatorEpisode.getTotalScore();
         this.participantCount = responseCreatorEpisode.getParticipantCount();
         this.uploadDate = responseCreatorEpisode.getUploadDate();
-    }
-
-    public static CreatorEpisodeView toViewFromResponse(ResponseCreatorEpisode responseCreatorEpisode) {
-        return new CreatorEpisodeView(
-            responseCreatorEpisode.getEpisodeTitle(),
-            responseCreatorEpisode.getEpisodeNumber(),
-            responseCreatorEpisode.getEpisodeThumbnail(),
-            responseCreatorEpisode.getTotalScore(),
-            responseCreatorEpisode.getParticipantCount(),
-            responseCreatorEpisode.getUploadDate());
+        this.webtoonStatus = responseCreatorEpisode.getWebtoonStatus();
     }
 
 

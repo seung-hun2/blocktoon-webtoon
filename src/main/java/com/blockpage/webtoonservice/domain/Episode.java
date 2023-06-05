@@ -29,6 +29,7 @@ public class Episode {
     private String nextEpisodeThumbnail;
     private double nextRating;
     private String nextUploadDate;
+    private String webtoonStatus;
 
     @Getter
     @Builder
@@ -57,6 +58,7 @@ public class Episode {
             .participantCount(episodeEntity.getParticipantCount())
             .uploadDate(simpleDateFormat.format(episodeEntity.getUploadDate()))
             .rating(rating)
+            .webtoonStatus(episodeEntity.getEpisodeStatus().getValue())
             .build();
     }
 
