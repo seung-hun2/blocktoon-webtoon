@@ -31,6 +31,7 @@ public class EpisodeAdaptor implements EpisodePort {
     private final WebtoonRepository webtoonRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Episode> findEpisode(Long webtoonId, String sort) {
 
         List<Episode> episodeList;
@@ -49,6 +50,7 @@ public class EpisodeAdaptor implements EpisodePort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Episode> findCreatorEpisode(Long webtoonId) {
         List<Episode> episodeList;
         List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
@@ -59,6 +61,7 @@ public class EpisodeAdaptor implements EpisodePort {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Episode findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber) {
 
         ResponseEpisodeDetail responseEpisodeDetail;
