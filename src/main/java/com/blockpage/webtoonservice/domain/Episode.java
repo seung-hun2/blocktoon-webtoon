@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.domain;
 
 import com.blockpage.webtoonservice.adaptor.infrastructure.entity.EpisodeEntity;
+import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeContent;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeImage;
 import java.text.SimpleDateFormat;
@@ -80,6 +81,19 @@ public class Episode {
             .nextEpisodeThumbnail(responseEpisodeDetail.getNextEpisodeThumbnail())
             .nextRating(responseEpisodeDetail.getNextRating())
             .nextUploadDate(responseEpisodeDetail.getNextUploadDate())
+            .build();
+    }
+
+    public static Episode fromResponseContent(ResponseEpisodeContent responseEpisodeContent){
+        return Episode.builder()
+            .episodeId(responseEpisodeContent.getEpisodeId())
+            .episodeTitle(responseEpisodeContent.getEpisodeTitle())
+            .episodeNumber(responseEpisodeContent.getEpisodeNumber())
+            .author(responseEpisodeContent.getAuthor())
+            .authorWords(responseEpisodeContent.getAuthor())
+            .uploadDate(responseEpisodeContent.getUploadDate())
+            .episodeThumbnail(responseEpisodeContent.getEpisodeThumbnail())
+            .images(responseEpisodeContent.getImages().stream().map(Image::toImage).toList())
             .build();
     }
 

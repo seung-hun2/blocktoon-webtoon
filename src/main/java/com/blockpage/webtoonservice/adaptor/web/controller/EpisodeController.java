@@ -5,11 +5,13 @@ import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView.Meta;
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView.Meta.Sort;
 import com.blockpage.webtoonservice.adaptor.web.view.CreatorEpisodeView;
 import com.blockpage.webtoonservice.adaptor.web.view.EpisodeDetailView;
+import com.blockpage.webtoonservice.adaptor.web.view.EpisodeView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonDescribeView;
 import com.blockpage.webtoonservice.application.port.in.EpisodeUseCase;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
 import com.blockpage.webtoonservice.application.port.out.ResponseCreatorEpisode;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisode;
+import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeContent;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import java.util.List;
@@ -52,6 +54,17 @@ public class EpisodeController {
         List<CreatorEpisodeView> creatorEpisodeViewList = responseCreatorEpisodeList.stream().map(CreatorEpisodeView::new).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(creatorEpisodeViewList));
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<ApiResponseView<EpisodeView>> getEpisode(@RequestParam Long episodeId, @RequestParam Long webtoonId,
+        @RequestParam Integer episodeNumber){
+
+        ResponseEpisodeContent responseEpisodeContent = episodeUseCase.findEpisodeContent(episodeId, webtoonId, episodeNumber);
+        EpisodeView episodeView = EpisodeView.toViewFromResponse(responseEpisodeContent);
+        //EPISODE VIEW 만들어줘야함
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(episodeView));
     }
 
     @GetMapping("/view")

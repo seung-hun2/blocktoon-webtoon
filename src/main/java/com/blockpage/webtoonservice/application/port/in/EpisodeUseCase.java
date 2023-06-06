@@ -2,6 +2,7 @@ package com.blockpage.webtoonservice.application.port.in;
 
 import com.blockpage.webtoonservice.application.port.out.ResponseCreatorEpisode;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisode;
+import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeContent;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import java.util.List;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public interface EpisodeUseCase {
     List<ResponseCreatorEpisode> findCreatorEpisode(Long webtoonId);
 
     ResponseEpisodeDetail findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber);
+    ResponseEpisodeContent findEpisodeContent(Long episodeId, Long webtoonId, Integer episodeNumber);
 
     @Getter
     class RequestEpisode {

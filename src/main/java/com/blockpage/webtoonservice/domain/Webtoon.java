@@ -13,7 +13,7 @@ public class Webtoon {
     private Long webtoonId;
     private String webtoonTitle;
     private String webtoonDescription;
-    private Long creatorId;
+    private String creatorId;
     private String creator;
     private String illustrator;
     private PublicationDays publicationDays;
@@ -77,6 +77,7 @@ public class Webtoon {
             .webtoonThumbnail(webtoon.getWebtoonThumbnail())
             .webtoonDescription(webtoon.getWebtoonDescription())
             .creator(webtoon.getCreator())
+            .creatorId(webtoon.getCreatorId())
             .illustrator(webtoon.getIllustrator())
             .views(webtoon.getViews())
             .interestCount(webtoon.getInterestCount())

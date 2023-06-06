@@ -10,5 +10,6 @@ public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
 
     Page<ImageEntity> findByWebtoonIdAndEpisodeNumber(Long webtoonId, Integer episodeNumber, Pageable pageable);
     List<ImageEntity> findByWebtoonIdAndEpisodeNumber(Long webtoonId, Integer episodeNumber);
+    List<ImageEntity> findByEpisodeId(Long episodeId);
 
 }

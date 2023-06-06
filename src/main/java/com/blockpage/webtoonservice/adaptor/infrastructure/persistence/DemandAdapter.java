@@ -191,7 +191,7 @@ public class DemandAdapter implements DemandPort {
             storage.create(blobInfo1, multipartFileList.get(i - 1).getBytes());
 
             ImageEntity image = ImageEntity.toEntity(e.getWebtoonId(), e.getEpisodeNumber(), i,
-                imagePath + thumbnail);
+                imagePath + thumbnail, e.getId());
             imageRepository.save(image);
         }
 

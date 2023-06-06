@@ -5,6 +5,7 @@ import com.blockpage.webtoonservice.application.port.in.RatingUseCase;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
 import com.blockpage.webtoonservice.application.port.out.ResponseCreatorEpisode;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisode;
+import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeContent;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
 import java.util.List;
@@ -36,6 +37,12 @@ public class EpisodeService implements EpisodeUseCase, RatingUseCase {
         Episode episode = episodePort.findEpisodeDetail(episodeId, webtoonId, episodeNumber);
 
         return ResponseEpisodeDetail.toResponseFromDomain(episode);
+    }
+
+    @Override
+    public ResponseEpisodeContent findEpisodeContent(Long episodeId, Long webtoonId, Integer episodeNumber) {
+        Episode episode = episodePort.findEpisodeContent(episodeId, webtoonId, episodeNumber);
+        return ResponseEpisodeContent.fromDomain(episode);
     }
 
     @Override

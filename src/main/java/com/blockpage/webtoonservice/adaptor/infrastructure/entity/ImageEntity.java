@@ -32,14 +32,17 @@ public class ImageEntity extends BaseEntity {
     private String image;
     @Column
     private Integer imageNumber;
+    @Column
+    private Long episodeId;
 
-    public static ImageEntity toEntity(Long webtoonId, Integer episodeNumber, Integer imageNumber, String image) {
+    public static ImageEntity toEntity(Long webtoonId, Integer episodeNumber, Integer imageNumber, String image, Long episodeId) {
         return ImageEntity.builder()
             .webtoonId(webtoonId)
             .episodeNumber(episodeNumber)
             .imageNumber(imageNumber)
             .image(image)
             .erase(Boolean.FALSE)
+            .episodeId(episodeId)
             .build();
     }
 
