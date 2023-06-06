@@ -24,6 +24,7 @@ public class Demand {
     private String illustrator;
     private MultipartFile webtoonMainImage;
     private MultipartFile webtoonThumbnail;
+    private String webtoonStatus;
 
     private Integer episodeNumber;
     private Long webtoonId;
@@ -32,6 +33,7 @@ public class Demand {
     private String authorWords;
     private MultipartFile episodeThumbnail;
     private List<MultipartFile> episodeImages;
+
 
     private String type;
     private String target;
@@ -54,6 +56,7 @@ public class Demand {
             .illustrator(demandQuery.getRequestDemand().getIllustrator())
             .webtoonMainImage(demandQuery.getWebtoonMainImage())
             .webtoonThumbnail(demandQuery.getWebtoonThumbnail())
+            .webtoonStatus(demandQuery.getRequestDemand().getWebtoonStatus())
             .build();
     }
 

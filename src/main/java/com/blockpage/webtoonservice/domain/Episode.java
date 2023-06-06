@@ -30,6 +30,8 @@ public class Episode {
     private double nextRating;
     private String nextUploadDate;
     private String webtoonStatus;
+    private Integer episodePrice;
+
 
     @Getter
     @Builder
@@ -56,6 +58,7 @@ public class Episode {
             .episodeTitle(episodeEntity.getEpisodeTitle())
             .episodeNumber(episodeEntity.getEpisodeNumber())
             .episodeThumbnail(episodeEntity.getEpisodeThumbnail())
+            .episodePrice(episodeEntity.getEpisodePrice())
             .totalScore(episodeEntity.getTotalScore())
             .authorWords(episodeEntity.getAuthorWords())
             .participantCount(episodeEntity.getParticipantCount())

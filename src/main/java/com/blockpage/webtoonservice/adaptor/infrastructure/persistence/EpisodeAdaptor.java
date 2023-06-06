@@ -63,9 +63,10 @@ public class EpisodeAdaptor implements EpisodePort {
             WebtoonStatus.REMOVE_WAITING);
 
         List<EpisodeEntity> result = new ArrayList<>();
+        result.addAll(episodeEntityList3);
+
         result.addAll(episodeEntityList1);
         result.addAll(episodeEntityList2);
-        result.addAll(episodeEntityList3);
 
         episodeList = result.stream().map(Episode::toDomainFromEntity)
             .collect(Collectors.toList());

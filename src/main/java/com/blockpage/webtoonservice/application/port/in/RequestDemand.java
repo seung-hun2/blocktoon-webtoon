@@ -12,6 +12,7 @@ public class RequestDemand {
     private String webtoonTitle;
     private String webtoonDescription;
     private Integer genre;
+    private String webtoonStatus;
     private Integer publicationDays;
     private String illustrator;
 

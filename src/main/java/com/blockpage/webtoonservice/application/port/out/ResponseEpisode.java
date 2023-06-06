@@ -13,16 +13,18 @@ public class ResponseEpisode {
     private String episodeThumbnail;
     private String uploadDate;
     private double rating;
+    private Integer episodePrice;
 
 
     public ResponseEpisode(Long episodeId, Integer episodeNumber, String episodeTitle, String episodeThumbnail, String uploadDate,
-        double rating) {
+        double rating, Integer episodePrice) {
         this.episodeId = episodeId;
         this.episodeNumber = episodeNumber;
         this.episodeTitle = episodeTitle;
         this.episodeThumbnail = episodeThumbnail;
         this.uploadDate = uploadDate;
         this.rating = rating;
+        this.episodePrice = episodePrice;
     }
 
     public static ResponseEpisode toResponseFromDomain(Episode episode) {
@@ -33,7 +35,8 @@ public class ResponseEpisode {
             episode.getEpisodeTitle(),
             episode.getEpisodeThumbnail(),
             episode.getUploadDate(),
-            episode.getRating()
+            episode.getRating(),
+            episode.getEpisodePrice()
         );
     }
 

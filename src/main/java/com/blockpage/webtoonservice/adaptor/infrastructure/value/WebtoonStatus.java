@@ -26,4 +26,11 @@ public enum WebtoonStatus {
             .findFirst()
             .get();
     }
+
+    public static WebtoonStatus findStatusByValue(String value){
+        return Arrays.stream(WebtoonStatus.values())
+            .filter(k -> k.getValue().equals(value))
+            .findFirst()
+            .get();
+    }
 }
