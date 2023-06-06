@@ -269,16 +269,20 @@ public class DomainAdapter implements DemandPort {
 
             Optional<EpisodeEntity> current = episodeRepository.findById(demand.getEpisodeId());
             String episodeTitle = current.get().getEpisodeTitle();
-            Optional<EpisodeEntity> episodeEntity = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
+            Optional<EpisodeEntity> publish = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
                 WebtoonStatus.PUBLISH);
             switch (type) {
                 case "remove":
-
+                    System.out.println("REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    publish.get().update(WebtoonStatus.REMOVE);
+                    current.get().update(WebtoonStatus.REMOVE);
+                    break;
                 default:
+                    System.out.println("ENROLL OR MODIFY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    publish.get().update(WebtoonStatus.REMOVE);
+                    current.get().update(WebtoonStatus.PUBLISH);
+                    break;
             }
-
-            episodeEntity.get().update(WebtoonStatus.REMOVE);
-            current.get().update(WebtoonStatus.PUBLISH);
 
         }
     }
