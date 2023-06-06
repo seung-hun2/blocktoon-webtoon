@@ -15,6 +15,7 @@ public class WebtoonView {
     private String webtoonMainImage;
     private String webtoonThumbnail;
     private String creator;
+    private String creatorId;
     private String illustrator;
     private Integer views;
     private Integer interestCount;
@@ -25,15 +26,15 @@ public class WebtoonView {
     private String webtoonDescription;
 
 
-
-
-    public WebtoonView(Long webtoonId, String webtoonTitle, String webtoonMainImage, String webtoonThumbnail, String creator, String illustrator, Integer views,
-        Integer interestCount, Integer genre, String webtoonStatus, Integer publicationDays, String webtoonDescription) {
+    public WebtoonView(Long webtoonId, String webtoonTitle, String webtoonMainImage, String webtoonThumbnail, String creator,
+        String creatorId, String illustrator, Integer views, Integer interestCount, Integer genre, String webtoonStatus,
+        Integer publicationDays, String webtoonDescription) {
         this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonMainImage = webtoonMainImage;
         this.webtoonThumbnail = webtoonThumbnail;
         this.creator = creator;
+        this.creatorId = creatorId;
         this.illustrator = illustrator;
         this.views = views;
         this.interestCount = interestCount;
@@ -50,6 +51,7 @@ public class WebtoonView {
             webtoon.getWebtoonMainImage(),
             webtoon.getWebtoonThumbnail(),
             webtoon.getCreator(),
+            webtoon.getCreatorId(),
             webtoon.getIllustrator(),
             webtoon.getViews(),
             webtoon.getInterestCount(),
