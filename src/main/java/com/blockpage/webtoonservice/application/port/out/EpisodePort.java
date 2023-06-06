@@ -11,5 +11,7 @@ public interface EpisodePort {
 
     Episode findEpisodeDetail(Long episodeId, Long webtoonId, Integer episodeNumber);
 
+    Episode findEpisodeContent(Long episodeId, Long webtoonId, Integer episodeNumber);
+
     void updateRating(Long episodeId, Integer totalScore, Integer participantCount);
 }

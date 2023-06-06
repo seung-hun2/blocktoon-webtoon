@@ -7,16 +7,15 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepos
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.EpisodePort;
+import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeContent;
 import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -101,6 +100,14 @@ public class EpisodeAdaptor implements EpisodePort {
             nextThumbnail, nextRating, nextUploadDate);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
+    }
+
+    @Override
+    public Episode findEpisodeContent(Long episodeId, Long webtoonId, Integer episodeNumber) {
+        Optional<EpisodeEntity> episode = episodeRepository.findById(episodeId);
+        List<ImageEntity> imageEntityList = imageRepository.findByEpisodeId(episodeId);
+        ResponseEpisodeContent responseEpisodeContent = ResponseEpisodeContent.fromEntity(episode.get(), imageEntityList);
+        return Episode.fromResponseContent(responseEpisodeContent);
     }
 
     @Override

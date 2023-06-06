@@ -33,6 +33,7 @@ public class DemandView {
     private String episodeThumbnail;
     private List<String> episodeImages;
     private Integer webtoonStatus;
+    private Integer episodeNumber;
 
     private String main;
     private String thumbnail;
@@ -75,6 +76,7 @@ public class DemandView {
             .episodeTitle(demandDto.getEpisodeTitle() != null ? demandDto.getEpisodeTitle() : null)
             .uploadDate(demandDto.getUploadDate() != null ? demandDto.getUploadDate().toString() : null)
             .authorWords(demandDto.getAuthorWords() != null ? demandDto.getAuthorWords() : null)
+            .episodeNumber(demandDto.getEpisodeNumber())
             .main(demandDto.getMain())
             .thumbnail(demandDto.getThumbnail())
             .images(demandDto.getImages())
