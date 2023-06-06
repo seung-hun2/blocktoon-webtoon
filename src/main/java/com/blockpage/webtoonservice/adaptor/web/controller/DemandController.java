@@ -1,6 +1,7 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
+import com.blockpage.webtoonservice.adaptor.web.view.DemandPageView;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandView;
 import com.blockpage.webtoonservice.adaptor.web.view.MessageView;
 import com.blockpage.webtoonservice.application.port.DemandDto;
@@ -80,15 +81,17 @@ public class DemandController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(
+    public ResponseEntity<ApiResponseView<DemandPageView>> getDemand(
         @RequestParam String target,
         @RequestParam String type,
         @RequestParam Integer pageNo) throws IOException {
 
         List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, pageNo));
+        Integer totalSize = demandUseCase.findTotalSize(DemandQuery.toQueryFromId(target, type, pageNo));
         List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
+        DemandPageView demandPageView = new DemandPageView(demandViewList, totalSize);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandPageView));
     }
 
 }
