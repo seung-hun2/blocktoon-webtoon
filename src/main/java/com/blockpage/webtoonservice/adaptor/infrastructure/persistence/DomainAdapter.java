@@ -335,4 +335,32 @@ public class DomainAdapter implements DemandPort {
 
         return episodeEntityList.stream().map(Demand::toDomainFromEpisodeEntity).toList();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Integer findTotalSize(String target, String type) {
+        switch (target) {
+            case "webtoon":
+                if (type.equals("modify")) {
+                    System.out.println("여기입니당~");
+                    return webtoonRepository.findAllByWebtoonStatus(WebtoonStatus.MODIFICATION_WAITING).size();
+                }
+                if (type.equals("remove")) {
+                    return webtoonRepository.findAllByWebtoonStatus(WebtoonStatus.REMOVE_WAITING).size();
+                }
+                break;
+            case "episode":
+                if (type.equals("enroll")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.REGISTRATION_WAITING).size();
+                }
+                if (type.equals("modify")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.MODIFICATION_WAITING).size();
+                }
+                if (type.equals("remove")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.REMOVE_WAITING).size();
+                }
+                break;
+        }
+        return 0;
+    }
 }

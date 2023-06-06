@@ -17,6 +17,8 @@ public interface DemandUseCase {
 
     List<DemandDto> getDemand(DemandQuery demandQuery) throws IOException;
 
+    Integer findTotalSize(DemandQuery demandQuery);
+
     @Getter
     @Builder
     class DemandQuery {
@@ -70,7 +72,7 @@ public interface DemandUseCase {
                 .build();
         }
 
-        public static DemandQuery toQueryFromId(String target, String type, Integer pageNo){
+        public static DemandQuery toQueryFromId(String target, String type, Integer pageNo) {
             return DemandQuery.builder()
                 .target(target)
                 .type(type)
