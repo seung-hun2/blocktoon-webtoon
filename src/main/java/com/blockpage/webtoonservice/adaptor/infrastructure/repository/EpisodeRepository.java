@@ -31,6 +31,8 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
     Page<EpisodeEntity> findByEpisodeStatus(WebtoonStatus status, Pageable pageable);
 
+    List<EpisodeEntity> findAllByEpisodeStatus(WebtoonStatus status);
+
     @Modifying(clearAutomatically = true)
     @Query("update EpisodeEntity e set e.episodePrice = 0 where e.uploadDate <= :date")
     void bulkPriceChange(@Param("date") Date date);

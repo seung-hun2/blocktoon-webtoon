@@ -6,22 +6,17 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.EpisodeRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
-import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
-import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.DemandPort;
 import com.blockpage.webtoonservice.domain.Demand;
-import com.blockpage.webtoonservice.domain.Episode;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class DomainAdapter implements DemandPort {
+public class DemandAdapter implements DemandPort {
 
     private final WebtoonRepository webtoonRepository;
     private final EpisodeRepository episodeRepository;
@@ -269,16 +264,18 @@ public class DomainAdapter implements DemandPort {
 
             Optional<EpisodeEntity> current = episodeRepository.findById(demand.getEpisodeId());
             String episodeTitle = current.get().getEpisodeTitle();
-            Optional<EpisodeEntity> episodeEntity = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
+            Optional<EpisodeEntity> publish = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
                 WebtoonStatus.PUBLISH);
             switch (type) {
                 case "remove":
-
+                    publish.get().update(WebtoonStatus.REMOVE);
+                    current.get().update(WebtoonStatus.REMOVE);
+                    break;
                 default:
+                    publish.get().update(WebtoonStatus.REMOVE);
+                    current.get().update(WebtoonStatus.PUBLISH);
+                    break;
             }
-
-            episodeEntity.get().update(WebtoonStatus.REMOVE);
-            current.get().update(WebtoonStatus.PUBLISH);
 
         }
     }
@@ -334,5 +331,32 @@ public class DomainAdapter implements DemandPort {
         }
 
         return episodeEntityList.stream().map(Demand::toDomainFromEpisodeEntity).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Integer findTotalSize(String target, String type) {
+        switch (target) {
+            case "webtoon":
+                if (type.equals("modify")) {
+                    return webtoonRepository.findAllByWebtoonStatus(WebtoonStatus.MODIFICATION_WAITING).size();
+                }
+                if (type.equals("remove")) {
+                    return webtoonRepository.findAllByWebtoonStatus(WebtoonStatus.REMOVE_WAITING).size();
+                }
+                break;
+            case "episode":
+                if (type.equals("enroll")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.REGISTRATION_WAITING).size();
+                }
+                if (type.equals("modify")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.MODIFICATION_WAITING).size();
+                }
+                if (type.equals("remove")) {
+                    return episodeRepository.findAllByEpisodeStatus(WebtoonStatus.REMOVE_WAITING).size();
+                }
+                break;
+        }
+        return 0;
     }
 }

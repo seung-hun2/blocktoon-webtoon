@@ -28,4 +28,6 @@ public interface DemandPort {
 
     List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo);
 
+    Integer findTotalSize(String target, String type);
+
 }

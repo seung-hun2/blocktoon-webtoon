@@ -93,4 +93,9 @@ public class DemandService implements DemandUseCase {
         }
         return null;
     }
+
+    @Override
+    public Integer findTotalSize(DemandQuery demandQuery) {
+        return demandPort.findTotalSize(demandQuery.getTarget(), demandQuery.getType());
+    }
 }

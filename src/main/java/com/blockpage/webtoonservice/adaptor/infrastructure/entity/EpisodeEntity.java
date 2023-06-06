@@ -59,7 +59,7 @@ public class EpisodeEntity extends BaseEntity {
         this.episodeStatus = webtoonStatus;
     }
 
-    public void updateRating(Integer totalScore, Integer participantCount){
+    public void updateRating(Integer totalScore, Integer participantCount) {
         this.totalScore = totalScore;
         this.participantCount = participantCount;
     }
@@ -75,7 +75,7 @@ public class EpisodeEntity extends BaseEntity {
             .episodeThumbnail(thumbnail)
             .episodeStatus(WebtoonStatus.findWebtoonStatusByKey(type))
             .commentCount(0)
-            .episodePrice(4)
+            .episodePrice(new Date().before(new SimpleDateFormat("yyyyMMdd").parse(demand.getUploadDate())) ? 4 : 0)
             .participantCount(0)
             .totalScore(0)
             .build();
@@ -92,7 +92,7 @@ public class EpisodeEntity extends BaseEntity {
             .episodeThumbnail(episode.getEpisodeThumbnail())
             .episodeStatus(episode.getEpisodeStatus())
             .commentCount(0)
-            .episodePrice(4)
+            .episodePrice(new Date().before(episode.getUploadDate()) ? 4 : 0)
             .participantCount(0)
             .totalScore(0)
             .build();
