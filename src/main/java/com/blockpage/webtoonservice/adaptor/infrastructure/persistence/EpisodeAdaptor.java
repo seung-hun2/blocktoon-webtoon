@@ -11,10 +11,12 @@ import com.blockpage.webtoonservice.application.port.out.ResponseEpisodeDetail;
 import com.blockpage.webtoonservice.domain.Episode;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -53,9 +55,19 @@ public class EpisodeAdaptor implements EpisodePort {
     @Transactional(readOnly = true)
     public List<Episode> findCreatorEpisode(Long webtoonId) {
         List<Episode> episodeList;
-        List<EpisodeEntity> episodeEntityList = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+        List<EpisodeEntity> episodeEntityList1 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
             WebtoonStatus.PUBLISH);
-        episodeList = episodeEntityList.stream().map(Episode::toDomainFromEntity)
+        List<EpisodeEntity> episodeEntityList2 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+            WebtoonStatus.MODIFICATION_WAITING);
+        List<EpisodeEntity> episodeEntityList3 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+            WebtoonStatus.REMOVE_WAITING);
+
+        List<EpisodeEntity> result = new ArrayList<>();
+        result.addAll(episodeEntityList1);
+        result.addAll(episodeEntityList2);
+        result.addAll(episodeEntityList3);
+
+        episodeList = result.stream().map(Episode::toDomainFromEntity)
             .collect(Collectors.toList());
         return episodeList;
     }

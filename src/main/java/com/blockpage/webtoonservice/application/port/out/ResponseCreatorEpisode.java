@@ -14,10 +14,11 @@ public class ResponseCreatorEpisode {
     private Integer participantCount;
     private String uploadDate;
     private String webtoonStatus;
+    private String authorWords;
 
 
     public ResponseCreatorEpisode(String episodeTitle, Integer episodeNumber, String episodeThumbnail, Integer totalScore,
-        Integer participantCount, String uploadDate, String webtoonStatus) {
+        Integer participantCount, String uploadDate, String webtoonStatus, String authorWords) {
         this.episodeTitle = episodeTitle;
         this.episodeNumber = episodeNumber;
         this.episodeThumbnail = episodeThumbnail;
@@ -25,6 +26,7 @@ public class ResponseCreatorEpisode {
         this.participantCount = participantCount;
         this.uploadDate = uploadDate;
         this.webtoonStatus = webtoonStatus;
+        this.authorWords = authorWords;
     }
 
 
@@ -36,7 +38,8 @@ public class ResponseCreatorEpisode {
             episode.getTotalScore(),
             episode.getParticipantCount(),
             episode.getUploadDate(),
-            episode.getWebtoonStatus());
+            episode.getWebtoonStatus(),
+            episode.getAuthorWords());
     }
 
 }

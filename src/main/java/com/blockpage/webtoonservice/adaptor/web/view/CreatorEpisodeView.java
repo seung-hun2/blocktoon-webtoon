@@ -13,6 +13,7 @@ public class CreatorEpisodeView {
     private Integer participantCount;
     private String uploadDate;
     private String webtoonStatus;
+    private String authorWords;
 
 
     public CreatorEpisodeView(String episodeTitle, Integer episodeNumber, String episodeThumbnail, Integer totalScore,
@@ -34,6 +35,7 @@ public class CreatorEpisodeView {
         this.participantCount = responseCreatorEpisode.getParticipantCount();
         this.uploadDate = responseCreatorEpisode.getUploadDate();
         this.webtoonStatus = responseCreatorEpisode.getWebtoonStatus();
+        this.authorWords = responseCreatorEpisode.getAuthorWords();
     }
 
 

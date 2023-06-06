@@ -48,13 +48,16 @@ public class Episode {
     public static Episode toDomainFromEntity(EpisodeEntity episodeEntity) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
         double rating = 0;
-        if(episodeEntity.getParticipantCount()!=0) rating = episodeEntity.getTotalScore()/episodeEntity.getParticipantCount();
+        if (episodeEntity.getParticipantCount() != 0) {
+            rating = episodeEntity.getTotalScore() / episodeEntity.getParticipantCount();
+        }
         return Episode.builder()
             .episodeId(episodeEntity.getId())
             .episodeTitle(episodeEntity.getEpisodeTitle())
             .episodeNumber(episodeEntity.getEpisodeNumber())
             .episodeThumbnail(episodeEntity.getEpisodeThumbnail())
             .totalScore(episodeEntity.getTotalScore())
+            .authorWords(episodeEntity.getAuthorWords())
             .participantCount(episodeEntity.getParticipantCount())
             .uploadDate(simpleDateFormat.format(episodeEntity.getUploadDate()))
             .rating(rating)
