@@ -6,22 +6,17 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.entity.WebtoonEntity;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.EpisodeRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.ImageRepository;
 import com.blockpage.webtoonservice.adaptor.infrastructure.repository.WebtoonRepository;
-import com.blockpage.webtoonservice.adaptor.infrastructure.value.GenreType;
-import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays;
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.DemandPort;
 import com.blockpage.webtoonservice.domain.Demand;
-import com.blockpage.webtoonservice.domain.Episode;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class DomainAdapter implements DemandPort {
+public class DemandAdapter implements DemandPort {
 
     private final WebtoonRepository webtoonRepository;
     private final EpisodeRepository episodeRepository;
@@ -273,12 +268,10 @@ public class DomainAdapter implements DemandPort {
                 WebtoonStatus.PUBLISH);
             switch (type) {
                 case "remove":
-                    System.out.println("REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     publish.get().update(WebtoonStatus.REMOVE);
                     current.get().update(WebtoonStatus.REMOVE);
                     break;
                 default:
-                    System.out.println("ENROLL OR MODIFY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     publish.get().update(WebtoonStatus.REMOVE);
                     current.get().update(WebtoonStatus.PUBLISH);
                     break;
@@ -346,7 +339,6 @@ public class DomainAdapter implements DemandPort {
         switch (target) {
             case "webtoon":
                 if (type.equals("modify")) {
-                    System.out.println("여기입니당~");
                     return webtoonRepository.findAllByWebtoonStatus(WebtoonStatus.MODIFICATION_WAITING).size();
                 }
                 if (type.equals("remove")) {
