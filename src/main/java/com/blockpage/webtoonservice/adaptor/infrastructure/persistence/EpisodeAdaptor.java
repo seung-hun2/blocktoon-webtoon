@@ -126,7 +126,7 @@ public class EpisodeAdaptor implements EpisodePort {
 
 
     @Transactional
-    @Scheduled(cron = "0 0 15 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void scheduleTask() {
         Date now = new Date();
         episodeRepository.bulkPriceChange(now);
