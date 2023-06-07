@@ -211,17 +211,18 @@ public class DemandAdapter implements DemandPort {
     @Transactional
     public void checkPostWebtoonDemand(Demand demand, String type, String target, String whether) {
         if (whether.equals("accept")) {
-
-            Optional<WebtoonEntity> current = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(),
-                demand.getCreatorId(), WebtoonStatus.PUBLISH);
-            current.get().update(WebtoonStatus.findWebtoonStatusByKey(Integer.parseInt(type)));
-
-            WebtoonEntity webtoon = WebtoonEntity.toEntity(demand, demand.getMain(), demand.getThumbnail(), 0);
-            webtoonRepository.save(webtoon);
+            Optional<WebtoonEntity> current = webtoonRepository.findById(demand.getId());
+            String webtoonTitle = current.get().getWebtoonTitle();
+            String creatorId = current.get().getCreatorId();
+            System.out.println("webtoonTitle = " + webtoonTitle);
+            System.out.println("creatorId = " + creatorId);
+            Optional<WebtoonEntity> last = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(webtoonTitle, creatorId,
+                WebtoonStatus.PUBLISH);
+            last.get().update(WebtoonStatus.REMOVE);
+            current.get().update(WebtoonStatus.PUBLISH);
 
         } else if (whether.equals("refuse")) {
-            webtoonRepository.deleteByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(), demand.getCreatorId(),
-                WebtoonStatus.findWebtoonStatusByKey(Integer.parseInt(type)));
+            webtoonRepository.deleteById(demand.getId());
         }
     }
 

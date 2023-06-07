@@ -37,6 +37,7 @@ public class Demand {
 
     private String type;
     private String target;
+    private Long id;
 
     private String main;
     private String thumbnail;
@@ -47,16 +48,17 @@ public class Demand {
     public static Demand toDomainFromWebtoon(DemandQuery demandQuery) {
         return Demand.builder()
             .creatorId(demandQuery.getCreatorId())
-            .creator(demandQuery.getRequestDemand().getCreatorNickname())
+            .creator(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getCreatorNickname() : null)
             .webtoonId(demandQuery.getWebtoonId())
-            .webtoonTitle(demandQuery.getRequestDemand().getWebtoonTitle())
-            .webtoonDescription(demandQuery.getRequestDemand().getWebtoonDescription())
-            .genre(demandQuery.getRequestDemand().getGenre())
-            .publicationDays(demandQuery.getRequestDemand().getPublicationDays())
-            .illustrator(demandQuery.getRequestDemand().getIllustrator())
+            .id(demandQuery.getId())
+            .webtoonTitle(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getWebtoonTitle() : null)
+            .webtoonDescription(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getWebtoonDescription() : null)
+            .genre(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getGenre() : null)
+            .publicationDays(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getPublicationDays() : null)
+            .illustrator(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getIllustrator() : null)
             .webtoonMainImage(demandQuery.getWebtoonMainImage())
             .webtoonThumbnail(demandQuery.getWebtoonThumbnail())
-            .webtoonStatus(demandQuery.getRequestDemand().getWebtoonStatus())
+            .webtoonStatus(demandQuery.getRequestDemand() != null ? demandQuery.getRequestDemand().getWebtoonStatus() : null)
             .build();
     }
 
