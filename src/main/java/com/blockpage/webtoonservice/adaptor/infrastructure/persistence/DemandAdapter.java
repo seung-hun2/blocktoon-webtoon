@@ -128,7 +128,7 @@ public class DemandAdapter implements DemandPort {
     @Transactional
     public void removeWebtoonDemand(Demand demand) {
         Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(),
-            demand.getCreatorId(), WebtoonStatus.findStatusByValue(demand.getWebtoonStatus()));
+            demand.getCreatorId(), WebtoonStatus.PUBLISH);
         System.out.println("demand.getWebtoonTitle() = " + demand.getWebtoonTitle());
         System.out.println("demand.getCreatorId() = " + demand.getCreatorId());
         WebtoonEntity webtoon = WebtoonEntity.copyEntity(webtoonEntity.get());
