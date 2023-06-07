@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
@@ -85,7 +84,7 @@ public class WebtoonAdaptor implements WebtoonPort {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatusOrderByViews(
+        webtoonEntityList = webtoonRepository.findAllByGenreTypeAndWebtoonStatusOrderByViewsDesc(
             GenreType.findGenreTypeByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
         webtoonList = webtoonEntityList.stream()
@@ -101,7 +100,7 @@ public class WebtoonAdaptor implements WebtoonPort {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatusOrderByViews(
+        webtoonEntityList = webtoonRepository.findByPublicationDaysAndWebtoonStatusOrderByViewsDesc(
             PublicationDays.findPublicationDaysByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
 
         webtoonList = webtoonEntityList.stream()
@@ -116,7 +115,7 @@ public class WebtoonAdaptor implements WebtoonPort {
         List<WebtoonEntity> webtoonEntityList;
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findByWebtoonStatusOrderByViews(WebtoonStatus.PUBLISH);
+        webtoonEntityList = webtoonRepository.findByWebtoonStatusOrderByViewsDesc(WebtoonStatus.PUBLISH);
 
         webtoonList = webtoonEntityList.stream()
             .map(Webtoon::toDomainFromEntity)

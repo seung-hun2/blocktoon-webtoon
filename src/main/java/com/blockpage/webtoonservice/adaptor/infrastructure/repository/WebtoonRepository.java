@@ -13,11 +13,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, JpaSpecificationExecutor<WebtoonEntity> {
 
-    List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatusOrderByViews(GenreType genre, WebtoonStatus status);
+    List<WebtoonEntity> findAllByGenreTypeAndWebtoonStatusOrderByViewsDesc(GenreType genre, WebtoonStatus status);
 
-    List<WebtoonEntity> findByPublicationDaysAndWebtoonStatusOrderByViews(PublicationDays publicationDays, WebtoonStatus status);
+    List<WebtoonEntity> findByPublicationDaysAndWebtoonStatusOrderByViewsDesc(PublicationDays publicationDays, WebtoonStatus status);
 
-    List<WebtoonEntity> findByWebtoonStatusOrderByViews(WebtoonStatus status);
+    List<WebtoonEntity> findByWebtoonStatusOrderByViewsDesc(WebtoonStatus status);
 
     List<WebtoonEntity> findAllByWebtoonStatus(WebtoonStatus status);
 
