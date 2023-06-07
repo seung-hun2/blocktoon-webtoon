@@ -33,7 +33,7 @@ public class CreatorEpisodeView {
         this.episodeThumbnail = responseCreatorEpisode.getEpisodeThumbnail();
         this.totalScore = responseCreatorEpisode.getTotalScore();
         this.participantCount = responseCreatorEpisode.getParticipantCount();
-        this.uploadDate = responseCreatorEpisode.getUploadDate();
+        this.uploadDate = "20"+responseCreatorEpisode.getUploadDate().replaceAll("\\.","");
         this.webtoonStatus = responseCreatorEpisode.getWebtoonStatus();
         this.authorWords = responseCreatorEpisode.getAuthorWords();
     }
