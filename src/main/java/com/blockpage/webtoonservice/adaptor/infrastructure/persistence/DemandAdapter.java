@@ -222,7 +222,8 @@ public class DemandAdapter implements DemandPort {
             current.get().update(WebtoonStatus.PUBLISH);
 
         } else if (whether.equals("refuse")) {
-            webtoonRepository.deleteById(demand.getId());
+            Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(demand.getId());
+            webtoonEntity.get().update(WebtoonStatus.MODIFICATION_REJECTING);
         }
     }
 
@@ -230,17 +231,16 @@ public class DemandAdapter implements DemandPort {
     @Transactional
     public void checkRemoveWebtoonDemand(Demand demand, String whether) {
         if (whether.equals("accept")) {
-            Optional<WebtoonEntity> current = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(),
-                demand.getCreatorId(), WebtoonStatus.PUBLISH);
+            Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findById(demand.getId());
+            String title = webtoonEntity.get().getWebtoonTitle();
+            String creatorId = webtoonEntity.get().getCreatorId();
+            webtoonRepository.deleteById(demand.getId());
+
+            Optional<WebtoonEntity> current = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(title, creatorId, WebtoonStatus.PUBLISH);
             current.get().update(WebtoonStatus.REMOVE);
 
-            Optional<WebtoonEntity> webtoonEntity = webtoonRepository.findByWebtoonTitleAndCreatorIdAndWebtoonStatus(
-                demand.getWebtoonTitle(), demand.getCreatorId(), WebtoonStatus.REMOVE_WAITING);
-            webtoonEntity.get().update(WebtoonStatus.PUBLISH);
-
         } else if (whether.equals("refuse")) {
-            webtoonRepository.deleteByWebtoonTitleAndCreatorIdAndWebtoonStatus(demand.getWebtoonTitle(), demand.getCreatorId(),
-                WebtoonStatus.REMOVE_WAITING);
+            webtoonRepository.deleteById(demand.getId());
         }
     }
 
