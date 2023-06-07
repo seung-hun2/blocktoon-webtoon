@@ -62,7 +62,7 @@ public class DemandController {
 
     @PutMapping
     public ResponseEntity<ApiResponseView<MessageView>> checkDemand(
-        @RequestHeader String memberId,
+        @RequestBody String memberId,
         @RequestParam String target,
         @RequestParam String type,
         @RequestParam String whether,
