@@ -90,7 +90,7 @@ public class Episode {
             .episodeTitle(responseEpisodeContent.getEpisodeTitle())
             .episodeNumber(responseEpisodeContent.getEpisodeNumber())
             .author(responseEpisodeContent.getAuthor())
-            .authorWords(responseEpisodeContent.getAuthor())
+            .authorWords(responseEpisodeContent.getAuthorWords())
             .uploadDate(responseEpisodeContent.getUploadDate())
             .episodeThumbnail(responseEpisodeContent.getEpisodeThumbnail())
             .images(responseEpisodeContent.getImages().stream().map(Image::toImage).toList())
