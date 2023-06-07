@@ -60,7 +60,7 @@ public class DemandController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<ApiResponseView<MessageView>> checkDemand(
         @RequestHeader String memberId,
         @RequestParam String target,
@@ -80,7 +80,7 @@ public class DemandController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponseView<>(new MessageView("요청이 완료 되었습니다.")));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<ApiResponseView<DemandPageView>> getDemand(
         @RequestParam String target,
         @RequestParam String type,
