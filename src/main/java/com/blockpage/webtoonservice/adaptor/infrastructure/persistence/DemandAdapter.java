@@ -271,8 +271,11 @@ public class DemandAdapter implements DemandPort {
                     publish.get().update(WebtoonStatus.REMOVE);
                     current.get().update(WebtoonStatus.REMOVE);
                     break;
-                default:
+                case "modify":
                     publish.get().update(WebtoonStatus.REMOVE);
+                    current.get().update(WebtoonStatus.PUBLISH);
+                    break;
+                case "enroll":
                     current.get().update(WebtoonStatus.PUBLISH);
                     break;
             }
