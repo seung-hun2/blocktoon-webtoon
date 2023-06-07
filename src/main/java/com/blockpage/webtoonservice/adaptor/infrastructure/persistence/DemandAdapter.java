@@ -263,9 +263,13 @@ public class DemandAdapter implements DemandPort {
         } else if (whether.equals("accept")) {
 
             Optional<EpisodeEntity> current = episodeRepository.findById(demand.getEpisodeId());
-            String episodeTitle = current.get().getEpisodeTitle();
-            Optional<EpisodeEntity> publish = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
+            Integer episodeNumber = current.get().getEpisodeNumber();
+            Long webtoonID = current.get().getWebtoonId();
+            Optional<EpisodeEntity> publish = episodeRepository.findByWebtoonIdAndEpisodeNumberAndEpisodeStatus(webtoonID, episodeNumber,
                 WebtoonStatus.PUBLISH);
+//            String episodeTitle = current.get().getEpisodeTitle();
+//            Optional<EpisodeEntity> publish = episodeRepository.findByEpisodeTitleAndEpisodeStatus(episodeTitle,
+//                WebtoonStatus.PUBLISH);
             switch (type) {
                 case "remove":
                     publish.get().update(WebtoonStatus.REMOVE);
