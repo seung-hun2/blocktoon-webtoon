@@ -57,15 +57,17 @@ public class EpisodeAdaptor implements EpisodePort {
         List<EpisodeEntity> episodeEntityList1 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
             WebtoonStatus.PUBLISH);
         List<EpisodeEntity> episodeEntityList2 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
-            WebtoonStatus.MODIFICATION_WAITING);
+            WebtoonStatus.REGISTRATION_WAITING);
         List<EpisodeEntity> episodeEntityList3 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
+            WebtoonStatus.MODIFICATION_WAITING);
+        List<EpisodeEntity> episodeEntityList4 = episodeRepository.findByWebtoonIdAndEpisodeStatusOrderByEpisodeNumberDesc(webtoonId,
             WebtoonStatus.REMOVE_WAITING);
 
         List<EpisodeEntity> result = new ArrayList<>();
-        result.addAll(episodeEntityList3);
-
         result.addAll(episodeEntityList1);
         result.addAll(episodeEntityList2);
+        result.addAll(episodeEntityList3);
+        result.addAll(episodeEntityList4);
 
         episodeList = result.stream().map(Episode::toDomainFromEntity)
             .collect(Collectors.toList());

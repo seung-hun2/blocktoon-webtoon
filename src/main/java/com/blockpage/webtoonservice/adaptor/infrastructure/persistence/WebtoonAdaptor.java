@@ -8,11 +8,13 @@ import com.blockpage.webtoonservice.adaptor.infrastructure.value.PublicationDays
 import com.blockpage.webtoonservice.adaptor.infrastructure.value.WebtoonStatus;
 import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
 import com.blockpage.webtoonservice.domain.Webtoon;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,10 +150,16 @@ public class WebtoonAdaptor implements WebtoonPort {
     @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonByCreator(String creatorId) {
 
-        List<WebtoonEntity> webtoonEntityList;
+        List<WebtoonEntity> webtoonEntityList = new ArrayList<>();
         List<Webtoon> webtoonList;
 
-        webtoonEntityList = webtoonRepository.findByCreatorId(creatorId);
+        List<WebtoonEntity> webtoonEntityList1 = webtoonRepository.findByCreatorIdAndWebtoonStatus(creatorId, WebtoonStatus.PUBLISH);
+        List<WebtoonEntity> webtoonEntityList2 = webtoonRepository.findByCreatorIdAndWebtoonStatus(creatorId, WebtoonStatus.MODIFICATION_WAITING);
+        List<WebtoonEntity> webtoonEntityList3 = webtoonRepository.findByCreatorIdAndWebtoonStatus(creatorId, WebtoonStatus.REMOVE_WAITING);
+        webtoonEntityList.addAll(webtoonEntityList1);
+        webtoonEntityList.addAll(webtoonEntityList2);
+        webtoonEntityList.addAll(webtoonEntityList3);
+
         webtoonList = webtoonEntityList.stream()
             .map(Webtoon::toDomainFromEntity)
             .collect(Collectors.toList());
