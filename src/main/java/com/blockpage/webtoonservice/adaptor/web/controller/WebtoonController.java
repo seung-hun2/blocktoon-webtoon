@@ -1,9 +1,12 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
+import com.blockpage.webtoonservice.adaptor.web.view.MainView;
 import com.blockpage.webtoonservice.adaptor.web.view.SearchWebtoonView;
 import com.blockpage.webtoonservice.adaptor.web.view.WebtoonView;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
+import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase.RequestType;
+import com.blockpage.webtoonservice.application.port.out.ResponseMain;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +35,16 @@ public class WebtoonController {
      */
 
     @GetMapping("")
-    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byGenreOrWeekdays(@RequestParam(required = false) String weekdays,
-        @RequestParam(required = false) String genre) {
+    public ResponseEntity<ApiResponseView<List<WebtoonView>>> byGenreOrWeekdays(
+        @RequestParam(required = false) String weekdays,
+        @RequestParam(required = false) String genre,
+        @RequestParam(required = false) String best) {
         List<ResponseWebtoon> responseWebtoonList;
 
-        System.out.println("weekdays = " + weekdays);
         if (genre != null) {
-            responseWebtoonList = webtoonUseCase.findWebtoonByGenre(genre);
+            responseWebtoonList = webtoonUseCase.findWebtoonByGenre(RequestType.toRequest(weekdays, genre, best));
         } else if (weekdays != null) {
-            responseWebtoonList = webtoonUseCase.findWebtoonByWeekdays(weekdays);
+            responseWebtoonList = webtoonUseCase.findWebtoonByWeekdays(RequestType.toRequest(weekdays, genre, best));
         } else {
             return (ResponseEntity<ApiResponseView<List<WebtoonView>>>) ResponseEntity.badRequest();
         }
@@ -100,5 +104,13 @@ public class WebtoonController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(webtoonViewList));
     }
 
+    @GetMapping("/main")
+    public ResponseEntity<ApiResponseView<List<MainView>>> main(){
+        List<ResponseMain> main = webtoonUseCase.findMain();
+
+        List<MainView> mainViewList = main.stream().map(MainView::fromResponse).toList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(mainViewList));
+    }
 
 }

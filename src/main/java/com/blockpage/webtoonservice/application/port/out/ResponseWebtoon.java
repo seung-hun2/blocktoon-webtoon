@@ -20,9 +20,10 @@ public class ResponseWebtoon {
     private Integer genreType;
     private Integer publicationDays;
     private String webtoonStatus;
+    private String cutoutImage;
 
     public ResponseWebtoon(Long webtoonId, String webtoonTitle, String webtoonThumbnail, String webtoonMainImage, String description,
-        String creator, String creatorId, String illustrator, Integer views, Integer interestCount, Integer genreType, Integer publicationDays, String webtoonStatus) {
+        String creator, String creatorId, String illustrator, Integer views, Integer interestCount, Integer genreType, Integer publicationDays, String webtoonStatus, String cutoutImage) {
         this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonThumbnail = webtoonThumbnail;
@@ -36,6 +37,7 @@ public class ResponseWebtoon {
         this.genreType = genreType;
         this.publicationDays = publicationDays;
         this.webtoonStatus = webtoonStatus;
+        this.cutoutImage = cutoutImage;
     }
 
 
@@ -53,7 +55,8 @@ public class ResponseWebtoon {
             webtoon.getInterestCount(),
             webtoon.getGenre().getKey(),
             webtoon.getPublicationDays().getKey(),
-            webtoon.getWebtoonStatus()
+            webtoon.getWebtoonStatus(),
+            webtoon.getCutoutImage()
         );
     }
 }

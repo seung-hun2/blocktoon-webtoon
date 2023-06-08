@@ -24,11 +24,12 @@ public class WebtoonView {
 
     private Integer publicationDays;
     private String webtoonDescription;
+    private String cutoutImage;
 
 
     public WebtoonView(Long webtoonId, String webtoonTitle, String webtoonMainImage, String webtoonThumbnail, String creator,
         String creatorId, String illustrator, Integer views, Integer interestCount, Integer genre, String webtoonStatus,
-        Integer publicationDays, String webtoonDescription) {
+        Integer publicationDays, String webtoonDescription, String cutoutImage) {
         this.webtoonId = webtoonId;
         this.webtoonTitle = webtoonTitle;
         this.webtoonMainImage = webtoonMainImage;
@@ -42,6 +43,7 @@ public class WebtoonView {
         this.webtoonStatus = webtoonStatus;
         this.publicationDays = publicationDays;
         this.webtoonDescription = webtoonDescription;
+        this.cutoutImage = cutoutImage;
     }
 
     public static WebtoonView toViewFromResponse(ResponseWebtoon webtoon) {
@@ -58,7 +60,8 @@ public class WebtoonView {
             webtoon.getGenreType(),
             webtoon.getWebtoonStatus(),
             webtoon.getPublicationDays(),
-            webtoon.getDescription()
+            webtoon.getDescription(),
+            webtoon.getCutoutImage()
         );
     }
 

@@ -23,6 +23,7 @@ public class Webtoon {
     private GenreType genre;
     private Integer interestCount;
     private Integer views;
+    private String cutoutImage;
 
     @Getter
     @AllArgsConstructor
@@ -84,6 +85,7 @@ public class Webtoon {
             .webtoonStatus(webtoon.getWebtoonStatus().getValue())
             .genre(GenreType.findGenreTypeByKey(webtoon.getGenreType().getKey()))
             .publicationDays(PublicationDays.findPublicationDaysByKey(webtoon.getPublicationDays().getKey()))
+            .cutoutImage(webtoon.getCutoutImage())
             .build();
     }
 
