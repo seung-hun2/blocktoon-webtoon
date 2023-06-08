@@ -29,5 +29,7 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, J
 
     void deleteByWebtoonTitleAndCreatorIdAndWebtoonStatus(String title, String creatorId, WebtoonStatus status);
 
+    List<WebtoonEntity> findTop10ByOrderByViewsDesc();
+    List<WebtoonEntity> findTop10ByPublicationDaysAndWebtoonStatusOrderByViewsDesc(PublicationDays publicationDays, WebtoonStatus webtoonStatus);
 
 }

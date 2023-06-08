@@ -79,6 +79,26 @@ public class WebtoonAdaptor implements WebtoonPort {
 
     @Override
     @Transactional(readOnly = true)
+    public List<Webtoon> findMain() {
+        List<WebtoonEntity> webtoonEntityList = webtoonRepository.findTop10ByOrderByViewsDesc();
+        List<Webtoon> webtoonList;
+
+        webtoonList = webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList();
+        return webtoonList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Webtoon> findTop10Weekdays(String type) {
+        List<Webtoon> webtoonList;
+        List<WebtoonEntity> webtoonEntityList = webtoonRepository.findTop10ByPublicationDaysAndWebtoonStatusOrderByViewsDesc(
+            PublicationDays.findPublicationDaysByKey(Integer.parseInt(type)), WebtoonStatus.PUBLISH);
+        webtoonList = webtoonEntityList.stream().map(Webtoon::toDomainFromEntity).toList();
+        return webtoonList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<Webtoon> findWebtoonByGenre(String type) {
 
         List<WebtoonEntity> webtoonEntityList;

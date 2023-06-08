@@ -23,4 +23,7 @@ public interface WebtoonPort {
 
     void updateRating(Long webtoonId, Integer totalScore, Integer participantCount);
 
+    List<Webtoon> findMain();
+    List<Webtoon> findTop10Weekdays(String type);
+
 }

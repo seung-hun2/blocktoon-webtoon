@@ -4,6 +4,7 @@ import com.blockpage.webtoonservice.application.port.in.InterestUseCase;
 import com.blockpage.webtoonservice.application.port.in.RatingUseCase;
 import com.blockpage.webtoonservice.application.port.in.ViewCountUseCase;
 import com.blockpage.webtoonservice.application.port.in.WebtoonUseCase;
+import com.blockpage.webtoonservice.application.port.out.ResponseMain;
 import com.blockpage.webtoonservice.application.port.out.ResponseWebtoon;
 import com.blockpage.webtoonservice.application.port.out.WebtoonPort;
 import com.blockpage.webtoonservice.domain.Webtoon;
@@ -19,18 +20,23 @@ public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, Interes
     private final WebtoonPort webtoonPort;
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByGenre(String type) {
+    public List<ResponseWebtoon> findWebtoonByGenre(RequestType requestType) {
         List<ResponseWebtoon> responseWebtoonList;
-        List<Webtoon> webtoonList = webtoonPort.findWebtoonByGenre(type);
+        List<Webtoon> webtoonList = webtoonPort.findWebtoonByGenre(requestType.getGenre());
         responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).collect(Collectors.toList());
 
         return responseWebtoonList;
     }
 
     @Override
-    public List<ResponseWebtoon> findWebtoonByWeekdays(String type) {
+    public List<ResponseWebtoon> findWebtoonByWeekdays(RequestType requestType) {
         List<ResponseWebtoon> responseWebtoonList;
-        List<Webtoon> webtoonList = webtoonPort.findWebtoonByWeekdays(type);
+        List<Webtoon> webtoonList = null;
+        if(requestType.getBest() != null) {
+            webtoonList = webtoonPort.findTop10Weekdays(requestType.getWeekdays());
+        }else {
+            webtoonList = webtoonPort.findWebtoonByWeekdays(requestType.getWeekdays());
+        }
         responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).collect(Collectors.toList());
 
         return responseWebtoonList;
@@ -66,6 +72,14 @@ public class WebtoonService implements WebtoonUseCase, ViewCountUseCase, Interes
         List<Webtoon> webtoonList = webtoonPort.findAll(keyword);
         responseWebtoonList = webtoonList.stream().map(ResponseWebtoon::toResponseFromDomain).toList();
         return responseWebtoonList;
+    }
+
+    @Override
+    public List<ResponseMain> findMain() {
+        List<Webtoon> webtoonList = webtoonPort.findMain();
+        List<ResponseMain> responseMainList = webtoonList.stream().map(ResponseMain::fromDomain).toList();
+
+        return responseMainList;
     }
 
 

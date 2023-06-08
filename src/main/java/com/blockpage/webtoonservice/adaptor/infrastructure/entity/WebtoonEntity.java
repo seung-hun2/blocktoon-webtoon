@@ -60,6 +60,8 @@ public class WebtoonEntity extends BaseEntity {
     private Integer totalScore;
     @Column
     private Integer participantCount;
+    @Column
+    private String cutoutImage;
 
     public void update(WebtoonStatus webtoonStatus) {
         this.webtoonStatus = webtoonStatus;
