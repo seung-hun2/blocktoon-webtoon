@@ -86,12 +86,14 @@ public class EpisodeAdaptor implements EpisodePort {
         List<EpisodeEntity> episodeEntityList = episodeRepository.findByEpisodeStatusAndWebtoonIdOrderByEpisodeNumber(WebtoonStatus.PUBLISH,
             webtoonId);
         String nextTitle = "", nextThumbnail = "", nextUploadDate = "";
+        Integer nextBlockPrice = 0;
         double nextRating = 0;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
 
         if (episodeNumber < episodeEntityList.size()) {
             nextTitle = episodeEntityList.get(episodeNumber).getEpisodeTitle();
             nextThumbnail = episodeEntityList.get(episodeNumber).getEpisodeThumbnail();
+            nextBlockPrice = episodeEntityList.get(episodeNumber).getEpisodePrice();
             nextUploadDate = simpleDateFormat.format(episodeEntityList.get(episodeNumber).getUploadDate());
             if (episodeEntityList.get(episodeNumber).getParticipantCount() != 0) {
                 nextRating =
@@ -99,7 +101,7 @@ public class EpisodeAdaptor implements EpisodePort {
             }
         }
         responseEpisodeDetail = ResponseEpisodeDetail.toResponseFromEntity(episodeEntity, creator, imageEntityList, nextTitle,
-            nextThumbnail, nextRating, nextUploadDate);
+            nextThumbnail, nextRating, nextUploadDate, nextBlockPrice);
 
         return Episode.toDomainFromResponse(responseEpisodeDetail);
     }
