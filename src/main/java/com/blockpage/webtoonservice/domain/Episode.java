@@ -32,6 +32,7 @@ public class Episode {
     private String nextUploadDate;
     private String webtoonStatus;
     private Integer episodePrice;
+    private Integer nextEpisodeBlockPrice;
 
 
     @Getter
@@ -81,10 +82,11 @@ public class Episode {
             .nextEpisodeThumbnail(responseEpisodeDetail.getNextEpisodeThumbnail())
             .nextRating(responseEpisodeDetail.getNextRating())
             .nextUploadDate(responseEpisodeDetail.getNextUploadDate())
+            .nextEpisodeBlockPrice(responseEpisodeDetail.getNextEpisodeBlockPrice())
             .build();
     }
 
-    public static Episode fromResponseContent(ResponseEpisodeContent responseEpisodeContent){
+    public static Episode fromResponseContent(ResponseEpisodeContent responseEpisodeContent) {
         return Episode.builder()
             .episodeId(responseEpisodeContent.getEpisodeId())
             .episodeTitle(responseEpisodeContent.getEpisodeTitle())

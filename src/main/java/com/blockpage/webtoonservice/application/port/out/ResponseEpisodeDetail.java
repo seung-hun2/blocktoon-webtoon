@@ -22,9 +22,10 @@ public class ResponseEpisodeDetail {
     private String nextEpisodeThumbnail;
     private double nextRating;
     private String nextUploadDate;
+    private Integer nextEpisodeBlockPrice;
 
     public static ResponseEpisodeDetail toResponseFromEntity(EpisodeEntity episode, String creator, List<ImageEntity> imageEntityList,
-        String nextTitle, String nextThumbnail, double nextRating, String nextUploadDate) {
+        String nextTitle, String nextThumbnail, double nextRating, String nextUploadDate, Integer nextEpisodeBlockPrice) {
         return ResponseEpisodeDetail.builder()
             .commentCount(episode.getCommentCount())
             .episodeId(episode.getId())
@@ -35,6 +36,7 @@ public class ResponseEpisodeDetail {
             .nextEpisodeThumbnail(nextThumbnail)
             .nextRating(nextRating)
             .nextUploadDate(nextUploadDate)
+            .nextEpisodeBlockPrice(nextEpisodeBlockPrice)
             .images(imageEntityList.stream()
                 .map(ResponseEpisodeImage::toResponseFromEntity)
                 .collect(Collectors.toList())
@@ -53,6 +55,7 @@ public class ResponseEpisodeDetail {
             .nextEpisodeThumbnail(episode.getNextEpisodeThumbnail())
             .nextRating(episode.getNextRating())
             .nextUploadDate(episode.getNextUploadDate())
+            .nextEpisodeBlockPrice(episode.getNextEpisodeBlockPrice())
             .images(episode.getImages().stream().map(ResponseEpisodeImage::toResponseFromDomain).toList())
             .build();
     }
