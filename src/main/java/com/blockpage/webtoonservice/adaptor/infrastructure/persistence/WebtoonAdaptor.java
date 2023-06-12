@@ -56,7 +56,7 @@ public class WebtoonAdaptor implements WebtoonPort {
 
         WebtoonEntity webtoonEntity = webtoonRepository.findById(webtoonId).get();
         //
-        webtoonRepository.updateViewCount(webtoonEntity.getViews()+viewCount);
+        webtoonRepository.updateViewCount(webtoonId, webtoonEntity.getViews()+viewCount);
 //        webtoonEntity.updateViewCount(viewCount);
     }
 
