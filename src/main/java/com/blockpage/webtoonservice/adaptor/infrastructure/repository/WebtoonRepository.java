@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, JpaSpecificationExecutor<WebtoonEntity> {
 
@@ -36,6 +37,7 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, J
 
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE webtoon w set w.views = w.views + :viewCount where w.id = :webtoonId", nativeQuery = true)
     void updateViewCount(Long webtoonId, Integer viewCount);
 
