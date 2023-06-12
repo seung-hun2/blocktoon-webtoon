@@ -9,6 +9,7 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -22,6 +23,7 @@ public class ViewCountMessageListener {
         groupId = "${spring.kafka.viewGroup}",
         containerFactory = "viewKafkaListenerContainerFactory"
     )
+    @Transactional
     public void listenWithHeaders(@Payload ViewCountMessage viewCountMessage, @Headers MessageHeaders messageHeaders) {
         log.info("webtoonId : " + viewCountMessage.getWebtoonId());
         log.info("viewCount : "+viewCountMessage.getViewCount());
