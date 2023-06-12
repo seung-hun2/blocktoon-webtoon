@@ -68,7 +68,7 @@ public class WebtoonEntity extends BaseEntity {
     }
 
     public void updateViewCount(Integer views) {
-        this.views = views;
+        this.views += views;
     }
 
     public void updateInterestCount(Integer interestCount) {
