@@ -36,7 +36,7 @@ public interface WebtoonRepository extends JpaRepository<WebtoonEntity, Long>, J
 
 
     @Modifying
-    @Query(value = "UPDATE webtoon w set w.views = :viewCount where w.id = :webtoonId", nativeQuery = true)
+    @Query(value = "UPDATE webtoon w set w.views = w.views + :viewCount where w.id = :webtoonId", nativeQuery = true)
     void updateViewCount(Long webtoonId, Integer viewCount);
 
 }
