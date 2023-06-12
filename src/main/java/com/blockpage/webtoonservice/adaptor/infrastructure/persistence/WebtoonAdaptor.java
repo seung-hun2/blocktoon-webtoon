@@ -51,7 +51,7 @@ public class WebtoonAdaptor implements WebtoonPort {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void updateViewCount(Long webtoonId, Integer viewCount) {
 
         /*WebtoonEntity webtoonEntity = webtoonRepository.findById(webtoonId).get();*/
