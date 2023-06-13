@@ -309,12 +309,11 @@ public class DemandAdapter implements DemandPort {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException {
-        Pageable pageable = PageRequest.of(pageNo, 10);
+    public List<Demand> getWebtoonDemand(Demand demand, String type) throws IOException {
 
-        Page<WebtoonEntity> webtoonEntityList = switch (type) {
-            case "modify" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(3), pageable);
-            case "remove" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(5), pageable);
+        List<WebtoonEntity> webtoonEntityList = switch (type) {
+            case "modify" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(3));
+            case "remove" -> webtoonRepository.findByWebtoonStatus(WebtoonStatus.findWebtoonStatusByKey(5));
             default -> null;
         };
         return webtoonEntityList.stream().map(Demand::toDomainFromWebtoonEntity).toList();
@@ -322,19 +321,18 @@ public class DemandAdapter implements DemandPort {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo) {
+    public List<Demand> getEpisodeDemand(Demand demand, String type) {
 
-        Pageable pageable = PageRequest.of(pageNo, 10);
-        Page<EpisodeEntity> episodeEntityList = null;
+        List<EpisodeEntity> episodeEntityList = null;
         switch (type) {
             case "enroll":
-                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(1), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(1));
                 break;
             case "modify":
-                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(3), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(3));
                 break;
             case "remove":
-                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(5), pageable);
+                episodeEntityList = episodeRepository.findByEpisodeStatus(WebtoonStatus.findWebtoonStatusByKey(5));
                 break;
         }
 

@@ -1,7 +1,6 @@
 package com.blockpage.webtoonservice.adaptor.web.controller;
 
 import com.blockpage.webtoonservice.adaptor.web.view.ApiResponseView;
-import com.blockpage.webtoonservice.adaptor.web.view.DemandPageView;
 import com.blockpage.webtoonservice.adaptor.web.view.DemandView;
 import com.blockpage.webtoonservice.adaptor.web.view.MessageView;
 import com.blockpage.webtoonservice.application.port.DemandDto;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.bridge.Message;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,17 +77,14 @@ public class DemandController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseView<DemandPageView>> getDemand(
+    public ResponseEntity<ApiResponseView<List<DemandView>>> getDemand(
         @RequestParam String target,
-        @RequestParam String type,
-        @RequestParam Integer pageNo) throws IOException {
+        @RequestParam String type) throws IOException {
 
-        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type, pageNo));
-        Integer totalSize = demandUseCase.findTotalSize(DemandQuery.toQueryFromId(target, type, pageNo));
+        List<DemandDto> demandDtoList = demandUseCase.getDemand(DemandQuery.toQueryFromId(target, type));
         List<DemandView> demandViewList = demandDtoList.stream().map(DemandView::toView).toList();
-        DemandPageView demandPageView = new DemandPageView(demandViewList, totalSize);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandPageView));
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponseView<>(demandViewList));
     }
 
 }

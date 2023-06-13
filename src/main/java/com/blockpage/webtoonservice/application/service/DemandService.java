@@ -78,7 +78,7 @@ public class DemandService implements DemandUseCase {
     public List<DemandDto> getDemand(DemandQuery demandQuery) throws IOException {
         if (demandQuery.getTarget().equals("webtoon")) {
             Demand demand = Demand.toDomainFromGet(demandQuery);
-            List<Demand> demands = demandPort.getWebtoonDemand(demand, demandQuery.getType(), demandQuery.getPageNo());
+            List<Demand> demands = demandPort.getWebtoonDemand(demand, demandQuery.getType());
 
             return demands.stream().map(DemandDto::toDtoFromDomain).toList();
 
@@ -86,8 +86,8 @@ public class DemandService implements DemandUseCase {
             Demand demand = Demand.toDomainFromGet(demandQuery);
             System.out.println("demand = " + demand.getEpisodeTitle());
             List<Demand> demands =
-                demandPort.getEpisodeDemand(demand, demandQuery.getType(), demandQuery.getPageNo()) != null ? demandPort.getEpisodeDemand(
-                    demand, demandQuery.getType(), demandQuery.getPageNo()) : new ArrayList<>();
+                demandPort.getEpisodeDemand(demand, demandQuery.getType()) != null ? demandPort.getEpisodeDemand(demand,
+                    demandQuery.getType()) : new ArrayList<>();
 
             return demands.stream().map(DemandDto::toDtoFromDomain).toList();
         }

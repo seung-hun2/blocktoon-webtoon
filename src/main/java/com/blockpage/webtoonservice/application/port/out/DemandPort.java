@@ -24,9 +24,9 @@ public interface DemandPort {
 
     void checkRemoveEpisodeDemand(Demand demand, String whether);
 
-    List<Demand> getWebtoonDemand(Demand demand, String type, Integer pageNo) throws IOException;
+    List<Demand> getWebtoonDemand(Demand demand, String type) throws IOException;
 
-    List<Demand> getEpisodeDemand(Demand demand, String type, Integer pageNo);
+    List<Demand> getEpisodeDemand(Demand demand, String type);
 
     Integer findTotalSize(String target, String type);
 

@@ -29,7 +29,7 @@ public interface EpisodeRepository extends JpaRepository<EpisodeEntity, Long> {
 
     void deleteByEpisodeTitleAndCreatorIdAndEpisodeStatus(String title, String creatorId, WebtoonStatus status);
 
-    Page<EpisodeEntity> findByEpisodeStatus(WebtoonStatus status, Pageable pageable);
+    List<EpisodeEntity> findByEpisodeStatus(WebtoonStatus status);
 
     List<EpisodeEntity> findAllByEpisodeStatus(WebtoonStatus status);
 
