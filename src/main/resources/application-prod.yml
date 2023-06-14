@@ -10,19 +10,24 @@ eureka:
 spring:
   application:
     name: webtoon-service
-    
   datasource:
-    master:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: ${spring.datasource.master.jdbc-url}
-      username: ${spring.datasource.master.username}
-      password: ${spring.datasource.master.password}
-
-    slave:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: ${spring.datasource.slave.jdbc-url}
-      username: ${spring.datasource.slave.username}
-      password: ${spring.datasource.slave.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${spring.datasource.master.jdbc-url}
+    username: ${spring.datasource.master.username}
+    password: ${spring.datasource.master.password}
+    
+#  datasource:
+#    master:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: ${spring.datasource.master.jdbc-url}
+#      username: ${spring.datasource.master.username}
+#      password: ${spring.datasource.master.password}
+#
+#    slave:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      jdbc-url: ${spring.datasource.slave.jdbc-url}
+#      username: ${spring.datasource.slave.username}
+#      password: ${spring.datasource.slave.password}
 
   kafka:
     bootstrapAddress: ${spring.kafka.bootstrapAddress}
